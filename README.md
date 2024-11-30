@@ -70,7 +70,9 @@ This project is configured to use Stripe for payments and checkout. It supports 
    - Create products and pricing plans as needed.
    - IMPORTANT: For each product, set metadata `credit_amount=<integer>`. The app uses the metadata to determine how many Rizz credits to grant for each purchase or subscription.
 4. **Set Environment Variables**:
+   
    Add the following to your .env.local file:
+   
    ```bash
    STRIPE_SECRET_KEY=<your-stripe-secret-key>
    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=<your-stripe-publishable-key>
@@ -81,23 +83,23 @@ Follow these steps to run the app locally:
 
 1. **Clone the Repository and install dependencies**:
 
-```bash
-git clone https://github.com/yourusername/rizzai-example-app.git
-cd rizzai-example-app
-pnpm install
-```
+   ```bash
+   git clone https://github.com/yourusername/rizzai-example-app.git
+   cd rizzai-example-app
+   pnpm install
+   ```
 
 2. **Set Up Environment Variables**:
 
-Create a file named `.env.local` in the root directory.
-Add all the environment variables as mentioned above.
+   Create a file named `.env.local` in the root directory.
+   Add all the environment variables as mentioned above.
 
 3. **Run the Development Server**:
 
-```bash
-npm run dev
-```
+   ```bash
+   npm run dev
+   ```
 
 4. **Access the App**:
 
-Open your browser and navigate to http://localhost:3000.
+   Open your browser and navigate to http://localhost:3000.
