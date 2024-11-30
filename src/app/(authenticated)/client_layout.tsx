@@ -1,0 +1,44 @@
+"use client";
+
+import { AuthenticatedHeader } from "@/components/AuthenticatedHeader";
+import { Footer } from "@/components/Footer";
+import { Toaster } from "react-hot-toast";
+import ReactModal from "react-modal";
+import { PaywallPopup } from "./live/components/PaywallPopup";
+import { useAppState } from "@/components/AppStateProvider";
+
+export function ClientLayout({ children }: { children: React.ReactNode }) {
+  const { showPaywall, setShowPaywall } = useAppState();
+  return (
+    <>
+      <Toaster />
+      <ReactModal
+        isOpen={showPaywall !== null}
+        onRequestClose={() => {
+          setShowPaywall(null);
+        }}
+        overlayClassName="fixed top-0 bottom-0 left-0 right-0 backdrop-blur-lg bg-blur flex justify-center items-center"
+        className="w-2/3 h-1/3 max-h-[300px] max-w-[400px] bg-white rounded-lg shadow-lg outline-none"
+        shouldCloseOnOverlayClick={true}
+      >
+        <div className="w-full h-full flex justify-center items-center">
+          <PaywallPopup />
+        </div>
+      </ReactModal>
+      <div className="fixed flex justify-center top-0 left-0 right-0 h-[50px] z-[10]">
+        <div className="w-full bg-neutral">
+          <AuthenticatedHeader />
+        </div>
+      </div>
+
+      <div className="fixed flex justify-center top-[62px] left-[8px] right-[8px] bottom-[58px]">
+        {children}
+      </div>
+      <div className="fixed flex justify-center bottom-0 left-0 right-0 h-[50px] z-[10]">
+        <div className="w-full bg-neutral">
+          <Footer />
+        </div>
+      </div>
+    </>
+  );
+}
