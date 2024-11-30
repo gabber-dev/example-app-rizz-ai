@@ -30,9 +30,74 @@ GABBER_API_KEY=<api-key-from-gabber-dashboard>
 GABBER_CREDIT_ID=<credit-id-in-gabber-dashboard>
 ```
 
-### Google Oauth
+### Google OAuth
+The app uses Google OAuth for user authentication. You'll need to set up a Google Cloud project to obtain OAuth 2.0 credentials.
+
+1. Create a Google Cloud Project:
+   - Go to the Google Cloud Console.
+   - Create a new project or select an existing one.
+2. Enable OAuth Consent Screen:
+   - Navigate to APIs & Services > OAuth consent screen.
+   - Configure the consent screen by adding the necessary information.
+3. Create OAuth Client ID:
+   - Go to APIs & Services > Credentials.
+   - Click Create Credentials and select OAuth client ID.
+   - Choose Web Application as the application type.
+   - Under Authorized JavaScript origins, add your app's URL (e.g., http://localhost:3000).
+   - Under Authorized redirect URIs, add http://localhost:3000/auth/google/callback.
+   - Click Create to obtain your Client ID and Client Secret.
+4. Set Environment Variables:
+
+   Add the following to your .env.local file:
+
+   ```bash
+   GOOGLE_CLIENT_ID=<your-google-client-id>
+   GOOGLE_CLIENT_SECRET=<your-google-client-secret>
+   GOOGLE_REDIRECT_URI=http://localhost:3000/auth/google/callback
+   ```
 
 ### Stripe
 
-This project is configured to use Stripe for payments and checkout. 
-It supports subscriptions as well as one-time-purchases of Rizz credits.
+This project is configured to use Stripe for payments and checkout. It supports subscriptions as well as one-time purchases of Rizz credits.
+
+1. Create a Stripe Account:
+   - Sign up at Stripe Dashboard.
+2. Obtain API Keys:
+   - Navigate to Developers > API keys.
+   - Copy the Publishable key and Secret key.
+3. Set Up Products and Pricing:
+   - Go to Products in the Stripe Dashboard.
+   - Create products and pricing plans as needed.
+   - IMPORTANT: For each product, set metadata `credit_amount=<integer>`. The app uses the metadata to determine how many Rizz credits to grant for each purchase or subscription.
+4. Set Environment Variables:
+   Add the following to your .env.local file:
+   ```bash
+   STRIPE_SECRET_KEY=<your-stripe-secret-key>
+   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=<your-stripe-publishable-key>
+   STRIPE_REDIRECT_HOST=http://localhost:3000
+   ```
+## Getting Started
+Follow these steps to run the app locally:
+
+1. Clone the Repository and install dependencies:
+
+```bash
+git clone https://github.com/yourusername/rizzai-example-app.git
+cd rizzai-example-app
+pnpm install
+```
+
+2. Set Up Environment Variables:
+
+Create a file named `.env.local` in the root directory.
+Add all the environment variables as mentioned above.
+
+3. Run the Development Server:
+
+```bash
+npm run dev
+```
+
+4. Access the App:
+
+Open your browser and navigate to http://localhost:3000.
