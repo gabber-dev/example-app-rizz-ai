@@ -18,7 +18,6 @@ export function ClientPage({ session }: Props) {
     try {
       const scoreResult = (await axios.get("/api/score?session=" + session)).data;
       setScore(scoreResult);
-      console.log(scoreResult);
     } catch (e) {
       toast.error("Error generating score");
     } finally {

@@ -14,8 +14,6 @@ export class SessionController {
     const config = this.getConfig();
     const sessionApi = SessionApiFactory(config);
     const response = await sessionApi.apiV1SessionListGet(userId);
-    console.log("response");
-    console.log(response.data);
     return response.data;
   }
 

@@ -23,19 +23,13 @@ export function Score({ score, persona }: Props) {
   ];
 
   return (
-    <div className="flex flex-col gap-4 items-center h-full w-full justify-center p-4">
+    <div className="flex flex-col gap-4 items-center h-full w-full justify-center">
       {/* Score Ring */}
       <div className="relative w-[300px] h-[300px]">
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <div className="text-2xl text-primary">Your Rizz Score</div>
           <div className="text-8xl font-bold text-white">{score.rizz_score}</div>
         </div>
-      </div>
-
-      {/* Summary */}
-      <div className="bg-base-300 p-4 rounded-lg w-full max-w-[600px] mb-4">
-        <div className="italic text-sm mb-2">Summary</div>
-        <div className="text-base-content-bold">{score.summary}</div>
       </div>
 
       {/* Attribute Ratings */}
@@ -59,7 +53,11 @@ export function Score({ score, persona }: Props) {
           </div>
         ))}
       </div>
-
+      {/* Summary */}
+      <div className="bg-base-300 p-4 rounded-lg w-full max-w-[600px] mb-4">
+        <div className="italic text-sm mb-2">Summary</div>
+        <div className="text-base-content-bold">{score.summary}</div>
+      </div>
       {/* Feedback Sections */}
       <div className="flex flex-col gap-4 w-full max-w-[600px]">
         {/* <FeedbackSection title="Things you did well" items={[score.good_1, score.good_2, score.good_3]} /> */}
@@ -67,10 +65,6 @@ export function Score({ score, persona }: Props) {
           title="Areas for improvement"
           items={[score.improve_1, score.improve_2, score.improve_3]}
         />*/}
-        <div className="bg-base-300 p-4 rounded-lg">
-          <div className="italic text-sm mb-2">Notes</div>
-          <div className="text-base-content-bold">{score.summary}</div>
-        </div>
       </div>
     </div>
   );
