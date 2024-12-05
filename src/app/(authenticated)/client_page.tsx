@@ -108,8 +108,23 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
         <Card className="p-4" dark={true}>
           {selectedPersona ? (
             <>
-              <h2 className="text-xl font-bold mb-4">Selected Persona</h2>
-              <PersonaCard item={selectedPersona} selected={true} />
+              <h2 className="text-xl font-bold mb-4">Selected</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <div className="text-sm opacity-70 mb-2">Persona</div>
+                  <PersonaCard item={selectedPersona} selected={true} />
+                </div>
+                <div className="hidden md:block">
+                  <div className="text-sm opacity-70 mb-2">Scenario</div>
+                  {selectedScenario ? (
+                    <ScenarioCard item={selectedScenario} selected={true} />
+                  ) : (
+                    <div className="flex items-center justify-center bg-base-200 rounded w-full h-[128px] p-2 border border-dashed border-base-content/20">
+                      <span className="text-sm opacity-50">Select a scenario below</span>
+                    </div>
+                  )}
+                </div>
+              </div>
             </>
           ) : (
             <>
@@ -160,7 +175,7 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
                   Change Persona
                 </button>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-auto flex-1">
                 {scenarios.slice(0, 6).map((scenario) => (
                   <button
                     key={scenario.id}
@@ -177,7 +192,7 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
                 ))}
               </div>
               {selectedScenario && (
-                <div className="mt-4 flex justify-center">
+                <div className="mt-auto pt-4 flex justify-center">
                   <Button3D
                     enabled={!loading}
                     onClick={async () => {
@@ -196,6 +211,7 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
                         setLoading(false);
                       }
                     }}
+                    className="w-24 h-24"
                   >
                     {loading ? (
                       <div className="w-1/2 h-full text-primary-content loading loading-dots" />
@@ -308,19 +324,19 @@ function StartButton({
 function PersonaCard({ item, selected }: { item: Persona; selected: boolean }) {
   return (
     <div
-      className={`flex bg-base-200 gap-2 hover:bg-base-300 rounded w-full h-[80px] p-2 ${selected ? "border border-primary" : ""}`}
+      className={`flex bg-base-200 gap-4 hover:bg-base-300 rounded w-full h-[128px] p-4 ${selected ? "border border-primary" : ""}`}
     >
-      <div className="relative overflow-hidden rounded h-full aspect-square">
+      <div className="relative w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
         <Image
           fill={true}
-          className="w-full h-full"
+          className="object-cover"
           src={item.image_url}
           alt={item.name}
         />
       </div>
       <div className="flex flex-col">
         <div className="text-lg font-bold">{item.name}</div>
-        <div className="text-sm">{item.description}</div>
+        <div className="text-sm line-clamp-3">{item.description}</div>
       </div>
     </div>
   );
@@ -335,10 +351,10 @@ function ScenarioCard({
 }) {
   return (
     <div
-      className={`hover:bg-base-300 bg-base-200 rounded w-full h-[80px] p-2 ${selected ? "border border-primary" : ""}`}
+      className={`hover:bg-base-300 bg-base-200 rounded w-full h-[128px] p-4 flex flex-col ${selected ? "border border-primary" : ""}`}
     >
       <div className="text-lg font-bold">{item.name}</div>
-      <div className="text-sm">{item.prompt}</div>
+      <div className="text-sm line-clamp-3">{item.prompt}</div>
     </div>
   );
 }
