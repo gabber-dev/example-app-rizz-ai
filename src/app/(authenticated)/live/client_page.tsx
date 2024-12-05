@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { SessionProvider, useSession } from "gabber-client-react";
 import { Persona, Scenario } from "@/generated";
 import { AgentAudioVisualizer } from "@/components/AgentAudioVisualizer";
@@ -19,16 +19,26 @@ type Props = {
   token: string;
 };
 
-const MESSAGES_BEFORE_RIZZ = 1;
+const MESSAGES_BEFORE_RIZZ = 10;
 
 export function ClientPage({ persona, scenario, token }: Props) {
+  const { credits, setShowPaywall } = useAppState();
   const [connectionOpts, setConnectionOpts] = useState<null | {
     token: string;
     sessionConnectOptions: { persona: string; scenario: string };
-  }>({
-    token,
-    sessionConnectOptions: { persona: persona.id, scenario: scenario.id },
-  });
+  }>(null);
+
+  useEffect(() => {
+    if (credits <= 0) {
+      setShowPaywall({});
+    } else {
+      setConnectionOpts({
+        token,
+        sessionConnectOptions: { persona: persona.id, scenario: scenario.id },
+      });
+    }
+  }, [credits, persona.id, scenario.id, setShowPaywall, token]);
+
   return (
     <SessionProvider connectionOpts={connectionOpts}>
       <ClientSessionPageInner persona={persona} scenario={scenario} />
@@ -65,7 +75,7 @@ export function ClientSessionPageInner({
           />
         </div>
         <div className="flex flex-col items-center justify-center text-white my-2 h-[100px]">
-          <div className="font-bold">Talk to get your rizz score</div>
+          <div className="font-bold">Talk for at least 10 messages to get your rizz score</div>
           <div className="h-[40px] w-[200px] flex items-center justify-center">
             {messages.length < MESSAGES_BEFORE_RIZZ ? (
               <ProgressBar

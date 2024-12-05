@@ -228,13 +228,18 @@ export class CreditsController {
       apiKey: process.env.GABBER_API_KEY,
     });
     const creditApi = CreditApiFactory(configuration);
-    creditApi.apiV1CreditCreditLedgerPost(
-      process.env.GABBER_CREDIT_ID,
-      {
-        amount,
-        idempotency_key: v4(),
-      },
-      { headers: { "x-human-id": customer } },
-    );
+    try {
+      await creditApi.apiV1CreditCreditLedgerPost(
+        process.env.GABBER_CREDIT_ID,
+        {
+          amount,
+          idempotency_key: v4(),
+        },
+        { headers: { "x-human-id": customer } },
+      );
+    } catch (e: any) {
+      console.error("Failed to report credit usage:", e.message);
+      throw e;
+    }
   }
 }

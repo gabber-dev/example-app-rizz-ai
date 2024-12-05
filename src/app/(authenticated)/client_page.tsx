@@ -8,6 +8,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import { useAppState } from "@/components/AppStateProvider";
 
 type Props = {
   personas: Persona[];
@@ -21,12 +22,32 @@ export default function ClientPage({ personas, scenarios }: Props) {
   );
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const { credits, setShowPaywall } = useAppState();
 
   return (
-    <div className="flex flex-col gap-2 items-center w-full h-full">
-      <Card className="w-[300px] h-[300px]" dark={true}>
-        <RizzScore score={0} empty={true} />
-      </Card>
+    <div className="flex flex-col gap-4 items-center w-full h-full p-4">
+      <div className="flex justify-between w-full max-w-[1200px]">
+        <Card className="w-[300px] h-[300px]" dark={true}>
+          <RizzScore score={0} empty={true} />
+        </Card>
+        
+        <Card className="w-[300px] h-[300px] p-4" dark={true}>
+          <div className="flex flex-col h-full">
+            <h2 className="text-xl font-bold mb-4">Recent Sessions</h2>
+            <div className="flex-1">
+              <button
+                onClick={() => router.push('/history')}
+                className="w-full h-full flex items-center justify-center border-2 border-dashed border-primary/30 rounded-lg hover:border-primary/50 transition-colors"
+              >
+                <div className="text-center">
+                  <div className="text-lg mb-2">View History</div>
+                  <div className="text-sm opacity-70">See all your past conversations</div>
+                </div>
+              </button>
+            </div>
+          </div>
+        </Card>
+      </div>
 
       <div className="flex gap-2 grow">
         <div className="w-[400px] h-full flex flex-col items-center gap-1">
@@ -53,6 +74,10 @@ export default function ClientPage({ personas, scenarios }: Props) {
           loading={loading}
           enabled={selectedPersona !== null && selectedScenario !== null}
           onClick={async () => {
+            if (credits <= 0) {
+              setShowPaywall({});
+              return;
+            }
             setLoading(true);
             try {
               router.push(
@@ -84,7 +109,7 @@ function StartButton({
 }) {
   return (
     <div className="text-primary-content p-2 rounded cursor-pointer w-full h-full">
-      <Button3D enabled={enabled} onClick={onClick}>
+      <Button3D enabled={enabled} onClick={enabled ? onClick : undefined}>
         {loading ? (
           <div className="w-1/2 h-full text-primary-content loading loading-dots" />
         ) : (

@@ -67,8 +67,11 @@ export class ScoreController {
     }
     try {
       const scoreObj = JSON.parse(scoreJsonString);
-      console.log("NEIL", scoreJsonString);
-      return scoreObj;
+      const rizzScore = calculateRizzScore(scoreObj);
+      return {
+        ...scoreObj,
+        rizz_score: rizzScore
+      };
     } catch (e) {
       const jsonFixMesages = [
         {
@@ -82,12 +85,15 @@ export class ScoreController {
         messages: jsonFixMesages,
       });
       const fixedJsonString = jsonFixResult.choices[0].message.content;
-      console.log("NEIL Fixed", scoreJsonString);
       if (!fixedJsonString) {
         throw new Error("Failed to fix JSON");
       }
       const scoreObj = JSON.parse(fixedJsonString);
-      return scoreObj;
+      const rizzScore = calculateRizzScore(scoreObj);
+      return {
+        ...scoreObj,
+        rizz_score: rizzScore
+      };
     }
   }
 }
@@ -119,6 +125,8 @@ Please rate my performance in the scenario based on the following attributes:
 
 each with scores: poor, fair, good
 
+Also include a string that summarizes my performance in the scenario.
+
 Please provide your outputs in JSON format with the format:
 {
   "wit": "fair" | "good" | "poor",
@@ -126,11 +134,40 @@ Please provide your outputs in JSON format with the format:
   "confidence": "fair" | "good" | "poor",
   "seductiveness": "fair" | "good" | "poor",
   "ability_to_progress_conversation": "fair" | "good" | "poor"
-  "kindness": "fair" | "good" | "poor"
+  "kindness": "fair" | "good" | "poor",
+  "summary": <string>
 }
 
 Make the output JSON parsable. Don't include any extra text or markdown. 
 `;
 
   return prompt;
+};
+
+const calculateRizzScore = (scoreObj: Record<string, string>): number => {
+  const pointValues = {
+    poor: 0,
+    fair: 1,
+    good: 2,
+  };
+
+  const attributes = [
+    'wit',
+    'humor', 
+    'confidence',
+    'seductiveness',
+    'ability_to_progress_conversation',
+    'kindness'
+  ];
+
+  let totalPoints = 0;
+  const maxPoints = attributes.length * 2; // 2 is max points per attribute
+
+  for (const attr of attributes) {
+    const score = scoreObj[attr] as keyof typeof pointValues;
+    totalPoints += pointValues[score] || 0;
+  }
+
+  // Convert to score out of 100 and round to nearest integer
+  return Math.round((totalPoints / maxPoints) * 100);
 };

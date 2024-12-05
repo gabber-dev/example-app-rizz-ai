@@ -32,7 +32,10 @@ export async function POST(req: NextRequest) {
   if (type === "usage.tracked") {
     const { human_id, type, value } = payload;
     if (type === "conversational_seconds") {
-      await CreditsController.reportCreditUsage(human_id, value * -1);
+      // Convert seconds to minutes and multiply by 7 credits per minute
+      const minutes = value / 60;
+      const creditCost = Math.ceil(minutes * 7);
+      await CreditsController.reportCreditUsage(human_id, creditCost * -1);
     }
   }
   return new Response(null, { status: 200 });
