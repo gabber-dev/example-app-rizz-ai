@@ -16,6 +16,7 @@ export function ClientPage({ sessions, personas }: Props) {
   const [loading, setLoading] = useState(false);
   const [initialSessions, setInitialSessions] = useState<Session[]>(sessions);
   const { user } = useAppState();
+  const [isSessionsCollapsed, setIsSessionsCollapsed] = useState(true);
 
   useEffect(() => {
     const fetchSessions = async () => {
@@ -43,16 +44,26 @@ export function ClientPage({ sessions, personas }: Props) {
   }, [user]);
 
   return (
-    <div className="flex h-full gap-4">
-      <div className="w-1/3 bg-base-300 rounded-lg p-4">
-        <h2 className="text-2xl font-bold mb-4">Session History</h2>
-        <SessionList 
-          sessions={initialSessions} 
-          selectedSession={selectedSession}
-          onSelectSession={setSelectedSession}
-          loading={loading}
-          personas={personas}
-        />
+    <div className="flex flex-col md:flex-row h-full gap-4">
+      <div className="bg-base-300 rounded-lg p-2 md:w-1/3">
+        <button 
+          className="w-full text-left text-lg font-medium mb-2 md:hidden py-2 px-3 bg-base-200 rounded-lg hover:bg-base-100 transition-all"
+          onClick={() => setIsSessionsCollapsed(!isSessionsCollapsed)}
+        >
+          {isSessionsCollapsed ? "Show Sessions" : "Hide Sessions"}
+        </button>
+        <div className={`transition-all duration-300 ${isSessionsCollapsed ? 'hidden' : 'block'} md:block`}>
+          <SessionList 
+            sessions={initialSessions} 
+            selectedSession={selectedSession}
+            onSelectSession={(sessionId) => {
+              setSelectedSession(sessionId);
+              setIsSessionsCollapsed(true);
+            }}
+            loading={loading}
+            personas={personas}
+          />
+        </div>
       </div>
       <div className="flex-1 bg-base-300 rounded-lg p-4">
         {selectedSession ? (

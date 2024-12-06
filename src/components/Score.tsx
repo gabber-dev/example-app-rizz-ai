@@ -1,11 +1,8 @@
-import { Persona } from "@/generated";
 import { Score as ScoreModel } from "@/lib/model/score";
-import { useState } from "react";
-import { ExpandMore, ExpandLess } from "@mui/icons-material";
+import { useState, useEffect } from "react";
 
 type Props = {
   score: ScoreModel;
-  persona: Persona;
 };
 
 type AttributeRating = {
@@ -13,57 +10,61 @@ type AttributeRating = {
   score: "poor" | "fair" | "good";
 };
 
-export function Score({ score, persona }: Props) {
-  const [isExpanded, setIsExpanded] = useState(false);
+export function Score({ score }: Props) {
+  const [isSummaryModalOpen, setSummaryModalOpen] = useState(false);
+  const [displayScore, setDisplayScore] = useState(0);
+
+  useEffect(() => {
+    let start = 0;
+    const end = score.rizz_score;
+    if (start === end) return;
+
+    let incrementTime = Math.abs(Math.floor(2000 / (end - start)));
+    let timer = setInterval(() => {
+      start += 1;
+      setDisplayScore(start);
+      if (start === end) clearInterval(timer);
+    }, incrementTime);
+
+    return () => clearInterval(timer);
+  }, [score.rizz_score]);
+
+  const handleSummaryClick = () => {
+    setSummaryModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setSummaryModalOpen(false);
+  };
+
   const attributes: AttributeRating[] = [
     { name: "Wit", score: score.wit },
     { name: "Humor", score: score.humor },
     { name: "Confidence", score: score.confidence },
-    { name: "Seductiveness", score: score.seductiveness },
+    { name: "Seduction", score: score.seductiveness },
     { name: "Conversation", score: score.ability_to_progress_conversation },
     { name: "Kindness", score: score.kindness },
   ];
 
   return (
-    <div className="flex flex-col gap-4 items-center h-full w-full justify-center">
-      {/* Persona Info */}
-      <div className="w-full max-w-[600px] bg-base-300 p-4 rounded-lg">
-        <div className="flex items-center gap-4">
-          <div className="flex-1">
-            <div className="font-bold text-lg">{persona.name}</div>
-            <div className="text-sm opacity-70">{persona.description}</div>
-          </div>
-        </div>
-      </div>
-
+    <div className="flex flex-col gap-2 items-center h-full w-full justify-center">
       {/* Score Ring */}
-      <div className="relative w-[300px] h-[300px]">
+      <div className="relative w-[200px] h-[200px]">
         <div className="absolute inset-0 flex flex-col items-center justify-center">
-          <div className="text-2xl text-primary">Your Rizz Score</div>
-          <div className="text-8xl font-bold text-white">{score.rizz_score}</div>
+          <div className="text-xl text-primary">Your Rizz Score</div>
+          <div className="text-7xl font-bold text-white">{displayScore}</div>
         </div>
       </div>
 
-      {/* Summary - Expandable */}
-      <div 
-        className={`relative w-full max-w-[600px] bg-base-300 p-4 rounded-lg cursor-pointer transition-all duration-300 ${
-          isExpanded ? 'absolute inset-0 z-10 m-4' : ''
-        }`}
-        onClick={() => setIsExpanded(!isExpanded)}
+      {/* Summary Button */}
+      <button
+        className="mt-2 mb-2 bg-primary text-white p-2 rounded w-full max-w-[600px]"
+        onClick={handleSummaryClick}
       >
-        <div className="flex justify-between items-center mb-2">
-          <div className="italic text-sm">Summary</div>
-          {isExpanded ? <ExpandLess /> : <ExpandMore />}
-        </div>
-        <div className={`text-base-content-bold ${isExpanded ? '' : 'line-clamp-2'}`}>
-          {score.summary}
-        </div>
-      </div>
-
-      {/* Attribute Ratings */}
-      <div className={`grid grid-cols-2 gap-4 w-full max-w-[600px] transition-opacity duration-300 ${
-        isExpanded ? 'opacity-0' : 'opacity-100'
-      }`}>
+        View Summary
+      </button>
+     {/* Attribute Ratings */}
+     <div className="grid grid-cols-2 gap-4 w-full max-w-[600px]">
         {attributes.map((attr) => (
           <div
             key={attr.name}
@@ -83,6 +84,37 @@ export function Score({ score, persona }: Props) {
           </div>
         ))}
       </div>
+      {/* Summary Modal */}
+      {isSummaryModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-4 rounded-lg w-full max-w-[600px]">
+            <div className="text-lg font-bold mb-2">Summary</div>
+            <div className="text-base-content-bold">{score.summary}</div>
+            <button
+              className="mt-4 bg-primary text-white p-2 rounded"
+              onClick={handleCloseModal}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function FeedbackSection({ title, items }: { title: string; items: string[] }) {
+  return (
+    <div className="bg-base-300 p-4 rounded-lg">
+      <div className="italic text-sm mb-2">{title}</div>
+      <ul className="space-y-2">
+        {items.map((item, i) => (
+          <li key={i} className="flex items-center gap-2">
+            <div className="rounded-full bg-base-content-bold w-[6px] h-[6px]" />
+            <span className="text-base-content-bold">{item}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

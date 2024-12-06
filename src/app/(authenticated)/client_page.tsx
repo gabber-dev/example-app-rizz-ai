@@ -9,11 +9,31 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useAppState } from "@/components/AppStateProvider";
+import { shuffle } from 'lodash';
 
 type Props = {
   personas: Persona[];
   scenarios: Scenario[];
   sessions: any[];
+};
+
+const PersonaButton = ({ persona, onClick }: { persona: Persona; onClick: () => void }) => {
+  return (
+    <button
+      onClick={onClick}
+      className="flex flex-col items-center w-full transition-all bg-base-200 hover:bg-base-100 rounded-lg p-4"
+    >
+      <div className="relative w-full pb-[100%] rounded-lg overflow-hidden mb-2">
+        <Image
+          fill
+          src={persona.image_url}
+          alt={persona.name}
+          className="object-cover"
+        />
+      </div>
+      <div className="font-bold text-center truncate w-full">{persona.name}</div>
+    </button>
+  );
 };
 
 export default function ClientPage({ personas, scenarios, sessions }: Props) {
@@ -65,7 +85,7 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
           <div className={`flex flex-col gap-2 overflow-y-auto transition-all duration-300 ${
             isSessionsCollapsed ? 'h-0' : 'h-[calc(100%-4rem)]'
           } md:h-[calc(100%-2rem)]`}>
-            {sessions.map((session) => (
+            {sessions.slice(-10).map((session) => (
               <button
                 key={session.id}
                 className="p-4 rounded-lg text-left transition-all bg-base-200 hover:bg-base-100"
@@ -104,14 +124,20 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
                 </div>
               </button>
             ))}
+            <button
+              onClick={() => router.push('/history')}
+              className="mt-4 p-2 bg-primary text-primary-content rounded-lg hover:bg-primary-focus"
+            >
+              View All Past Sessions
+            </button>
           </div>
         </Card>
       </div>
 
       {/* Right Column - Main Content */}
-      <div className="flex-1 flex flex-col gap-4 min-h-0">
+      <div className="flex-1 flex flex-col gap-4 min-h-0 min-w-0">
         {/* Recommended/Selected Personas */}
-        <Card className="p-4" dark={true}>
+        <Card className={`p-4 w-full ${isMobile ? 'hidden' : ''}`} dark={true}>
           {selectedPersona ? (
             <>
               <div className="flex items-center gap-4 mb-4">
@@ -125,45 +151,30 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
                 </div>
                 <div className="flex-1">
                   <h2 className="text-xl font-bold">{selectedPersona.name}</h2>
-                  <div className="text-sm opacity-70 line-clamp-2">{selectedPersona.description}</div>
+                  <div className="text-sm opacity-70 line-clamp-2 hidden md:block">{selectedPersona.description}</div>
                 </div>
               </div>
             </>
           ) : (
             <>
               <h2 className="text-xl font-bold mb-4">Recommended Personas</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {personas.slice(0, isDesktop ? 3 : (isMobile ? 1 : 2)).map((persona) => (
-                  <button
-                    key={persona.id}
-                    onClick={() => setSelectedPersona(persona)}
-                    className="p-4 rounded-lg text-left transition-all bg-base-200 hover:bg-base-100 h-[128px]"
-                  >
-                    <div className="flex gap-2 items-start">
-                      {persona.image_url && (
-                        <div className="relative w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
-                          <Image
-                            fill
-                            src={persona.image_url}
-                            alt={persona.name}
-                            className="object-cover"
-                          />
-                        </div>
-                      )}
-                      <div className="flex-1 overflow-hidden">
-                        <div className="font-bold truncate">{persona.name}</div>
-                        <div className="text-sm opacity-70 line-clamp-3">{persona.description}</div>
-                      </div>
-                    </div>
-                  </button>
-                ))}
+              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {shuffle(personas)
+                  .slice(0, isDesktop ? 3 : (isMobile ? 0 : 2))
+                  .map((persona: Persona) => (
+                    <PersonaButton
+                      key={persona.id}
+                      persona={persona}
+                      onClick={() => setSelectedPersona(persona)}
+                    />
+                  ))}
               </div>
             </>
           )}
         </Card>
 
         {/* All Personas or Scenarios */}
-        <Card className="flex-1 p-4 flex flex-col min-h-0" dark={true}>
+        <Card className="flex-1 p-4 flex flex-col min-h-0 w-full" dark={true}>
           {selectedPersona ? (
             <div className="flex flex-col h-full min-h-0">
               <div className="flex justify-between items-center mb-4 flex-shrink-0">
@@ -234,7 +245,7 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
                 <div className="flex gap-2">
                   <button
                     onClick={() => setGenderFilter('all')}
-                    className={`px-3 py-1 rounded-lg text-sm transition-all ${
+                    className={`px-3 py-1 w-20 rounded-lg text-sm transition-all ${
                       genderFilter === 'all' 
                         ? 'bg-primary text-primary-content' 
                         : 'bg-base-200 hover:bg-base-100'
@@ -244,7 +255,7 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
                   </button>
                   <button
                     onClick={() => setGenderFilter('men')}
-                    className={`px-3 py-1 rounded-lg text-sm transition-all ${
+                    className={`px-3 py-1 w-20 rounded-lg text-sm transition-all ${
                       genderFilter === 'men' 
                         ? 'bg-primary text-primary-content' 
                         : 'bg-base-200 hover:bg-base-100'
@@ -254,7 +265,7 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
                   </button>
                   <button
                     onClick={() => setGenderFilter('women')}
-                    className={`px-3 py-1 rounded-lg text-sm transition-all ${
+                    className={`px-3 py-1 w-20 rounded-lg text-sm transition-all ${
                       genderFilter === 'women' 
                         ? 'bg-primary text-primary-content' 
                         : 'bg-base-200 hover:bg-base-100'
@@ -265,7 +276,7 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
                 </div>
               </div>
               <div className="overflow-y-auto min-h-0 flex-1">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {personas
                     .filter(persona => 
                       genderFilter === 'all' ? true : 
@@ -273,28 +284,11 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
                       persona.gender === 'female'
                     )
                     .map((persona) => (
-                      <button
+                      <PersonaButton
                         key={persona.id}
+                        persona={persona}
                         onClick={() => setSelectedPersona(persona)}
-                        className="p-4 rounded-lg text-left transition-all bg-base-200 hover:bg-base-100 h-[128px]"
-                      >
-                        <div className="flex gap-2 items-start">
-                          {persona.image_url && (
-                            <div className="relative w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
-                              <Image
-                                fill
-                                src={persona.image_url}
-                                alt={persona.name}
-                                className="object-cover"
-                              />
-                            </div>
-                          )}
-                          <div className="flex-1 overflow-hidden">
-                            <div className="font-bold truncate">{persona.name}</div>
-                            <div className="text-sm opacity-70 line-clamp-3">{persona.description}</div>
-                          </div>
-                        </div>
-                      </button>
+                      />
                     ))}
                 </div>
               </div>
