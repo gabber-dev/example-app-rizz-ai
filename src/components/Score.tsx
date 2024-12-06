@@ -87,9 +87,9 @@ export function Score({ score }: Props) {
       {/* Summary Modal */}
       {isSummaryModalOpen && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-4 rounded-lg w-full max-w-[600px]">
-            <div className="text-lg font-bold mb-2">Summary</div>
-            <div className="text-base-content-bold">{score.summary}</div>
+          <div className="bg-base-200 p-4 rounded-lg w-full max-w-[90%] sm:max-w-[540px] border border-primary">
+            <div className="text-lg font-bold mb-2 text-white">Summary</div>
+            <div className="text-base-content-bold text-white">{score.summary}</div>
             <button
               className="mt-4 bg-primary text-white p-2 rounded"
               onClick={handleCloseModal}

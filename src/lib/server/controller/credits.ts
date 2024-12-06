@@ -89,6 +89,10 @@ export class CreditsController {
   static async createCustomer({ email }: { email: string }) {
     const client = await CreditsController.getStripeClient();
     const customer = await client.customers.create({ email });
+
+    // Grant 10 minutes (600 seconds) worth of free credits
+    await CreditsController.grantFreeCredits(600, customer.id);
+
     return customer;
   }
 
@@ -120,6 +124,9 @@ export class CreditsController {
         },
       },
     });
+
+    // Report the credit grant to Gabber's backend
+    await CreditsController.reportCreditUsage(customer, amountCents);
   }
 
   static async getCreditBalance(customer: string) {

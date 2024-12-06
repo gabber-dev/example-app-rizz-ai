@@ -141,69 +141,57 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
 
       {/* Right Column - Main Content */}
       <div className="flex-1 flex flex-col gap-4 min-h-0 min-w-0">
-        {/* Recommended/Selected Personas */}
-        <Card className={`p-4 w-full ${isMobile ? 'hidden' : ''}`} dark={true}>
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-bold md:text-xl text-lg">Recommended Personas</h2>
-            <button
-              className="text-sm opacity-70 hover:opacity-100"
-              onClick={() => setIsRecommendedCollapsed(!isRecommendedCollapsed)}
-            >
-              <div className={`transform transition-transform ${isRecommendedCollapsed ? '' : 'rotate-90'}`}>
-                ▶
+        {/* Selected Persona Details */}
+        {selectedPersona && (
+          <Card className="p-2 w-full border-2 border-orange-500" dark={true}>
+            <div className="flex items-center gap-4 mb-4 h-full">
+              <div className="relative w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
+                <Image
+                  fill={true}
+                  className="object-cover"
+                  src={selectedPersona.image_url}
+                  alt={selectedPersona.name}
+                />
               </div>
-            </button>
-          </div>
-          {!isRecommendedCollapsed && (
-            <>
-              {selectedPersona ? (
-                <>
-                  <div className="flex items-center gap-4 mb-4">
-                    <div className="relative w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
-                      <Image
-                        fill={true}
-                        className="object-cover"
-                        src={selectedPersona.image_url}
-                        alt={selectedPersona.name}
-                      />
-                    </div>
-                    <div className="flex-1">
-                      <h2 className="text-xl font-bold md:text-xl text-lg">{selectedPersona.name}</h2>
-                      <div className="text-sm opacity-70 line-clamp-2 hidden md:block">{selectedPersona.description}</div>
-                    </div>
-                  </div>
-                </>
-              ) : (
-                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                  {shuffledPersonas
-                    .slice(0, isDesktop ? 4 : (isMobile ? 0 : 2))
-                    .map((persona: Persona) => (
-                      <PersonaButton
-                        key={persona.id}
-                        persona={persona}
-                        onClick={() => setSelectedPersona(persona)}
-                      />
-                    ))}
-                </div>
-              )}
-            </>
-          )}
-        </Card>
+              <div className="flex-1 flex items-center">
+                <h2 className="text-lg font-bold md:text-lg text-md">{selectedPersona.name}</h2>
+              </div>
+            </div>
+          </Card>
+        )}
+
+        {/* Recommended Personas */}
+        {!selectedPersona && !isMobile && (
+          <Card className="p-4 w-full" dark={true}>
+            <h2 className="text-xl font-bold md:text-xl text-lg mb-4">Recommended Characters</h2>
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              {shuffledPersonas
+                .slice(0, isDesktop ? 4 : 2)
+                .map((persona: Persona) => (
+                  <PersonaButton
+                    key={persona.id}
+                    persona={persona}
+                    onClick={() => setSelectedPersona(persona)}
+                  />
+                ))}
+            </div>
+          </Card>
+        )}
 
         {/* All Personas or Scenarios */}
         <Card className="flex-1 p-4 flex flex-col min-h-0 w-full" dark={true}>
           {selectedPersona ? (
             <div className="flex flex-col h-full min-h-0">
               <div className="flex justify-between items-center mb-4 flex-shrink-0">
-                <h2 className="text-xl font-bold md:text-xl text-lg">Select a Scenario</h2>
+                <h2 className="text-xl font-bold md:text-xl text-lg">Select a Scenario To Practice</h2>
                 <button
                   onClick={() => {
                     setSelectedPersona(null);
                     setSelectedScenario(null);
                   }}
-                  className="text-sm opacity-70 hover:opacity-100"
+                  className="text-sm opacity-70 hover:opacity-100 border-2 border-secondary rounded-lg px-2 py-1"
                 >
-                  Change Persona
+                  Change Character
                 </button>
               </div>
               <div className="overflow-y-auto min-h-0 flex-1">
@@ -216,9 +204,8 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
                         selectedScenario?.id === scenario.id ? "border-2 border-primary" : ""
                       }`}
                     >
-                      <div className="h-full flex flex-col">
-                        <div className="font-bold truncate">{scenario.name}</div>
-                        <div className="text-sm opacity-70 line-clamp-3 flex-1">{scenario.prompt}</div>
+                      <div className="h-full flex flex-col items-center justify-center">
+                        <div className="font-bold whitespace-normal text-xl">{scenario.name}</div>
                       </div>
                     </button>
                   ))}
@@ -258,13 +245,13 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
           ) : (
             <div className="flex flex-col h-full min-h-0">
               <div className="flex justify-between items-center mb-4 flex-shrink-0">
-                <h2 className="text-xl font-bold md:text-xl text-lg">Choose a Persona</h2>
+                <h2 className="text-xl font-bold md:text-xl text-lg">Choose a Character</h2>
                 <div className="flex gap-2">
                   {isMobile ? (
                     <select
                       value={genderFilter}
                       onChange={(e) => setGenderFilter(e.target.value as 'all' | 'men' | 'women')}
-                      className="px-3 py-1 w-20 rounded-lg text-sm transition-all bg-base-200 hover:bg-base-100"
+                      className="px-3 py-1 w-30 rounded-lg text-sm transition-all bg-base-200 hover:bg-base-100"
                       style={{ fontSize: '90%' }}
                     >
                       <option value="all">All</option>

@@ -18,7 +18,7 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
           setShowPaywall(null);
         }}
         overlayClassName="fixed top-0 bottom-0 left-0 right-0 backdrop-blur-lg bg-blur flex justify-center items-center"
-        className="w-2/3 h-1/3 max-h-[300px] max-w-[400px] bg-white rounded-lg shadow-lg outline-none"
+        className="w-3/4 h-1/2 max-h-[500px] max-w-[600px] bg-white rounded-lg shadow-lg outline-none"
         shouldCloseOnOverlayClick={true}
       >
         <div className="w-full h-full flex justify-center items-center">
