@@ -145,6 +145,13 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
         {selectedPersona && (
           <Card className="p-2 w-full border-2 border-orange-500" dark={true}>
             <div className="flex items-center gap-4 mb-4 h-full">
+              <button
+                onClick={() => setSelectedPersona(null)}
+                className="text-primary hover:text-primary-focus"
+                aria-label="Back to persona selection"
+              >
+                ←
+              </button>
               <div className="relative w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
                 <Image
                   fill={true}
