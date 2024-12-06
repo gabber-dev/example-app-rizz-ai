@@ -71,7 +71,7 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
   }
 
   return (
-    <div className="flex flex-col md:flex-row gap-4 h-[calc(100vh-100px)] p-4">
+    <div className="flex flex-col md:flex-row gap-4 h-[calc(100vh-100px)] p-2 md:p-3">
       {/* Sessions Panel - Collapsible on Mobile */}
       <div className={`md:w-[20%] md:min-w-[300px] transition-all duration-300 ${
         isSessionsCollapsed ? 'h-[60px]' : 'h-[300px]'
