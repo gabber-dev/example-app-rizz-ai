@@ -47,6 +47,8 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
   const [isDesktop, setIsDesktop] = useState(false);
   const [isSessionsCollapsed, setIsSessionsCollapsed] = useState(true);
   const [hasMounted, setHasMounted] = useState(false);
+  const [isRecommendedCollapsed, setIsRecommendedCollapsed] = useState(false);
+  const [shuffledPersonas, setShuffledPersonas] = useState<Persona[]>([]);
 
   useEffect(() => {
     setHasMounted(true);
@@ -57,6 +59,9 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
     
     checkScreenSize();
     window.addEventListener('resize', checkScreenSize);
+    
+    // Shuffle personas once on component mount
+    setShuffledPersonas(shuffle(personas));
     
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
@@ -76,12 +81,12 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
             className="flex md:hidden w-full justify-between items-center mb-4"
             onClick={() => setIsSessionsCollapsed(!isSessionsCollapsed)}
           >
-            <h2 className="text-xl font-bold">Past Sessions</h2>
+            <h2 className="text-xl font-bold md:text-xl text-lg">Past Sessions</h2>
             <div className={`transform transition-transform ${isSessionsCollapsed ? '' : 'rotate-180'}`}>
               ▼
             </div>
           </button>
-          <h2 className="hidden md:block text-xl font-bold mb-4">Past Sessions</h2>
+          <h2 className="hidden md:block text-xl font-bold mb-4 md:text-xl text-lg">Past Sessions</h2>
           <div className={`flex flex-col gap-2 overflow-y-auto transition-all duration-300 ${
             isSessionsCollapsed ? 'h-0' : 'h-[calc(100%-4rem)]'
           } md:h-[calc(100%-2rem)]`}>
@@ -138,37 +143,49 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
       <div className="flex-1 flex flex-col gap-4 min-h-0 min-w-0">
         {/* Recommended/Selected Personas */}
         <Card className={`p-4 w-full ${isMobile ? 'hidden' : ''}`} dark={true}>
-          {selectedPersona ? (
-            <>
-              <div className="flex items-center gap-4 mb-4">
-                <div className="relative w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
-                  <Image
-                    fill={true}
-                    className="object-cover"
-                    src={selectedPersona.image_url}
-                    alt={selectedPersona.name}
-                  />
-                </div>
-                <div className="flex-1">
-                  <h2 className="text-xl font-bold">{selectedPersona.name}</h2>
-                  <div className="text-sm opacity-70 line-clamp-2 hidden md:block">{selectedPersona.description}</div>
-                </div>
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-xl font-bold md:text-xl text-lg">Recommended Personas</h2>
+            <button
+              className="text-sm opacity-70 hover:opacity-100"
+              onClick={() => setIsRecommendedCollapsed(!isRecommendedCollapsed)}
+            >
+              <div className={`transform transition-transform ${isRecommendedCollapsed ? '' : 'rotate-90'}`}>
+                ▶
               </div>
-            </>
-          ) : (
+            </button>
+          </div>
+          {!isRecommendedCollapsed && (
             <>
-              <h2 className="text-xl font-bold mb-4">Recommended Personas</h2>
-              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {shuffle(personas)
-                  .slice(0, isDesktop ? 3 : (isMobile ? 0 : 2))
-                  .map((persona: Persona) => (
-                    <PersonaButton
-                      key={persona.id}
-                      persona={persona}
-                      onClick={() => setSelectedPersona(persona)}
-                    />
-                  ))}
-              </div>
+              {selectedPersona ? (
+                <>
+                  <div className="flex items-center gap-4 mb-4">
+                    <div className="relative w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                      <Image
+                        fill={true}
+                        className="object-cover"
+                        src={selectedPersona.image_url}
+                        alt={selectedPersona.name}
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <h2 className="text-xl font-bold md:text-xl text-lg">{selectedPersona.name}</h2>
+                      <div className="text-sm opacity-70 line-clamp-2 hidden md:block">{selectedPersona.description}</div>
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  {shuffledPersonas
+                    .slice(0, isDesktop ? 4 : (isMobile ? 0 : 2))
+                    .map((persona: Persona) => (
+                      <PersonaButton
+                        key={persona.id}
+                        persona={persona}
+                        onClick={() => setSelectedPersona(persona)}
+                      />
+                    ))}
+                </div>
+              )}
             </>
           )}
         </Card>
@@ -178,7 +195,7 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
           {selectedPersona ? (
             <div className="flex flex-col h-full min-h-0">
               <div className="flex justify-between items-center mb-4 flex-shrink-0">
-                <h2 className="text-xl font-bold">Select a Scenario</h2>
+                <h2 className="text-xl font-bold md:text-xl text-lg">Select a Scenario</h2>
                 <button
                   onClick={() => {
                     setSelectedPersona(null);
@@ -241,42 +258,60 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
           ) : (
             <div className="flex flex-col h-full min-h-0">
               <div className="flex justify-between items-center mb-4 flex-shrink-0">
-                <h2 className="text-xl font-bold">Choose a Persona</h2>
+                <h2 className="text-xl font-bold md:text-xl text-lg">Choose a Persona</h2>
                 <div className="flex gap-2">
-                  <button
-                    onClick={() => setGenderFilter('all')}
-                    className={`px-3 py-1 w-20 rounded-lg text-sm transition-all ${
-                      genderFilter === 'all' 
-                        ? 'bg-primary text-primary-content' 
-                        : 'bg-base-200 hover:bg-base-100'
-                    }`}
-                  >
-                    All
-                  </button>
-                  <button
-                    onClick={() => setGenderFilter('men')}
-                    className={`px-3 py-1 w-20 rounded-lg text-sm transition-all ${
-                      genderFilter === 'men' 
-                        ? 'bg-primary text-primary-content' 
-                        : 'bg-base-200 hover:bg-base-100'
-                    }`}
-                  >
-                    Men
-                  </button>
-                  <button
-                    onClick={() => setGenderFilter('women')}
-                    className={`px-3 py-1 w-20 rounded-lg text-sm transition-all ${
-                      genderFilter === 'women' 
-                        ? 'bg-primary text-primary-content' 
-                        : 'bg-base-200 hover:bg-base-100'
-                    }`}
-                  >
-                    Women
-                  </button>
+                  {isMobile ? (
+                    <select
+                      value={genderFilter}
+                      onChange={(e) => setGenderFilter(e.target.value as 'all' | 'men' | 'women')}
+                      className="px-3 py-1 w-20 rounded-lg text-sm transition-all bg-base-200 hover:bg-base-100"
+                      style={{ fontSize: '90%' }}
+                    >
+                      <option value="all">All</option>
+                      <option value="men">Men</option>
+                      <option value="women">Women</option>
+                    </select>
+                  ) : (
+                    <>
+                      <button
+                        onClick={() => setGenderFilter('all')}
+                        className={`px-3 py-1 w-20 rounded-lg text-sm transition-all ${
+                          genderFilter === 'all' 
+                            ? 'bg-primary text-primary-content' 
+                            : 'bg-base-200 hover:bg-base-100'
+                        }`}
+                        style={{ fontSize: '100%' }}
+                      >
+                        All
+                      </button>
+                      <button
+                        onClick={() => setGenderFilter('men')}
+                        className={`px-3 py-1 w-20 rounded-lg text-sm transition-all ${
+                          genderFilter === 'men' 
+                            ? 'bg-primary text-primary-content' 
+                            : 'bg-base-200 hover:bg-base-100'
+                        }`}
+                        style={{ fontSize: '100%' }}
+                      >
+                        Men
+                      </button>
+                      <button
+                        onClick={() => setGenderFilter('women')}
+                        className={`px-3 py-1 w-20 rounded-lg text-sm transition-all ${
+                          genderFilter === 'women' 
+                            ? 'bg-primary text-primary-content' 
+                            : 'bg-base-200 hover:bg-base-100'
+                        }`}
+                        style={{ fontSize: '100%' }}
+                      >
+                        Women
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
               <div className="overflow-y-auto min-h-0 flex-1">
-                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                   {personas
                     .filter(persona => 
                       genderFilter === 'all' ? true : 
