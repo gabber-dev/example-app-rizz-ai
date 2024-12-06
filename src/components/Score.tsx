@@ -1,5 +1,6 @@
 import { Score as ScoreModel } from "@/lib/model/score";
 import { useState, useEffect } from "react";
+import { Ring } from "@/components/stats/RizzScore";
 
 type Props = {
   score: ScoreModel;
@@ -50,6 +51,7 @@ export function Score({ score }: Props) {
     <div className="flex flex-col gap-2 items-center h-full w-full justify-center">
       {/* Score Ring */}
       <div className="relative w-[200px] h-[200px]">
+        <Ring color="primary" percentage={displayScore / 100} />
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <div className="text-xl text-primary">Your Rizz Score</div>
           <div className="text-7xl font-bold text-white">{displayScore}</div>

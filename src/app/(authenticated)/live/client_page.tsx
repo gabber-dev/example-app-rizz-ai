@@ -87,11 +87,7 @@ export function ClientSessionPageInner({
             ) : (
               <BorderButton
                 onClick={() => {
-                  if (!hasPaid) {
-                    setShowPaywall({ session: id || undefined });
-                  } else {
-                    router.push(`/score?session=${id}`);
-                  }
+                  router.push(`/score?session=${id}`);
                   console.log("NEIL clicked", id);
                 }}
                 className="font-bold px-2 hover:shadow-inner bg-primary rounded-lg text-primary hover:primary h-full"
