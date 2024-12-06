@@ -50,7 +50,12 @@ export function ClientPage({ sessions, personas }: Props) {
           className="w-full text-left text-lg font-medium mb-2 md:hidden py-2 px-3 bg-base-200 rounded-lg hover:bg-base-100 transition-all"
           onClick={() => setIsSessionsCollapsed(!isSessionsCollapsed)}
         >
-          {isSessionsCollapsed ? "Show Sessions" : "Hide Sessions"}
+          <div className="flex items-center justify-between">
+            <span>{isSessionsCollapsed ? "Show Sessions" : "Hide Sessions"}</span>
+            <div className={`transform transition-transform ${isSessionsCollapsed ? '' : 'rotate-180'}`}>
+              ▼
+            </div>
+          </div>
         </button>
         <div className={`transition-all duration-300 ${isSessionsCollapsed ? 'hidden' : 'block'} md:block`}>
           <SessionList 
