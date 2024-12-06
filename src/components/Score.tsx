@@ -1,6 +1,7 @@
 import { Persona } from "@/generated";
 import { Score as ScoreModel } from "@/lib/model/score";
-//import { Ring } from "./stats/RizzScore";
+import { useState } from "react";
+import { ExpandMore, ExpandLess } from "@mui/icons-material";
 
 type Props = {
   score: ScoreModel;
@@ -13,6 +14,7 @@ type AttributeRating = {
 };
 
 export function Score({ score, persona }: Props) {
+  const [isExpanded, setIsExpanded] = useState(false);
   const attributes: AttributeRating[] = [
     { name: "Wit", score: score.wit },
     { name: "Humor", score: score.humor },
@@ -24,6 +26,16 @@ export function Score({ score, persona }: Props) {
 
   return (
     <div className="flex flex-col gap-4 items-center h-full w-full justify-center">
+      {/* Persona Info */}
+      <div className="w-full max-w-[600px] bg-base-300 p-4 rounded-lg">
+        <div className="flex items-center gap-4">
+          <div className="flex-1">
+            <div className="font-bold text-lg">{persona.name}</div>
+            <div className="text-sm opacity-70">{persona.description}</div>
+          </div>
+        </div>
+      </div>
+
       {/* Score Ring */}
       <div className="relative w-[300px] h-[300px]">
         <div className="absolute inset-0 flex flex-col items-center justify-center">
@@ -32,8 +44,26 @@ export function Score({ score, persona }: Props) {
         </div>
       </div>
 
+      {/* Summary - Expandable */}
+      <div 
+        className={`relative w-full max-w-[600px] bg-base-300 p-4 rounded-lg cursor-pointer transition-all duration-300 ${
+          isExpanded ? 'absolute inset-0 z-10 m-4' : ''
+        }`}
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
+        <div className="flex justify-between items-center mb-2">
+          <div className="italic text-sm">Summary</div>
+          {isExpanded ? <ExpandLess /> : <ExpandMore />}
+        </div>
+        <div className={`text-base-content-bold ${isExpanded ? '' : 'line-clamp-2'}`}>
+          {score.summary}
+        </div>
+      </div>
+
       {/* Attribute Ratings */}
-      <div className="grid grid-cols-2 gap-4 w-full max-w-[600px]">
+      <div className={`grid grid-cols-2 gap-4 w-full max-w-[600px] transition-opacity duration-300 ${
+        isExpanded ? 'opacity-0' : 'opacity-100'
+      }`}>
         {attributes.map((attr) => (
           <div
             key={attr.name}
@@ -53,35 +83,6 @@ export function Score({ score, persona }: Props) {
           </div>
         ))}
       </div>
-      {/* Summary */}
-      <div className="bg-base-300 p-4 rounded-lg w-full max-w-[600px] mb-4">
-        <div className="italic text-sm mb-2">Summary</div>
-        <div className="text-base-content-bold">{score.summary}</div>
-      </div>
-      {/* Feedback Sections */}
-      <div className="flex flex-col gap-4 w-full max-w-[600px]">
-        {/* <FeedbackSection title="Things you did well" items={[score.good_1, score.good_2, score.good_3]} /> */}
-        {/* <FeedbackSection
-          title="Areas for improvement"
-          items={[score.improve_1, score.improve_2, score.improve_3]}
-        />*/}
-      </div>
-    </div>
-  );
-}
-
-function FeedbackSection({ title, items }: { title: string; items: string[] }) {
-  return (
-    <div className="bg-base-300 p-4 rounded-lg">
-      <div className="italic text-sm mb-2">{title}</div>
-      <ul className="space-y-2">
-        {items.map((item, i) => (
-          <li key={i} className="flex items-center gap-2">
-            <div className="rounded-full bg-base-content-bold w-[6px] h-[6px]" />
-            <span className="text-base-content-bold">{item}</span>
-          </li>
-        ))}
-      </ul>
     </div>
   );
 }

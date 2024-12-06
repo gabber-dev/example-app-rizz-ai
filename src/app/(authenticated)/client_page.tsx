@@ -23,11 +23,13 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { credits, setShowPaywall } = useAppState();
-  const [isMobile, setIsMobile] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
   const [isSessionsCollapsed, setIsSessionsCollapsed] = useState(true);
+  const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
+    setHasMounted(true);
     const checkScreenSize = () => {
       setIsMobile(window.innerWidth < 768);
       setIsDesktop(window.innerWidth >= 1024);
@@ -38,6 +40,10 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
     
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
+
+  if (!hasMounted) {
+    return null; // or a loading spinner
+  }
 
   return (
     <div className="flex flex-col md:flex-row gap-4 h-[calc(100vh-100px)] p-4">
@@ -103,26 +109,23 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
       </div>
 
       {/* Right Column - Main Content */}
-      <div className="flex-1 flex flex-col gap-4">
+      <div className="flex-1 flex flex-col gap-4 min-h-0">
         {/* Recommended/Selected Personas */}
         <Card className="p-4" dark={true}>
           {selectedPersona ? (
             <>
-              <h2 className="text-xl font-bold mb-4">Selected</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <div className="text-sm opacity-70 mb-2">Persona</div>
-                  <PersonaCard item={selectedPersona} selected={true} />
+              <div className="flex items-center gap-4 mb-4">
+                <div className="relative w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                  <Image
+                    fill={true}
+                    className="object-cover"
+                    src={selectedPersona.image_url}
+                    alt={selectedPersona.name}
+                  />
                 </div>
-                <div className="hidden md:block">
-                  <div className="text-sm opacity-70 mb-2">Scenario</div>
-                  {selectedScenario ? (
-                    <ScenarioCard item={selectedScenario} selected={true} />
-                  ) : (
-                    <div className="flex items-center justify-center bg-base-200 rounded w-full h-[128px] p-2 border border-dashed border-base-content/20">
-                      <span className="text-sm opacity-50">Select a scenario below</span>
-                    </div>
-                  )}
+                <div className="flex-1">
+                  <h2 className="text-xl font-bold">{selectedPersona.name}</h2>
+                  <div className="text-sm opacity-70 line-clamp-2">{selectedPersona.description}</div>
                 </div>
               </div>
             </>
@@ -162,8 +165,8 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
         {/* All Personas or Scenarios */}
         <Card className="flex-1 p-4 flex flex-col min-h-0" dark={true}>
           {selectedPersona ? (
-            <>
-              <div className="flex justify-between items-center mb-4">
+            <div className="flex flex-col h-full min-h-0">
+              <div className="flex justify-between items-center mb-4 flex-shrink-0">
                 <h2 className="text-xl font-bold">Select a Scenario</h2>
                 <button
                   onClick={() => {
@@ -175,24 +178,26 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
                   Change Persona
                 </button>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-auto flex-1">
-                {scenarios.slice(0, 6).map((scenario) => (
-                  <button
-                    key={scenario.id}
-                    onClick={() => setSelectedScenario(scenario)}
-                    className={`p-4 rounded-lg text-left transition-all bg-base-200 hover:bg-base-100 h-[128px] ${
-                      selectedScenario?.id === scenario.id ? "border-2 border-primary" : ""
-                    }`}
-                  >
-                    <div className="h-full flex flex-col">
-                      <div className="font-bold truncate">{scenario.name}</div>
-                      <div className="text-sm opacity-70 line-clamp-3 flex-1">{scenario.prompt}</div>
-                    </div>
-                  </button>
-                ))}
+              <div className="overflow-y-auto min-h-0 flex-1">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pb-4">
+                  {scenarios.slice(0, 6).map((scenario) => (
+                    <button
+                      key={scenario.id}
+                      onClick={() => setSelectedScenario(scenario)}
+                      className={`p-4 rounded-lg text-left transition-all bg-base-200 hover:bg-base-100 h-[128px] ${
+                        selectedScenario?.id === scenario.id ? "border-2 border-primary" : ""
+                      }`}
+                    >
+                      <div className="h-full flex flex-col">
+                        <div className="font-bold truncate">{scenario.name}</div>
+                        <div className="text-sm opacity-70 line-clamp-3 flex-1">{scenario.prompt}</div>
+                      </div>
+                    </button>
+                  ))}
+                </div>
               </div>
               {selectedScenario && (
-                <div className="mt-auto pt-4 flex justify-center">
+                <div className="mt-4 pt-4 flex justify-center border-t">
                   <Button3D
                     enabled={!loading}
                     onClick={async () => {
@@ -221,11 +226,11 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
                   </Button3D>
                 </div>
               )}
-            </>
+            </div>
           ) : (
-            <>
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-bold">All Personas</h2>
+            <div className="flex flex-col h-full min-h-0">
+              <div className="flex justify-between items-center mb-4 flex-shrink-0">
+                <h2 className="text-xl font-bold">Choose a Persona</h2>
                 <div className="flex gap-2">
                   <button
                     onClick={() => setGenderFilter('all')}
@@ -259,39 +264,41 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
                   </button>
                 </div>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 overflow-y-auto flex-1 -mx-2 px-2">
-                {personas
-                  .filter(persona => 
-                    genderFilter === 'all' ? true : 
-                    genderFilter === 'men' ? persona.gender === 'male' :
-                    persona.gender === 'female'
-                  )
-                  .map((persona) => (
-                    <button
-                      key={persona.id}
-                      onClick={() => setSelectedPersona(persona)}
-                      className="p-4 rounded-lg text-left transition-all bg-base-200 hover:bg-base-100 h-[128px]"
-                    >
-                      <div className="flex gap-2 items-start">
-                        {persona.image_url && (
-                          <div className="relative w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
-                            <Image
-                              fill
-                              src={persona.image_url}
-                              alt={persona.name}
-                              className="object-cover"
-                            />
+              <div className="overflow-y-auto min-h-0 flex-1">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {personas
+                    .filter(persona => 
+                      genderFilter === 'all' ? true : 
+                      genderFilter === 'men' ? persona.gender === 'male' :
+                      persona.gender === 'female'
+                    )
+                    .map((persona) => (
+                      <button
+                        key={persona.id}
+                        onClick={() => setSelectedPersona(persona)}
+                        className="p-4 rounded-lg text-left transition-all bg-base-200 hover:bg-base-100 h-[128px]"
+                      >
+                        <div className="flex gap-2 items-start">
+                          {persona.image_url && (
+                            <div className="relative w-16 h-16 rounded-full overflow-hidden flex-shrink-0">
+                              <Image
+                                fill
+                                src={persona.image_url}
+                                alt={persona.name}
+                                className="object-cover"
+                              />
+                            </div>
+                          )}
+                          <div className="flex-1 overflow-hidden">
+                            <div className="font-bold truncate">{persona.name}</div>
+                            <div className="text-sm opacity-70 line-clamp-3">{persona.description}</div>
                           </div>
-                        )}
-                        <div className="flex-1 overflow-hidden">
-                          <div className="font-bold truncate">{persona.name}</div>
-                          <div className="text-sm opacity-70 line-clamp-3">{persona.description}</div>
                         </div>
-                      </div>
-                    </button>
-                  ))}
+                      </button>
+                    ))}
+                </div>
               </div>
-            </>
+            </div>
           )}
         </Card>
       </div>

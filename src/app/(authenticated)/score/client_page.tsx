@@ -5,6 +5,8 @@ import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Score } from "@/components/Score";
+import { Persona } from "@/generated";
+
 type Props = {
   session: string;
 };
@@ -16,8 +18,8 @@ export function ClientPage({ session }: Props) {
   const generateScore = useCallback(async () => {
     setLoading(true);
     try {
-      const scoreResult = (await axios.get("/api/score?session=" + session)).data;
-      setScore(scoreResult);
+      const { data } = await axios.get("/api/score?session=" + session);
+      setScore(data);
     } catch (e) {
       toast.error("Error generating score");
     } finally {
@@ -50,9 +52,9 @@ export function ClientPage({ session }: Props) {
   }
 
   return (
-    <div className="w-full h-full p-8 overflow-y-auto">
-      <div className="max-w-4xl mx-auto">
-        <Score score={score} />
+    <div className="w-full h-full flex items-center justify-center">
+      <div className="w-full max-w-4xl h-full max-h-screen px-4 md:px-8">
+        <Score score={score.score} persona={score.persona} />
       </div>
     </div>
   );
