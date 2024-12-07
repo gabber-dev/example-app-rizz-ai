@@ -260,7 +260,7 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
                     enabled={!loading}
                     onClick={async () => {
                       if (credits <= 0) {
-                        setShowPaywall({});
+                        setShowPaywall({ session: null });
                         return;
                       }
                       setLoading(true);

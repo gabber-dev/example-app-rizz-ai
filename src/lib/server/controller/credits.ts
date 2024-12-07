@@ -79,8 +79,8 @@ export class CreditsController {
       payment_intent_data:
         mode === "payment"
           ? {
-            metadata,
-          }
+              metadata,
+            }
           : undefined,
     });
     return session;

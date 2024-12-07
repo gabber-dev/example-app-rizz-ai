@@ -29,9 +29,9 @@ export default async function RootLayout({
       <Head>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-        <ClientSecretProvider clientSecret={clientSecret}>
-          <body>{children}</body>
-        </ClientSecretProvider>
+      <ClientSecretProvider clientSecret={clientSecret}>
+        <body>{children}</body>
+      </ClientSecretProvider>
     </html>
   );
 }

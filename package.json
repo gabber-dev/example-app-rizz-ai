@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "next lint --fix",
     "tsc": "tsc",
     "generate": "openapi-generator-cli generate -i https://app.gabber.dev/openapi.yaml -g typescript-axios -o ./src/generated"
   },

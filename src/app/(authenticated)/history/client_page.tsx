@@ -43,7 +43,6 @@ export function ClientPage({ sessions, personas }: Props) {
               setSelectedSession(sessionId);
               setIsSessionsCollapsed(true);
             }}
-            personas={personas}
           />
         </div>
       </div>

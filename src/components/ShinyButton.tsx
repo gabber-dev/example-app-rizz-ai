@@ -33,9 +33,11 @@ export function ShinyButton(props: Props) {
     hover:before:bg-[position:-100%_0,0_0] hover:before:duration-[1500ms]
   `
       }
-      style={{
-        "--primary-light": primaryLight,
-      } as React.CSSProperties}
+      style={
+        {
+          "--primary-light": primaryLight,
+        } as React.CSSProperties
+      }
     >
       {props.children}
     </button>
