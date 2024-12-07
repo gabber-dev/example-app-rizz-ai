@@ -75,7 +75,6 @@ This project is configured to use Stripe for payments and checkout. It supports 
    
    ```bash
    STRIPE_SECRET_KEY=<your-stripe-secret-key>
-   NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=<your-stripe-publishable-key>
    STRIPE_REDIRECT_HOST=http://localhost:3000
    ```
 ## Getting Started
