@@ -14,4 +14,4 @@ export type Score = {
   improve_2: string;
   improve_3: string;
   notes: string;
-}; 
+};

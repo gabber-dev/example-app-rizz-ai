@@ -10,7 +10,13 @@ type Props = {
   loading: boolean;
 };
 
-export function SessionList({ sessions, personas, selectedSession, onSelectSession, loading }: Props) {
+export function SessionList({
+  sessions,
+  personas,
+  selectedSession,
+  onSelectSession,
+  loading,
+}: Props) {
   if (loading) {
     return <div className="animate-pulse">Loading sessions...</div>;
   }
@@ -37,7 +43,7 @@ export function SessionList({ sessions, personas, selectedSession, onSelectSessi
                 <div className="relative w-12 h-12 rounded-full overflow-hidden">
                   <Image
                     fill
-                    src={persona.image_url}
+                    src={persona.image_url || ""}
                     alt={persona.name}
                     className="object-cover"
                   />
@@ -57,4 +63,4 @@ export function SessionList({ sessions, personas, selectedSession, onSelectSessi
       })}
     </div>
   );
-} 
+}

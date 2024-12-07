@@ -35,13 +35,13 @@ export default async function Page({
   const scenarioApi = ScenarioApiFactory(config);
 
   const usageToken = (
-    await usageApi.apiV1UsageTokenPost({
+    await usageApi.createUsageToken({
       human_id: user.stripe_customer,
       limits: [{ type: "conversational_seconds", value: 1000 }],
     })
   ).data.token;
 
-  const personaObj = (await personaApi.apiV1PersonaPersonaIdGet(persona)).data;
+  const personaObj = (await personaApi.getPersona(persona)).data;
   const scenarioObj = (await scenarioApi.apiV1ScenarioScenarioIdGet(scenario))
     .data;
 

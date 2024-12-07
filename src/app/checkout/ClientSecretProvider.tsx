@@ -6,13 +6,13 @@ type ClientSecretContextData = {
   clientSecret: string;
 };
 
-const ClientSecretContext = React.createContext<ClientSecretContextData | undefined>(
-  undefined
-);
+const ClientSecretContext = React.createContext<
+  ClientSecretContextData | undefined
+>(undefined);
 
 export function ClientSecretProvider({
   children,
-  clientSecret
+  clientSecret,
 }: {
   children: React.ReactNode;
   clientSecret: string;
@@ -27,7 +27,9 @@ export function ClientSecretProvider({
 export function useClientSecret() {
   const context = React.useContext(ClientSecretContext);
   if (context === undefined) {
-    throw new Error("useClientSecret must be used within a ClientSecretProvider");
+    throw new Error(
+      "useClientSecret must be used within a ClientSecretProvider",
+    );
   }
   return context;
 }

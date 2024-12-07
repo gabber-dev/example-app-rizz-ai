@@ -27,7 +27,9 @@ export function SessionDetail({ sessionId }: Props) {
   // const { credits, setCredits } = useAppState();
   // const [score, setScore] = useState(null);
   // const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isStatsCollapsed, setIsStatsCollapsed] = useState(window.innerWidth < 768);
+  const [isStatsCollapsed, setIsStatsCollapsed] = useState(
+    window.innerWidth < 768,
+  );
 
   useEffect(() => {
     const handleResize = () => {
@@ -36,8 +38,8 @@ export function SessionDetail({ sessionId }: Props) {
       }
     };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   useEffect(() => {
@@ -46,7 +48,7 @@ export function SessionDetail({ sessionId }: Props) {
       try {
         const [messagesRes, timelineRes] = await Promise.all([
           axios.get(`/api/sessions/${sessionId}/messages`),
-          axios.get(`/api/sessions/${sessionId}/timeline`)
+          axios.get(`/api/sessions/${sessionId}/timeline`),
         ]);
         setMessages(messagesRes.data.values);
         setTimeline(timelineRes.data.values);
@@ -70,15 +72,15 @@ export function SessionDetail({ sessionId }: Props) {
   }
 
   const totalUserTime = timeline
-    .filter(item => item.type === "user")
+    .filter((item) => item.type === "user")
     .reduce((acc, item) => acc + item.seconds, 0);
-  
+
   const totalSilenceTime = timeline
-    .filter(item => item.type === "silence")
+    .filter((item) => item.type === "silence")
     .reduce((acc, item) => acc + item.seconds, 0);
 
   const totalAgentTime = timeline
-    .filter(item => item.type === "agent")
+    .filter((item) => item.type === "agent")
     .reduce((acc, item) => acc + item.seconds, 0);
 
   const totalTime = totalUserTime + totalSilenceTime + totalAgentTime;
@@ -93,32 +95,32 @@ export function SessionDetail({ sessionId }: Props) {
       </button>
       {!isStatsCollapsed && (
         <div className="grid grid-cols-3 gap-4">
-          <StatCard 
+          <StatCard
             label="Time Speaking"
             value={`${Math.round(totalUserTime)}s`}
             percentage={Math.round((totalUserTime / totalTime) * 100)}
           />
-          <StatCard 
+          <StatCard
             label="Silence Time"
             value={`${Math.round(totalSilenceTime)}s`}
             percentage={Math.round((totalSilenceTime / totalTime) * 100)}
           />
-          <StatCard 
+          <StatCard
             label="AI Speaking"
             value={`${Math.round(totalAgentTime)}s`}
             percentage={Math.round((totalAgentTime / totalTime) * 100)}
           />
         </div>
       )}
-      <div className="flex-1 overflow-y-auto" style={{ maxHeight: '60vh' }}>
+      <div className="flex-1 overflow-y-auto" style={{ maxHeight: "60vh" }}>
         <div className="text-xl font-bold mb-4">Transcript</div>
         <div className="flex flex-col gap-3">
           {messages.map((message, i) => (
             <div
               key={i}
               className={`p-4 rounded-lg ${
-                message.agent 
-                  ? "bg-base-200" 
+                message.agent
+                  ? "bg-base-200"
                   : "bg-primary text-primary-content ml-8"
               }`}
             >
@@ -134,7 +136,11 @@ export function SessionDetail({ sessionId }: Props) {
   );
 }
 
-function StatCard({ label, value, percentage }: { 
+function StatCard({
+  label,
+  value,
+  percentage,
+}: {
   label: string;
   value: string;
   percentage: number;
@@ -144,8 +150,8 @@ function StatCard({ label, value, percentage }: {
       <div className="text-sm opacity-70">{label}</div>
       <div className="text-2xl font-bold">{value}</div>
       <div className="w-full bg-base-300 rounded-full h-2 mt-2">
-        <div 
-          className="bg-primary h-full rounded-full" 
+        <div
+          className="bg-primary h-full rounded-full"
           style={{ width: `${percentage}%` }}
         />
       </div>
@@ -168,4 +174,4 @@ function StatCard({ label, value, percentage }: {
 //       </div>
 //     </div>
 //   );
-// } 
+// }

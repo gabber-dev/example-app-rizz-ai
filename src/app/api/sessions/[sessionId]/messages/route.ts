@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { sessionId: string } }
+  { params }: { params: { sessionId: string } },
 ) {
   const { sessionId } = params;
 
@@ -11,7 +11,10 @@ export async function GET(
     const messages = await SessionController.getSessionMessages(sessionId);
     return NextResponse.json(messages);
   } catch (error) {
-    console.error('Failed to fetch session messages:', error);
-    return NextResponse.json({ error: 'Failed to fetch session messages' }, { status: 500 });
+    console.error("Failed to fetch session messages:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch session messages" },
+      { status: 500 },
+    );
   }
-} 
+}

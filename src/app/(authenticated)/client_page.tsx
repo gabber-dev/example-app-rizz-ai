@@ -1,7 +1,6 @@
 "use client";
 import { Button3D } from "@/components/Button3D";
 import { Card } from "@/components/common/Card";
-import { RizzScore } from "@/components/stats/RizzScore";
 import { Persona, Scenario } from "@/generated";
 import { PlayArrowRounded } from "@mui/icons-material";
 import Image from "next/image";
@@ -9,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useAppState } from "@/components/AppStateProvider";
-import { shuffle } from 'lodash';
+import { shuffle } from "lodash";
 
 type Props = {
   personas: Persona[];
@@ -17,7 +16,13 @@ type Props = {
   sessions: any[];
 };
 
-const PersonaButton = ({ persona, onClick }: { persona: Persona; onClick: () => void }) => {
+const PersonaButton = ({
+  persona,
+  onClick,
+}: {
+  persona: Persona;
+  onClick: () => void;
+}) => {
   return (
     <button
       onClick={onClick}
@@ -26,20 +31,26 @@ const PersonaButton = ({ persona, onClick }: { persona: Persona; onClick: () => 
       <div className="relative w-full pb-[100%] rounded-lg overflow-hidden mb-2">
         <Image
           fill
-          src={persona.image_url}
+          src={persona.image_url || ""}
           alt={persona.name}
           className="object-cover"
         />
       </div>
-      <div className="font-bold text-center truncate w-full">{persona.name}</div>
+      <div className="font-bold text-center truncate w-full">
+        {persona.name}
+      </div>
     </button>
   );
 };
 
 export default function ClientPage({ personas, scenarios, sessions }: Props) {
   const [selectedPersona, setSelectedPersona] = useState<Persona | null>(null);
-  const [selectedScenario, setSelectedScenario] = useState<Scenario | null>(null);
-  const [genderFilter, setGenderFilter] = useState<'all' | 'men' | 'women'>('all');
+  const [selectedScenario, setSelectedScenario] = useState<Scenario | null>(
+    null,
+  );
+  const [genderFilter, setGenderFilter] = useState<"all" | "men" | "women">(
+    "all",
+  );
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const { credits, setShowPaywall } = useAppState();
@@ -56,14 +67,14 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
       setIsMobile(window.innerWidth < 768);
       setIsDesktop(window.innerWidth >= 1024);
     };
-    
+
     checkScreenSize();
-    window.addEventListener('resize', checkScreenSize);
-    
+    window.addEventListener("resize", checkScreenSize);
+
     // Shuffle personas once on component mount
     setShuffledPersonas(shuffle(personas));
-    
-    return () => window.removeEventListener('resize', checkScreenSize);
+
+    return () => window.removeEventListener("resize", checkScreenSize);
   }, []);
 
   if (!hasMounted) {
@@ -73,23 +84,33 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
   return (
     <div className="flex flex-col md:flex-row gap-4 h-[calc(100vh-100px)] p-2 md:p-3">
       {/* Sessions Panel - Collapsible on Mobile */}
-      <div className={`md:w-[20%] md:min-w-[300px] transition-all duration-300 ${
-        isSessionsCollapsed ? 'h-[60px]' : 'h-[300px]'
-      } md:h-full`}>
+      <div
+        className={`md:w-[20%] md:min-w-[300px] transition-all duration-300 ${
+          isSessionsCollapsed ? "h-[60px]" : "h-[300px]"
+        } md:h-full`}
+      >
         <Card className="h-full p-4" dark={true}>
-          <button 
+          <button
             className="flex md:hidden w-full justify-between items-center mb-4"
             onClick={() => setIsSessionsCollapsed(!isSessionsCollapsed)}
           >
-            <h2 className="text-xl font-bold md:text-xl text-lg">Past Sessions</h2>
-            <div className={`transform transition-transform ${isSessionsCollapsed ? '' : 'rotate-180'}`}>
+            <h2 className="text-xl font-bold md:text-xl text-lg">
+              Past Sessions
+            </h2>
+            <div
+              className={`transform transition-transform ${isSessionsCollapsed ? "" : "rotate-180"}`}
+            >
               ▼
             </div>
           </button>
-          <h2 className="hidden md:block text-xl font-bold mb-4 md:text-xl text-lg">Past Sessions</h2>
-          <div className={`flex flex-col gap-2 overflow-y-auto transition-all duration-300 ${
-            isSessionsCollapsed ? 'h-0' : 'h-[calc(100%-4rem)]'
-          } md:h-[calc(100%-2rem)]`}>
+          <h2 className="hidden md:block text-xl font-bold mb-4 md:text-xl text-lg">
+            Past Sessions
+          </h2>
+          <div
+            className={`flex flex-col gap-2 overflow-y-auto transition-all duration-300 ${
+              isSessionsCollapsed ? "h-0" : "h-[calc(100%-4rem)]"
+            } md:h-[calc(100%-2rem)]`}
+          >
             {sessions.slice(-10).map((session) => (
               <button
                 key={session.id}
@@ -104,22 +125,27 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
                   <div className="relative w-12 h-12 rounded-full overflow-hidden flex-shrink-0">
                     <Image
                       fill
-                      src={personas.find(p => p.id === session.persona)?.image_url || ''}
+                      src={
+                        personas.find((p) => p.id === session.persona)
+                          ?.image_url || ""
+                      }
                       alt=""
                       className="object-cover"
                     />
                   </div>
                   <div className="flex-1">
                     <div className="font-bold truncate">
-                      {personas.find(p => p.id === session.persona)?.name}
+                      {personas.find((p) => p.id === session.persona)?.name}
                     </div>
                     <div className="text-sm opacity-70 truncate">
-                      {scenarios.find(s => s.id === session.scenario)?.name}
+                      {scenarios.find((s) => s.id === session.scenario)?.name}
                     </div>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
-                        router.push(`/live?persona=${session.persona}&scenario=${session.scenario}`);
+                        router.push(
+                          `/live?persona=${session.persona}&scenario=${session.scenario}`,
+                        );
                       }}
                       className="mt-2 text-sm text-primary hover:text-primary-focus"
                     >
@@ -130,7 +156,7 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
               </button>
             ))}
             <button
-              onClick={() => router.push('/history')}
+              onClick={() => router.push("/history")}
               className="mt-4 p-2 bg-primary text-primary-content rounded-lg hover:bg-primary-focus"
             >
               View All Past Sessions
@@ -156,12 +182,14 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
                 <Image
                   fill={true}
                   className="object-cover"
-                  src={selectedPersona.image_url}
+                  src={selectedPersona.image_url || ""}
                   alt={selectedPersona.name}
                 />
               </div>
               <div className="flex-1 flex items-center">
-                <h2 className="text-lg font-bold md:text-lg text-md">{selectedPersona.name}</h2>
+                <h2 className="text-lg font-bold md:text-lg text-md">
+                  {selectedPersona.name}
+                </h2>
               </div>
             </div>
           </Card>
@@ -170,7 +198,9 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
         {/* Recommended Personas */}
         {!selectedPersona && !isMobile && (
           <Card className="p-4 w-full" dark={true}>
-            <h2 className="text-xl font-bold md:text-xl text-lg mb-4">Recommended Characters</h2>
+            <h2 className="text-xl font-bold md:text-xl text-lg mb-4">
+              Recommended Characters
+            </h2>
             <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {shuffledPersonas
                 .slice(0, isDesktop ? 4 : 2)
@@ -190,7 +220,9 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
           {selectedPersona ? (
             <div className="flex flex-col h-full min-h-0">
               <div className="flex justify-between items-center mb-4 flex-shrink-0">
-                <h2 className="text-xl font-bold md:text-xl text-lg">Select a Scenario To Practice</h2>
+                <h2 className="text-xl font-bold md:text-xl text-lg">
+                  Select a Scenario To Practice
+                </h2>
                 <button
                   onClick={() => {
                     setSelectedPersona(null);
@@ -208,11 +240,15 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
                       key={scenario.id}
                       onClick={() => setSelectedScenario(scenario)}
                       className={`p-4 rounded-lg text-left transition-all bg-base-200 hover:bg-base-100 h-[128px] ${
-                        selectedScenario?.id === scenario.id ? "border-2 border-primary" : ""
+                        selectedScenario?.id === scenario.id
+                          ? "border-2 border-primary"
+                          : ""
                       }`}
                     >
                       <div className="h-full flex flex-col items-center justify-center">
-                        <div className="font-bold whitespace-normal text-xl">{scenario.name}</div>
+                        <div className="font-bold whitespace-normal text-xl">
+                          {scenario.name}
+                        </div>
                       </div>
                     </button>
                   ))}
@@ -230,7 +266,7 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
                       setLoading(true);
                       try {
                         router.push(
-                          `/live?persona=${selectedPersona.id}&scenario=${selectedScenario.id}`
+                          `/live?persona=${selectedPersona.id}&scenario=${selectedScenario.id}`,
                         );
                       } catch (error) {
                         toast.error("Failed to start");
@@ -252,14 +288,20 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
           ) : (
             <div className="flex flex-col h-full min-h-0">
               <div className="flex justify-between items-center mb-4 flex-shrink-0">
-                <h2 className="text-xl font-bold md:text-xl text-lg">Choose a Character</h2>
+                <h2 className="text-xl font-bold md:text-xl text-lg">
+                  Choose a Character
+                </h2>
                 <div className="flex gap-2">
                   {isMobile ? (
                     <select
                       value={genderFilter}
-                      onChange={(e) => setGenderFilter(e.target.value as 'all' | 'men' | 'women')}
+                      onChange={(e) =>
+                        setGenderFilter(
+                          e.target.value as "all" | "men" | "women",
+                        )
+                      }
                       className="px-3 py-1 w-30 rounded-lg text-sm transition-all bg-base-200 hover:bg-base-100"
-                      style={{ fontSize: '90%' }}
+                      style={{ fontSize: "90%" }}
                     >
                       <option value="all">All</option>
                       <option value="men">Men</option>
@@ -268,35 +310,35 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
                   ) : (
                     <>
                       <button
-                        onClick={() => setGenderFilter('all')}
+                        onClick={() => setGenderFilter("all")}
                         className={`px-3 py-1 w-20 rounded-lg text-sm transition-all ${
-                          genderFilter === 'all' 
-                            ? 'bg-primary text-primary-content' 
-                            : 'bg-base-200 hover:bg-base-100'
+                          genderFilter === "all"
+                            ? "bg-primary text-primary-content"
+                            : "bg-base-200 hover:bg-base-100"
                         }`}
-                        style={{ fontSize: '100%' }}
+                        style={{ fontSize: "100%" }}
                       >
                         All
                       </button>
                       <button
-                        onClick={() => setGenderFilter('men')}
+                        onClick={() => setGenderFilter("men")}
                         className={`px-3 py-1 w-20 rounded-lg text-sm transition-all ${
-                          genderFilter === 'men' 
-                            ? 'bg-primary text-primary-content' 
-                            : 'bg-base-200 hover:bg-base-100'
+                          genderFilter === "men"
+                            ? "bg-primary text-primary-content"
+                            : "bg-base-200 hover:bg-base-100"
                         }`}
-                        style={{ fontSize: '100%' }}
+                        style={{ fontSize: "100%" }}
                       >
                         Men
                       </button>
                       <button
-                        onClick={() => setGenderFilter('women')}
+                        onClick={() => setGenderFilter("women")}
                         className={`px-3 py-1 w-20 rounded-lg text-sm transition-all ${
-                          genderFilter === 'women' 
-                            ? 'bg-primary text-primary-content' 
-                            : 'bg-base-200 hover:bg-base-100'
+                          genderFilter === "women"
+                            ? "bg-primary text-primary-content"
+                            : "bg-base-200 hover:bg-base-100"
                         }`}
-                        style={{ fontSize: '100%' }}
+                        style={{ fontSize: "100%" }}
                       >
                         Women
                       </button>
@@ -307,10 +349,12 @@ export default function ClientPage({ personas, scenarios, sessions }: Props) {
               <div className="overflow-y-auto min-h-0 flex-1">
                 <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                   {personas
-                    .filter(persona => 
-                      genderFilter === 'all' ? true : 
-                      genderFilter === 'men' ? persona.gender === 'male' :
-                      persona.gender === 'female'
+                    .filter((persona) =>
+                      genderFilter === "all"
+                        ? true
+                        : genderFilter === "men"
+                          ? persona.gender === "male"
+                          : persona.gender === "female",
                     )
                     .map((persona) => (
                       <PersonaButton
@@ -360,7 +404,7 @@ function PersonaCard({ item, selected }: { item: Persona; selected: boolean }) {
         <Image
           fill={true}
           className="object-cover"
-          src={item.image_url}
+          src={item.image_url || ""}
           alt={item.name}
         />
       </div>

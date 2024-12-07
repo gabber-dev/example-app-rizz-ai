@@ -7,9 +7,7 @@ import { ClientLayout } from "./client_layout";
 import { CreditsController } from "@/lib/server/controller/credits";
 import Head from "next/head";
 import Script from "next/script";
-import { cookies } from "next/headers";
 import { AppStateProvider } from "@/components/AppStateProvider";
-import Stripe from "stripe";
 
 const sfProRounded = localFont({
   src: [
@@ -43,7 +41,9 @@ export default async function RootLayout({
   if (!user) {
     redirect("/login");
   }
-  const credits = await CreditsController.getCreditBalance(user.stripe_customer);
+  const credits = await CreditsController.getCreditBalance(
+    user.stripe_customer,
+  );
   const hasPaid = await CreditsController.checkHasPaid(user.stripe_customer);
   const products = await CreditsController.getProducts();
   return (

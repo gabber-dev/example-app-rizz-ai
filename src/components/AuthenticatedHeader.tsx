@@ -13,7 +13,7 @@ export function AuthenticatedHeader() {
       <div className="grow" />
       <ShinyButton
         onClick={() => {
-          setShowPaywall(true);
+          setShowPaywall(null);
         }}
       >
         <div className="text-primary-content font-bold">Credits: {credits}</div>

@@ -79,8 +79,8 @@ export class CreditsController {
       payment_intent_data:
         mode === "payment"
           ? {
-              metadata,
-            }
+            metadata,
+          }
           : undefined,
     });
     return session;
@@ -142,7 +142,7 @@ export class CreditsController {
     let latestCreditDate = new Date(0);
     try {
       const latestLedgerEntry = (
-        await creditApi.apiV1CreditCreditLedgerLatestGet(
+        await creditApi.getLatestCreditLedgerEntry(
           process.env.GABBER_CREDIT_ID,
           { headers: { "x-human-id": customer } },
         )
@@ -187,7 +187,7 @@ export class CreditsController {
       console.log("Processing charge", amount);
       try {
         latestLedgerEntry = (
-          await creditApi.apiV1CreditCreditLedgerPost(
+          await creditApi.createCreditLedgerEntry(
             process.env.GABBER_CREDIT_ID,
             {
               amount,
@@ -207,7 +207,7 @@ export class CreditsController {
 
     try {
       const newLatestEntry = (
-        await creditApi.apiV1CreditCreditLedgerLatestGet(
+        await creditApi.getLatestCreditLedgerEntry(
           process.env.GABBER_CREDIT_ID,
           { headers: { "x-human-id": customer } },
         )
@@ -236,7 +236,7 @@ export class CreditsController {
     });
     const creditApi = CreditApiFactory(configuration);
     try {
-      await creditApi.apiV1CreditCreditLedgerPost(
+      await creditApi.createCreditLedgerEntry(
         process.env.GABBER_CREDIT_ID,
         {
           amount,

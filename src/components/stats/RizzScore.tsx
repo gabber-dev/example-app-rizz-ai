@@ -37,7 +37,13 @@ export function RizzScore({ score, empty }: { score: number; empty: boolean }) {
   );
 }
 
-export function Ring({ percentage, color }: { percentage: number; color: string }) {
+export function Ring({
+  percentage,
+  color,
+}: {
+  percentage: number;
+  color: string;
+}) {
   const fullSweep = (Math.PI * 4) / 3;
   const percentageSweep = fullSweep * percentage;
   const start = Math.PI / 2 + (Math.PI / 6) * 2;

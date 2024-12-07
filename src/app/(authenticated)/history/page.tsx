@@ -19,18 +19,21 @@ export default async function Page() {
   const personaApi = PersonaApiFactory(config);
   const [sessions, personas] = await Promise.all([
     SessionController.getSessions(user.stripe_customer),
-    personaApi.apiV1PersonaListGet()
+    personaApi.listPersonas(),
   ]);
 
   // Create a map of persona id to persona object for easier lookup
-  const personaMap = personas.data.values.reduce((acc, persona) => {
-    acc[persona.id] = persona;
-    return acc;
-  }, {} as Record<string, typeof personas.data.values[0]>);
+  const personaMap = personas.data.values.reduce(
+    (acc, persona) => {
+      acc[persona.id] = persona;
+      return acc;
+    },
+    {} as Record<string, (typeof personas.data.values)[0]>,
+  );
 
   return (
     <div className="w-full h-full bg-base-200 rounded-lg p-4">
       <ClientPage sessions={sessions.values} personas={personaMap} />
     </div>
   );
-} 
+}

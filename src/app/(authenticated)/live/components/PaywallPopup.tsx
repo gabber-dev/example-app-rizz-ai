@@ -48,14 +48,15 @@ export function PaywallPopup() {
     [router, showPaywall?.session],
   );
 
-
   return (
     <div className="flex flex-col items-center w-full h-full p-6 bg-base-100 rounded-lg shadow-lg">
       <div className="flex justify-center w-full mb-4">
         <div className="flex bg-base-200 rounded-full overflow-hidden">
           <button
             className={`px-4 py-2 transition-colors duration-300 ${
-              activeTab === "recurring" ? "bg-primary text-white" : "text-primary"
+              activeTab === "recurring"
+                ? "bg-primary text-white"
+                : "text-primary"
             }`}
             onClick={() => setActiveTab("recurring")}
           >
@@ -71,10 +72,15 @@ export function PaywallPopup() {
           </button>
         </div>
       </div>
-      <div className="flex flex-col w-full max-w-3xl gap-6 overflow-y-auto" style={{ maxHeight: 'calc(100% - 100px)' }}>
+      <div
+        className="flex flex-col w-full max-w-3xl gap-6 overflow-y-auto"
+        style={{ maxHeight: "calc(100% - 100px)" }}
+      >
         {activeTab === "recurring" && (
           <section>
-            <h2 className="text-2xl font-bold text-white mb-4">Recurring Plans</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">
+              Recurring Plans
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {recurringProducts.map((product) => (
                 <div
@@ -89,7 +95,10 @@ export function PaywallPopup() {
                     {product.metadata.credit_amount} Credits
                   </div>
                   <div className="text-sm">
-                    ${((product.default_price as any).unit_amount / 100).toFixed(2)}
+                    $
+                    {((product.default_price as any).unit_amount / 100).toFixed(
+                      2,
+                    )}
                   </div>
                 </div>
               ))}
@@ -98,7 +107,9 @@ export function PaywallPopup() {
         )}
         {activeTab === "oneTime" && (
           <section>
-            <h2 className="text-2xl font-bold text-white mb-4">One-time Token Grant</h2>
+            <h2 className="text-2xl font-bold text-white mb-4">
+              One-time Token Grant
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {oneTimeProducts.map((product) => (
                 <div
@@ -113,7 +124,10 @@ export function PaywallPopup() {
                     {product.metadata.credit_amount} Credits
                   </div>
                   <div className="text-sm">
-                    ${((product.default_price as any).unit_amount / 100).toFixed(2)}
+                    $
+                    {((product.default_price as any).unit_amount / 100).toFixed(
+                      2,
+                    )}
                   </div>
                 </div>
               ))}
@@ -124,4 +138,3 @@ export function PaywallPopup() {
     </div>
   );
 }
-

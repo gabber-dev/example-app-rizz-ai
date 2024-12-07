@@ -9,7 +9,6 @@ import Image from "next/image";
 import { Messages } from "./components/Messages";
 import { ProgressBar } from "./components/ProgressBar";
 import { useAppState } from "@/components/AppStateProvider";
-import { ShinyButton } from "@/components/ShinyButton";
 import { BorderButton } from "@/components/BorderButton";
 import { useRouter } from "next/navigation";
 
@@ -70,14 +69,16 @@ export function ClientSessionPageInner({
           <Image
             fill={true}
             className="w-full h-full object-cover"
-            src={persona.image_url}
+            src={persona.image_url || ""}
             alt={persona.name}
           />
         </div>
         <div className="flex flex-col items-center justify-center text-white my-2 h-[100px]">
           <div className="text-xl font-bold mb-1">{persona.name}</div>
           <div className="text-sm opacity-70 mb-3">{scenario.name}</div>
-          <div className="font-bold">Talk for at least 10 messages to get your rizz score</div>
+          <div className="font-bold">
+            Talk for at least 10 messages to get your rizz score
+          </div>
           <div className="h-[40px] w-[200px] flex items-center justify-center">
             {messages.length < MESSAGES_BEFORE_RIZZ ? (
               <ProgressBar

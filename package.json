@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "tsc": "tsc",
     "generate": "openapi-generator-cli generate -i https://app.gabber.dev/openapi.yaml -g typescript-axios -o ./src/generated"
   },
   "dependencies": {
@@ -43,6 +44,7 @@
     "daisyui": "^4.7.2",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.1.2",
+    "eslint-plugin-prettier": "^5.2.1",
     "postcss": "^8.4.35",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3"

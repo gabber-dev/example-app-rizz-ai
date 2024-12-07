@@ -65,8 +65,8 @@ export function Score({ score }: Props) {
       >
         View Summary
       </button>
-     {/* Attribute Ratings */}
-     <div className="grid grid-cols-2 gap-4 w-full max-w-[600px]">
+      {/* Attribute Ratings */}
+      <div className="grid grid-cols-2 gap-4 w-full max-w-[600px]">
         {attributes.map((attr) => (
           <div
             key={attr.name}
@@ -77,9 +77,10 @@ export function Score({ score }: Props) {
               {["poor", "fair", "good"].map((rating) => (
                 <div
                   key={rating}
-                  className={`w-2 h-2 rounded-full ${
-                    getRatingColor(attr.score, rating)
-                  }`}
+                  className={`w-2 h-2 rounded-full ${getRatingColor(
+                    attr.score,
+                    rating,
+                  )}`}
                 />
               ))}
             </div>
@@ -91,7 +92,9 @@ export function Score({ score }: Props) {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="bg-base-200 p-4 rounded-lg w-full max-w-[90%] sm:max-w-[540px] border border-primary">
             <div className="text-lg font-bold mb-2 text-white">Summary</div>
-            <div className="text-base-content-bold text-white">{score.summary}</div>
+            <div className="text-base-content-bold text-white">
+              {score.summary}
+            </div>
             <button
               className="mt-4 bg-primary text-white p-2 rounded"
               onClick={handleCloseModal}

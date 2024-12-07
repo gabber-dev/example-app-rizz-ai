@@ -1,7 +1,9 @@
 import {
   Configuration,
+  LLMApiFactory,
   Persona,
   PersonaApiFactory,
+  RealtimeApiFactory,
   Scenario,
   ScenarioApiFactory,
   SessionApiFactory,
@@ -20,33 +22,40 @@ export class ScoreController {
       apiKey: process.env.GABBER_API_KEY,
       basePath: "https://app.gabber.dev",
     });
-    const sessionApi = SessionApiFactory(config);
+    const realtimeApi = RealtimeApiFactory(config);
     const personaApi = PersonaApiFactory(config);
-    const ScenarioApi = ScenarioApiFactory(config);
+    const scenarioApi = ScenarioApiFactory(config);
+    const llmAPI = LLMApiFactory(config);
 
-    const sessionObj = (await sessionApi.apiV1SessionSessionIdEndPost(session))
-      .data;
-    if (!sessionObj.persona || !sessionObj.scenario) {
+    const sessionObj = (await realtimeApi.getRealtimeSession(session)).data;
+    if (
+      !sessionObj.config.generative.persona ||
+      !sessionObj.config.generative.scenario
+    ) {
       throw new Error("Couldn't get persona or scenario");
     }
     const scenarioObj = (
-      await ScenarioApi.apiV1ScenarioScenarioIdGet(sessionObj.scenario)
+      await scenarioApi.apiV1ScenarioScenarioIdGet(
+        sessionObj.config.generative.scenario,
+      )
     ).data;
 
     const personaObj = (
-      await personaApi.apiV1PersonaPersonaIdGet(sessionObj.persona)
+      await personaApi.getPersona(sessionObj.config.generative.persona)
     ).data;
 
-    const sessionMessages = (
-      await sessionApi.apiV1SessionSessionIdMessagesGet(session)
+    const messages = (
+      await llmAPI.listContextMessages(sessionObj.config.generative.context)
     ).data;
 
-    const history = sessionMessages.values.map((message) => {
-      return {
-        role: message.agent ? "assistant" : "user",
-        content: message.text || "",
-      };
-    });
+    const history = messages.values
+      .filter((msg) => msg.role !== "system")
+      .map((msg) => {
+        return {
+          role: msg.role,
+          content: msg.content,
+        };
+      });
 
     const systemMessage = generateSystemMessage(personaObj, scenarioObj);
     const scoreMessage = generateScoreMessage();
@@ -70,7 +79,7 @@ export class ScoreController {
       const rizzScore = calculateRizzScore(scoreObj);
       return {
         ...scoreObj,
-        rizz_score: rizzScore
+        rizz_score: rizzScore,
       };
     } catch (e) {
       const jsonFixMesages = [
@@ -92,7 +101,7 @@ export class ScoreController {
       const rizzScore = calculateRizzScore(scoreObj);
       return {
         ...scoreObj,
-        rizz_score: rizzScore
+        rizz_score: rizzScore,
       };
     }
   }
@@ -152,12 +161,12 @@ const calculateRizzScore = (scoreObj: Record<string, string>): number => {
   };
 
   const attributes = [
-    'wit',
-    'humor', 
-    'confidence',
-    'seductiveness',
-    'ability_to_progress_conversation',
-    'kindness'
+    "wit",
+    "humor",
+    "confidence",
+    "seductiveness",
+    "ability_to_progress_conversation",
+    "kindness",
   ];
 
   let totalPoints = 0;

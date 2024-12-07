@@ -35,7 +35,7 @@ export function ShinyButton(props: Props) {
       }
       style={{
         "--primary-light": primaryLight,
-      }}
+      } as React.CSSProperties}
     >
       {props.children}
     </button>

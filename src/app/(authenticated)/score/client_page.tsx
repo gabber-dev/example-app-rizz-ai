@@ -5,6 +5,7 @@ import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Score } from "@/components/Score";
+
 type Props = {
   session: string;
 };
@@ -16,7 +17,8 @@ export function ClientPage({ session }: Props) {
   const generateScore = useCallback(async () => {
     setLoading(true);
     try {
-      const scoreResult = (await axios.get("/api/score?session=" + session)).data;
+      const scoreResult = (await axios.get("/api/score?session=" + session))
+        .data;
       setScore(scoreResult);
     } catch (e) {
       toast.error("Error generating score");
@@ -42,9 +44,7 @@ export function ClientPage({ session }: Props) {
   if (!score) {
     return (
       <div className="w-full h-full flex items-center justify-center">
-        <div className="text-2xl font-bold text-error">
-          No score available
-        </div>
+        <div className="text-2xl font-bold text-error">No score available</div>
       </div>
     );
   }
