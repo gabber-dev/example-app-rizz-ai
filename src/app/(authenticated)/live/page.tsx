@@ -30,28 +30,15 @@ export default async function Page({
     basePath: "https://app.gabber.dev",
   });
 
-  const usageApi = UsageApiFactory(config);
   const personaApi = PersonaApiFactory(config);
   const scenarioApi = ScenarioApiFactory(config);
 
-  const usageToken = (
-    await usageApi.createUsageToken({
-      human_id: user.stripe_customer,
-      limits: [{ type: "conversational_seconds", value: 1000 }],
-    })
-  ).data.token;
-
   const personaObj = (await personaApi.getPersona(persona)).data;
-  const scenarioObj = (await scenarioApi.apiV1ScenarioScenarioIdGet(scenario))
-    .data;
+  const scenarioObj = (await scenarioApi.getScenario(scenario)).data;
 
   return (
     <div className="w-full h-full bg-base-200 rounded-lg">
-      <ClientPage
-        persona={personaObj}
-        scenario={scenarioObj}
-        token={usageToken}
-      />
+      <ClientPage persona={personaObj} scenario={scenarioObj} />
     </div>
   );
 }

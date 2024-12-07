@@ -1,29 +1,39 @@
-import { Session, Persona } from "@/generated";
+import { Persona } from "@/generated";
 import { formatDistanceToNow } from "date-fns";
 import Image from "next/image";
+import { useAppState } from "./AppStateProvider";
+import { useMemo } from "react";
 
 type Props = {
-  personas: Record<string, Persona>;
   selectedSession: string | null;
   onSelectSession: (sessionId: string) => void;
 };
 
-export function SessionList({
-  personas,
-  selectedSession,
-  onSelectSession,
-}: Props) {
-  if (true) {
+export function SessionList({ selectedSession, onSelectSession }: Props) {
+  const { sessions, sessionsLoading, personas } = useAppState();
+
+  const personasLookup = useMemo(() => {
+    return personas.reduce(
+      (acc, persona) => {
+        acc[persona.id] = persona;
+        return acc;
+      },
+      {} as Record<string, Persona>,
+    );
+  }, [personas]);
+
+  if (sessionsLoading) {
     return <div className="animate-pulse">Loading sessions...</div>;
   }
 
   // Take only the last 30 sessions
-  const recentSessions = [].slice(-30);
+  const recentSessions = sessions.slice(-30);
 
   return (
     <div className="flex flex-col gap-2 h-[calc(100vh-200px)] overflow-y-auto pr-2">
       {recentSessions.map((session) => {
-        const persona = personas[session.persona];
+        const persona_id = session.config.generative.persona;
+        const persona = persona_id && personasLookup[persona_id];
         return (
           <button
             key={session.id}
@@ -47,7 +57,7 @@ export function SessionList({
               )}
               <div>
                 <div className="font-bold">
-                  {persona ? persona.name : session.persona}
+                  {persona ? persona.name : "Not found"}
                 </div>
                 <div className="text-sm opacity-70">
                   {formatDistanceToNow(new Date(session.created_at))} ago

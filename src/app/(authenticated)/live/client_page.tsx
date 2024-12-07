@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { SessionProvider, useSession } from "gabber-client-react";
 import { Persona, Scenario } from "@/generated";
 import { AgentAudioVisualizer } from "@/components/AgentAudioVisualizer";
@@ -15,13 +15,12 @@ import { useRouter } from "next/navigation";
 type Props = {
   persona: Persona;
   scenario: Scenario;
-  token: string;
 };
 
 const MESSAGES_BEFORE_RIZZ = 10;
 
-export function ClientPage({ persona, scenario, token }: Props) {
-  const { credits, setShowPaywall } = useAppState();
+export function ClientPage({ persona, scenario }: Props) {
+  const { credits, setShowPaywall, usageToken } = useAppState();
   const [connectionOpts, setConnectionOpts] = useState<null | {
     token: string;
     sessionConnectOptions: { persona: string; scenario: string };
@@ -29,14 +28,14 @@ export function ClientPage({ persona, scenario, token }: Props) {
 
   useEffect(() => {
     if (credits <= 0) {
-      setShowPaywall({});
+      setShowPaywall({ session: null });
     } else {
       setConnectionOpts({
-        token,
+        token: usageToken,
         sessionConnectOptions: { persona: persona.id, scenario: scenario.id },
       });
     }
-  }, [credits, persona.id, scenario.id, setShowPaywall, token]);
+  }, [credits, persona.id, scenario.id, setShowPaywall, usageToken]);
 
   return (
     <SessionProvider connectionOpts={connectionOpts}>

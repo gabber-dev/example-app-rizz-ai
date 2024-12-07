@@ -1838,13 +1838,13 @@ export interface ListRealtimeSessions200Response {
      * @type {number}
      * @memberof ListRealtimeSessions200Response
      */
-    'total_count'?: number;
+    'total_count': number;
     /**
      * The list of items.
      * @type {Array<RealtimeSession>}
      * @memberof ListRealtimeSessions200Response
      */
-    'values'?: Array<RealtimeSession>;
+    'values': Array<RealtimeSession>;
 }
 /**
  * 
@@ -1857,7 +1857,7 @@ export interface ListScenarios200Response {
      * @type {string}
      * @memberof ListScenarios200Response
      */
-    'next_page': string;
+    'next_page'?: string;
     /**
      * The total number of items available.
      * @type {number}
@@ -4988,47 +4988,6 @@ export const ScenarioApiAxiosParamCreator = function (configuration?: Configurat
     return {
         /**
          * 
-         * @summary Get a scenario
-         * @param {string} scenarioId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiV1ScenarioScenarioIdGet: async (scenarioId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'scenarioId' is not null or undefined
-            assertParamExists('apiV1ScenarioScenarioIdGet', 'scenarioId', scenarioId)
-            const localVarPath = `/api/v1/scenario/{scenario_id}`
-                .replace(`{${"scenario_id"}}`, encodeURIComponent(String(scenarioId)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication ApiKeyAuth required
-            await setApiKeyToObject(localVarHeaderParameter, "x-api-key", configuration)
-
-            // authentication BearerAuth required
-            // http bearer authentication required
-            await setBearerAuthToObject(localVarHeaderParameter, configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @summary Create a scenario
          * @param {CreateScenarioRequest} createScenarioRequest 
          * @param {*} [options] Override http request option.
@@ -5090,6 +5049,47 @@ export const ScenarioApiAxiosParamCreator = function (configuration?: Configurat
             }
 
             const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication ApiKeyAuth required
+            await setApiKeyToObject(localVarHeaderParameter, "x-api-key", configuration)
+
+            // authentication BearerAuth required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get a scenario
+         * @param {string} scenarioId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getScenario: async (scenarioId: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'scenarioId' is not null or undefined
+            assertParamExists('getScenario', 'scenarioId', scenarioId)
+            const localVarPath = `/api/v1/scenario/{scenario_id}`
+                .replace(`{${"scenario_id"}}`, encodeURIComponent(String(scenarioId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
 
@@ -5207,19 +5207,6 @@ export const ScenarioApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Get a scenario
-         * @param {string} scenarioId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async apiV1ScenarioScenarioIdGet(scenarioId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Scenario>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1ScenarioScenarioIdGet(scenarioId, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ScenarioApi.apiV1ScenarioScenarioIdGet']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
          * @summary Create a scenario
          * @param {CreateScenarioRequest} createScenarioRequest 
          * @param {*} [options] Override http request option.
@@ -5242,6 +5229,19 @@ export const ScenarioApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteScenario(scenarioId, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ScenarioApi.deleteScenario']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get a scenario
+         * @param {string} scenarioId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getScenario(scenarioId: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Scenario>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getScenario(scenarioId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ScenarioApi.getScenario']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -5282,16 +5282,6 @@ export const ScenarioApiFactory = function (configuration?: Configuration, baseP
     return {
         /**
          * 
-         * @summary Get a scenario
-         * @param {string} scenarioId 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        apiV1ScenarioScenarioIdGet(scenarioId: string, options?: RawAxiosRequestConfig): AxiosPromise<Scenario> {
-            return localVarFp.apiV1ScenarioScenarioIdGet(scenarioId, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
          * @summary Create a scenario
          * @param {CreateScenarioRequest} createScenarioRequest 
          * @param {*} [options] Override http request option.
@@ -5309,6 +5299,16 @@ export const ScenarioApiFactory = function (configuration?: Configuration, baseP
          */
         deleteScenario(scenarioId: string, options?: RawAxiosRequestConfig): AxiosPromise<DeleteScenario200Response> {
             return localVarFp.deleteScenario(scenarioId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get a scenario
+         * @param {string} scenarioId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getScenario(scenarioId: string, options?: RawAxiosRequestConfig): AxiosPromise<Scenario> {
+            return localVarFp.getScenario(scenarioId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5342,18 +5342,6 @@ export const ScenarioApiFactory = function (configuration?: Configuration, baseP
 export class ScenarioApi extends BaseAPI {
     /**
      * 
-     * @summary Get a scenario
-     * @param {string} scenarioId 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof ScenarioApi
-     */
-    public apiV1ScenarioScenarioIdGet(scenarioId: string, options?: RawAxiosRequestConfig) {
-        return ScenarioApiFp(this.configuration).apiV1ScenarioScenarioIdGet(scenarioId, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
      * @summary Create a scenario
      * @param {CreateScenarioRequest} createScenarioRequest 
      * @param {*} [options] Override http request option.
@@ -5374,6 +5362,18 @@ export class ScenarioApi extends BaseAPI {
      */
     public deleteScenario(scenarioId: string, options?: RawAxiosRequestConfig) {
         return ScenarioApiFp(this.configuration).deleteScenario(scenarioId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get a scenario
+     * @param {string} scenarioId 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ScenarioApi
+     */
+    public getScenario(scenarioId: string, options?: RawAxiosRequestConfig) {
+        return ScenarioApiFp(this.configuration).getScenario(scenarioId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

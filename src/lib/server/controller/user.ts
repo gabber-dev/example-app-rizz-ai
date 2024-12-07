@@ -2,6 +2,7 @@ import { GoogleUser } from "../../model/google_user";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { CreditsController } from "./credits";
+import { Configuration, UsageApiFactory } from "@/generated";
 
 type UserInfo = {
   email: string;
@@ -25,6 +26,24 @@ export class UserController {
     const decoded = jwt.verify(token, process.env.GABBER_API_KEY || "");
     const user: UserInfo = (decoded as any).data;
     return user;
+  }
+
+  static async createUsageToken() {
+    const user = await UserController.getUserFromCookies();
+    if (!user) {
+      throw new Error("User not found");
+    }
+    const config = new Configuration({
+      apiKey: process.env.GABBER_API_KEY,
+    });
+    const usageApi = UsageApiFactory(config);
+    const usageToken = (
+      await usageApi.createUsageToken({
+        human_id: user.stripe_customer,
+        limits: [{ type: "conversational_seconds", value: 1000 }],
+      })
+    ).data.token;
+    return usageToken;
   }
 
   static async loginGoogleUser({

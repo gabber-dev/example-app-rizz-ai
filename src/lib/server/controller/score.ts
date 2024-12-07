@@ -6,7 +6,6 @@ import {
   RealtimeApiFactory,
   Scenario,
   ScenarioApiFactory,
-  SessionApiFactory,
 } from "@/generated";
 import OpenAI from "openai";
 
@@ -35,9 +34,7 @@ export class ScoreController {
       throw new Error("Couldn't get persona or scenario");
     }
     const scenarioObj = (
-      await scenarioApi.apiV1ScenarioScenarioIdGet(
-        sessionObj.config.generative.scenario,
-      )
+      await scenarioApi.getScenario(sessionObj.config.generative.scenario)
     ).data;
 
     const personaObj = (

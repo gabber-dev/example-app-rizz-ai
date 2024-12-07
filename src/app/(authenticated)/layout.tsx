@@ -8,6 +8,12 @@ import { CreditsController } from "@/lib/server/controller/credits";
 import Head from "next/head";
 import Script from "next/script";
 import { AppStateProvider } from "@/components/AppStateProvider";
+import {
+  Configuration,
+  PersonaApi,
+  RealtimeApi,
+  ScenarioApi,
+} from "@/generated";
 
 const sfProRounded = localFont({
   src: [
@@ -37,15 +43,27 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const user = await UserController.getUserFromCookies();
-  console.log("user", user);
   if (!user) {
     redirect("/login");
   }
-  const credits = await CreditsController.getCreditBalance(
-    user.stripe_customer,
-  );
-  const hasPaid = await CreditsController.checkHasPaid(user.stripe_customer);
-  const products = await CreditsController.getProducts();
+  const config = new Configuration({ apiKey: process.env.GABBER_API_KEY });
+  const realtimeApi = new RealtimeApi(config);
+  const personaApi = new PersonaApi(config);
+  const scenarioApi = new ScenarioApi(config);
+
+  const [sessions, personas, scenarios] = await Promise.all([
+    realtimeApi.listRealtimeSessions(),
+    personaApi.listPersonas(),
+    scenarioApi.listScenarios(),
+  ]);
+
+  const [credits, hasPaid, products, usageToken] = await Promise.all([
+    CreditsController.getCreditBalance(user.stripe_customer),
+    CreditsController.checkHasPaid(user.stripe_customer),
+    CreditsController.getProducts(),
+    UserController.createUsageToken(),
+  ]);
+
   return (
     <html
       lang="en"
@@ -62,9 +80,13 @@ export default async function RootLayout({
       ></Script>
       <body className="relative h-screen bg-base-100">
         <AppStateProvider
+          usageToken={usageToken}
           initialCredits={credits}
           initialHasPaid={hasPaid}
           initialProducts={products}
+          initialPersonas={personas.data.values}
+          initialScenarios={scenarios.data.values}
+          initialSessions={sessions.data.values}
         >
           <ClientLayout>{children}</ClientLayout>
         </AppStateProvider>
