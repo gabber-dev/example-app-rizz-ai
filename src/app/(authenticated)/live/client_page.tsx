@@ -50,8 +50,11 @@ export function ClientSessionPageInner({
   scenario,
 }: Omit<Props, "token">) {
   const { messages, id } = useSession();
-  const { setShowPaywall, hasPaid } = useAppState();
   const router = useRouter();
+
+  useEffect(() => {
+    console.log("NEIL id", id);
+  }, [id]);
 
   return (
     <div className="relative w-full h-full pt-4">

@@ -3,26 +3,22 @@ import { formatDistanceToNow } from "date-fns";
 import Image from "next/image";
 
 type Props = {
-  sessions: Session[];
   personas: Record<string, Persona>;
   selectedSession: string | null;
   onSelectSession: (sessionId: string) => void;
-  loading: boolean;
 };
 
 export function SessionList({
-  sessions,
   personas,
   selectedSession,
   onSelectSession,
-  loading,
 }: Props) {
-  if (loading) {
+  if (true) {
     return <div className="animate-pulse">Loading sessions...</div>;
   }
 
   // Take only the last 30 sessions
-  const recentSessions = sessions.slice(-30);
+  const recentSessions = [].slice(-30);
 
   return (
     <div className="flex flex-col gap-2 h-[calc(100vh-200px)] overflow-y-auto pr-2">

@@ -13,7 +13,6 @@ type Props = {
 
 export function ClientPage({ sessions, personas }: Props) {
   const [selectedSession, setSelectedSession] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
   const {} = useAppState();
   const [isSessionsCollapsed, setIsSessionsCollapsed] = useState(true);
 
@@ -39,13 +38,11 @@ export function ClientPage({ sessions, personas }: Props) {
           className={`transition-all duration-300 ${isSessionsCollapsed ? "hidden" : "block"} md:block`}
         >
           <SessionList
-            sessions={[]} // TODO
             selectedSession={selectedSession}
             onSelectSession={(sessionId) => {
               setSelectedSession(sessionId);
               setIsSessionsCollapsed(true);
             }}
-            loading={loading}
             personas={personas}
           />
         </div>

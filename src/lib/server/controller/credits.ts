@@ -147,6 +147,7 @@ export class CreditsController {
           { headers: { "x-human-id": customer } },
         )
       ).data;
+      console.log("Latest credit entry", latestLedgerEntry);
       latestCreditDate = new Date(latestLedgerEntry.created_at);
     } catch (e: any) {
       console.error("Failed to get latest tracked charge", e.message);

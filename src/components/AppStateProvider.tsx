@@ -8,8 +8,8 @@ type AppStateContextType = {
   credits: number;
   hasPaid: boolean;
   products: Stripe.Product[];
-  showPaywall: { session?: string } | null;
-  setShowPaywall: (paywall: { session?: string } | null) => void;
+  showPaywall: { session: string | null } | null;
+  setShowPaywall: (paywall: { session: string | null } | null) => void;
   refreshCredits: () => void;
 };
 
@@ -31,7 +31,7 @@ export function AppStateProvider({
   const [credits, setCredits] = useState<number>(initialCredits);
   const [hasPaid, setHasPaid] = useState<boolean>(initialHasPaid);
   const [products, setProducts] = useState<Stripe.Product[]>(initialProducts);
-  const [showPaywall, setShowPaywall] = useState<{ session?: string } | null>(
+  const [showPaywall, setShowPaywall] = useState<{ session: string | null } | null>(
     null,
   );
 
