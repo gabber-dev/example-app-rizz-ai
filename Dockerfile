@@ -23,6 +23,8 @@ RUN echo "module.exports = { ...require('./next.config.js'), output: 'standalone
 # Build the application
 RUN pnpm run build
 
+RUN cp -r public .next/standalone/ && cp -r .next/static .next/standalone/.next/
+
 # Runner stage
 FROM node:18-alpine AS runner
 
@@ -38,12 +40,11 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
 # Copy standalone build and public assets from the builder stage
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next .next
 
 # Run as nextjs user
 USER nextjs
 
 # Expose port and run the standalone server
 EXPOSE 3000
-CMD ["node", "server.js"]
+CMD ["node", ".next/standalone/server.js"]
