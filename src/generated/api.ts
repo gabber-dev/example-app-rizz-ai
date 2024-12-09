@@ -76,25 +76,6 @@ export interface ApiV1SessionSessionIdMessagesGet200Response {
 /**
  * 
  * @export
- * @interface ApiV1SessionSessionIdPutRequest
- */
-export interface ApiV1SessionSessionIdPutRequest {
-    /**
-     * 
-     * @type {number}
-     * @memberof ApiV1SessionSessionIdPutRequest
-     */
-    'time_limit_s'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionSessionIdPutRequest
-     */
-    'voice_override'?: string;
-}
-/**
- * 
- * @export
  * @interface ApiV1SessionSessionIdTimelineGet200Response
  */
 export interface ApiV1SessionSessionIdTimelineGet200Response {
@@ -120,605 +101,403 @@ export interface ApiV1SessionSessionIdTimelineGet200Response {
 /**
  * 
  * @export
- * @interface ApiV1SessionStartPost200Response
+ * @interface ChatCompletionRequest
  */
-export interface ApiV1SessionStartPost200Response {
+export interface ChatCompletionRequest {
     /**
-     * 
-     * @type {ApiV1SessionStartPost200ResponseSession}
-     * @memberof ApiV1SessionStartPost200Response
+     * Chat context
+     * @type {Array<ChatCompletionRequestMessage>}
+     * @memberof ChatCompletionRequest
      */
-    'session': ApiV1SessionStartPost200ResponseSession;
-    /**
-     * 
-     * @type {ApiV1SessionStartPost200ResponsePersona}
-     * @memberof ApiV1SessionStartPost200Response
-     */
-    'persona'?: ApiV1SessionStartPost200ResponsePersona;
-    /**
-     * 
-     * @type {ApiV1SessionStartPost200ResponseScenario}
-     * @memberof ApiV1SessionStartPost200Response
-     */
-    'scenario'?: ApiV1SessionStartPost200ResponseScenario;
-    /**
-     * 
-     * @type {ApiV1SessionStartPost200ResponseConnectionDetails}
-     * @memberof ApiV1SessionStartPost200Response
-     */
-    'connection_details': ApiV1SessionStartPost200ResponseConnectionDetails;
-}
-/**
- * 
- * @export
- * @interface ApiV1SessionStartPost200ResponseConnectionDetails
- */
-export interface ApiV1SessionStartPost200ResponseConnectionDetails {
+    'messages': Array<ChatCompletionRequestMessage>;
     /**
      * 
      * @type {string}
-     * @memberof ApiV1SessionStartPost200ResponseConnectionDetails
+     * @memberof ChatCompletionRequest
      */
-    'token'?: string;
+    'model': string;
     /**
      * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPost200ResponseConnectionDetails
-     */
-    'url'?: string;
-}
-/**
- * 
- * @export
- * @interface ApiV1SessionStartPost200ResponsePersona
- */
-export interface ApiV1SessionStartPost200ResponsePersona {
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPost200ResponsePersona
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPost200ResponsePersona
-     */
-    'description': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPost200ResponsePersona
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPost200ResponsePersona
-     */
-    'image_url'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPost200ResponsePersona
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPost200ResponsePersona
-     */
-    'project': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPost200ResponsePersona
-     */
-    'gender'?: ApiV1SessionStartPost200ResponsePersonaGenderEnum;
-    /**
-     * 
-     * @type {Array<ApiV1SessionStartPost200ResponsePersonaTagsInner>}
-     * @memberof ApiV1SessionStartPost200ResponsePersona
-     */
-    'tags'?: Array<ApiV1SessionStartPost200ResponsePersonaTagsInner>;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPost200ResponsePersona
-     */
-    'voice': string;
-}
-
-export const ApiV1SessionStartPost200ResponsePersonaGenderEnum = {
-    Male: 'male',
-    Female: 'female'
-} as const;
-
-export type ApiV1SessionStartPost200ResponsePersonaGenderEnum = typeof ApiV1SessionStartPost200ResponsePersonaGenderEnum[keyof typeof ApiV1SessionStartPost200ResponsePersonaGenderEnum];
-
-/**
- * 
- * @export
- * @interface ApiV1SessionStartPost200ResponsePersonaTagsInner
- */
-export interface ApiV1SessionStartPost200ResponsePersonaTagsInner {
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPost200ResponsePersonaTagsInner
-     */
-    'human_name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPost200ResponsePersonaTagsInner
-     */
-    'name': string;
-}
-/**
- * 
- * @export
- * @interface ApiV1SessionStartPost200ResponseScenario
- */
-export interface ApiV1SessionStartPost200ResponseScenario {
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPost200ResponseScenario
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPost200ResponseScenario
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPost200ResponseScenario
-     */
-    'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPost200ResponseScenario
-     */
-    'project': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPost200ResponseScenario
-     */
-    'prompt': string;
-}
-/**
- * 
- * @export
- * @interface ApiV1SessionStartPost200ResponseSession
- */
-export interface ApiV1SessionStartPost200ResponseSession {
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPost200ResponseSession
-     */
-    'created_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPost200ResponseSession
-     */
-    'ended_at'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPost200ResponseSession
-     */
-    'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPost200ResponseSession
-     */
-    'livekit_room': string;
-    /**
-     * 
-     * @type {any}
-     * @memberof ApiV1SessionStartPost200ResponseSession
-     */
-    'metadata': any;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPost200ResponseSession
-     */
-    'persona': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPost200ResponseSession
-     */
-    'project': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPost200ResponseSession
-     */
-    'scenario': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPost200ResponseSession
-     */
-    'llm'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPost200ResponseSession
-     */
-    'state': ApiV1SessionStartPost200ResponseSessionStateEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPost200ResponseSession
-     */
-    'voice_override'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ApiV1SessionStartPost200ResponseSession
-     */
-    'time_limit_s': number;
-}
-
-export const ApiV1SessionStartPost200ResponseSessionStateEnum = {
-    Ended: 'ended',
-    InProgress: 'in_progress',
-    NotStarted: 'not_started'
-} as const;
-
-export type ApiV1SessionStartPost200ResponseSessionStateEnum = typeof ApiV1SessionStartPost200ResponseSessionStateEnum[keyof typeof ApiV1SessionStartPost200ResponseSessionStateEnum];
-
-/**
- * @type ApiV1SessionStartPostRequest
- * @export
- */
-export type ApiV1SessionStartPostRequest = ApiV1SessionStartPostRequestOneOf | ApiV1SessionStartPostRequestOneOf1;
-
-/**
- * 
- * @export
- * @interface ApiV1SessionStartPostRequestOneOf
- */
-export interface ApiV1SessionStartPostRequestOneOf {
-    /**
-     * 
-     * @type {Array<ApiV1SessionStartPostRequestOneOfHistoryInner>}
-     * @memberof ApiV1SessionStartPostRequestOneOf
-     */
-    'history'?: Array<ApiV1SessionStartPostRequestOneOfHistoryInner>;
-    /**
-     * 
-     * @type {number}
-     * @memberof ApiV1SessionStartPostRequestOneOf
-     */
-    'time_limit_s'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPostRequestOneOf
-     */
-    'voice_override'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPostRequestOneOf
-     */
-    'llm'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPostRequestOneOf
-     */
-    'persona'?: string;
-    /**
-     * save session messages
-     * @type {boolean}
-     * @memberof ApiV1SessionStartPostRequestOneOf
-     */
-    'save_messages'?: boolean;
-    /**
-     * reserved for internal use
      * @type {object}
-     * @memberof ApiV1SessionStartPostRequestOneOf
+     * @memberof ChatCompletionRequest
      */
-    '_extra'?: object;
-}
-/**
- * 
- * @export
- * @interface ApiV1SessionStartPostRequestOneOf1
- */
-export interface ApiV1SessionStartPostRequestOneOf1 {
+    'metadata'?: object;
     /**
      * 
-     * @type {number}
-     * @memberof ApiV1SessionStartPostRequestOneOf1
+     * @type {ChatCompletionRequestGabber}
+     * @memberof ChatCompletionRequest
      */
-    'time_limit_s'?: number;
+    'gabber'?: ChatCompletionRequestGabber;
     /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPostRequestOneOf1
-     */
-    'voice_override'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPostRequestOneOf1
-     */
-    'llm'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPostRequestOneOf1
-     */
-    'scenario'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPostRequestOneOf1
-     */
-    'persona'?: string;
-    /**
-     * save session messages
+     * If set, partial message deltas will be sent, like in ChatGPT. 
      * @type {boolean}
-     * @memberof ApiV1SessionStartPostRequestOneOf1
+     * @memberof ChatCompletionRequest
      */
-    'save_messages'?: boolean;
+    'stream'?: boolean;
     /**
-     * reserved for internal use
-     * @type {object}
-     * @memberof ApiV1SessionStartPostRequestOneOf1
+     * Temperature for sampling from the model. Higher values mean more randomness. 
+     * @type {number}
+     * @memberof ChatCompletionRequest
      */
-    '_extra'?: object;
+    'temperature'?: number;
+    /**
+     * Maximum number of tokens to generate. Requests can be up to 4096 tokens. 
+     * @type {number}
+     * @memberof ChatCompletionRequest
+     */
+    'max_tokens'?: number;
 }
 /**
  * 
  * @export
- * @interface ApiV1SessionStartPostRequestOneOfHistoryInner
+ * @interface ChatCompletionRequestGabber
  */
-export interface ApiV1SessionStartPostRequestOneOfHistoryInner {
+export interface ChatCompletionRequestGabber {
+    /**
+     * Gabber voice id
+     * @type {string}
+     * @memberof ChatCompletionRequestGabber
+     */
+    'voice'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface ChatCompletionRequestMessage
+ */
+export interface ChatCompletionRequestMessage {
     /**
      * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPostRequestOneOfHistoryInner
+     * @type {ChatCompletionRequestMessageContent}
+     * @memberof ChatCompletionRequestMessage
      */
-    'content': string;
+    'content': ChatCompletionRequestMessageContent;
     /**
-     * 
+     * The role of the messages author.
      * @type {string}
-     * @memberof ApiV1SessionStartPostRequestOneOfHistoryInner
+     * @memberof ChatCompletionRequestMessage
      */
-    'import_id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ApiV1SessionStartPostRequestOneOfHistoryInner
-     */
-    'role': ApiV1SessionStartPostRequestOneOfHistoryInnerRoleEnum;
+    'role': ChatCompletionRequestMessageRoleEnum;
 }
 
-export const ApiV1SessionStartPostRequestOneOfHistoryInnerRoleEnum = {
+export const ChatCompletionRequestMessageRoleEnum = {
+    User: 'user',
     Assistant: 'assistant',
-    System: 'system',
-    User: 'user'
+    System: 'system'
 } as const;
 
-export type ApiV1SessionStartPostRequestOneOfHistoryInnerRoleEnum = typeof ApiV1SessionStartPostRequestOneOfHistoryInnerRoleEnum[keyof typeof ApiV1SessionStartPostRequestOneOfHistoryInnerRoleEnum];
+export type ChatCompletionRequestMessageRoleEnum = typeof ChatCompletionRequestMessageRoleEnum[keyof typeof ChatCompletionRequestMessageRoleEnum];
+
+/**
+ * @type ChatCompletionRequestMessageContent
+ * The contents of the message.
+ * @export
+ */
+export type ChatCompletionRequestMessageContent = Array<ChatCompletionRequestUserMessageContentPart> | string;
 
 /**
  * 
  * @export
- * @interface AssistantMessage
+ * @interface ChatCompletionRequestMessageContentPartAudio
  */
-export interface AssistantMessage {
-    /**
-     * 
-     * @type {AssistantMessageContent}
-     * @memberof AssistantMessage
-     */
-    'content': AssistantMessageContent;
-    /**
-     * The refusal message by the assistant.
-     * @type {string}
-     * @memberof AssistantMessage
-     */
-    'refusal'?: string;
-    /**
-     * The role of the messages author, in this case `assistant`.
-     * @type {string}
-     * @memberof AssistantMessage
-     */
-    'role': AssistantMessageRoleEnum;
-}
-
-export const AssistantMessageRoleEnum = {
-    Assistant: 'assistant'
-} as const;
-
-export type AssistantMessageRoleEnum = typeof AssistantMessageRoleEnum[keyof typeof AssistantMessageRoleEnum];
-
-/**
- * @type AssistantMessageContent
- * The contents of the assistant message. 
- * @export
- */
-export type AssistantMessageContent = Array<AssistantMessageContentOneOfInner> | string;
-
-/**
- * @type AssistantMessageContentOneOfInner
- * @export
- */
-export type AssistantMessageContentOneOfInner = RefusalContentPart | TextContentPart;
-
-/**
- * 
- * @export
- * @interface AudioContentPart
- */
-export interface AudioContentPart {
+export interface ChatCompletionRequestMessageContentPartAudio {
     /**
      * Audio content type.
      * @type {string}
-     * @memberof AudioContentPart
+     * @memberof ChatCompletionRequestMessageContentPartAudio
      */
-    'type': AudioContentPartTypeEnum;
+    'type': ChatCompletionRequestMessageContentPartAudioTypeEnum;
     /**
      * 
-     * @type {AudioContentPartInputAudio}
-     * @memberof AudioContentPart
+     * @type {ChatCompletionRequestMessageContentPartAudioInputAudio}
+     * @memberof ChatCompletionRequestMessageContentPartAudio
      */
-    'input_audio': AudioContentPartInputAudio;
+    'input_audio': ChatCompletionRequestMessageContentPartAudioInputAudio;
 }
 
-export const AudioContentPartTypeEnum = {
+export const ChatCompletionRequestMessageContentPartAudioTypeEnum = {
     InputAudio: 'input_audio'
 } as const;
 
-export type AudioContentPartTypeEnum = typeof AudioContentPartTypeEnum[keyof typeof AudioContentPartTypeEnum];
+export type ChatCompletionRequestMessageContentPartAudioTypeEnum = typeof ChatCompletionRequestMessageContentPartAudioTypeEnum[keyof typeof ChatCompletionRequestMessageContentPartAudioTypeEnum];
 
 /**
  * 
  * @export
- * @interface AudioContentPartInputAudio
+ * @interface ChatCompletionRequestMessageContentPartAudioInputAudio
  */
-export interface AudioContentPartInputAudio {
+export interface ChatCompletionRequestMessageContentPartAudioInputAudio {
     /**
      * Base64 encoded audio data.
      * @type {string}
-     * @memberof AudioContentPartInputAudio
+     * @memberof ChatCompletionRequestMessageContentPartAudioInputAudio
      */
     'data': string;
     /**
      * The format of the audio data.
      * @type {string}
-     * @memberof AudioContentPartInputAudio
+     * @memberof ChatCompletionRequestMessageContentPartAudioInputAudio
      */
-    'format': AudioContentPartInputAudioFormatEnum;
+    'format': ChatCompletionRequestMessageContentPartAudioInputAudioFormatEnum;
 }
 
-export const AudioContentPartInputAudioFormatEnum = {
+export const ChatCompletionRequestMessageContentPartAudioInputAudioFormatEnum = {
     Wav: 'wav',
     Mp3: 'mp3',
     Ogg: 'ogg'
 } as const;
 
-export type AudioContentPartInputAudioFormatEnum = typeof AudioContentPartInputAudioFormatEnum[keyof typeof AudioContentPartInputAudioFormatEnum];
+export type ChatCompletionRequestMessageContentPartAudioInputAudioFormatEnum = typeof ChatCompletionRequestMessageContentPartAudioInputAudioFormatEnum[keyof typeof ChatCompletionRequestMessageContentPartAudioInputAudioFormatEnum];
+
+/**
+ * Text content
+ * @export
+ * @interface ChatCompletionRequestMessageContentPartText
+ */
+export interface ChatCompletionRequestMessageContentPartText {
+    /**
+     * The type of the content part.
+     * @type {string}
+     * @memberof ChatCompletionRequestMessageContentPartText
+     */
+    'type': ChatCompletionRequestMessageContentPartTextTypeEnum;
+    /**
+     * The text content.
+     * @type {string}
+     * @memberof ChatCompletionRequestMessageContentPartText
+     */
+    'text': string;
+}
+
+export const ChatCompletionRequestMessageContentPartTextTypeEnum = {
+    Text: 'text'
+} as const;
+
+export type ChatCompletionRequestMessageContentPartTextTypeEnum = typeof ChatCompletionRequestMessageContentPartTextTypeEnum[keyof typeof ChatCompletionRequestMessageContentPartTextTypeEnum];
+
+/**
+ * @type ChatCompletionRequestUserMessageContentPart
+ * @export
+ */
+export type ChatCompletionRequestUserMessageContentPart = ChatCompletionRequestMessageContentPartAudio | ChatCompletionRequestMessageContentPartText;
 
 /**
  * Represents a completion response from the API. Note: both the streamed and non-streamed response objects share the same shape. 
  * @export
- * @interface ChatCompletions200Response
+ * @interface ChatCompletionResponse
  */
-export interface ChatCompletions200Response {
+export interface ChatCompletionResponse {
     /**
      * A list of chat completion choices.
-     * @type {Array<ChatCompletions200ResponseChoicesInner>}
-     * @memberof ChatCompletions200Response
+     * @type {Array<ChatCompletionResponseChoicesInner>}
+     * @memberof ChatCompletionResponse
      */
-    'choices': Array<ChatCompletions200ResponseChoicesInner>;
+    'choices': Array<ChatCompletionResponseChoicesInner>;
     /**
      * The model used for completion.
      * @type {string}
-     * @memberof ChatCompletions200Response
+     * @memberof ChatCompletionResponse
      */
     'model': string;
     /**
      * 
-     * @type {ChatCompletions200ResponseGabber}
-     * @memberof ChatCompletions200Response
+     * @type {ChatCompletionResponseGabber}
+     * @memberof ChatCompletionResponse
      */
-    'gabber'?: ChatCompletions200ResponseGabber;
+    'gabber'?: ChatCompletionResponseGabber;
 }
+/**
+ * 
+ * @export
+ * @interface ChatCompletionResponseChoicesInner
+ */
+export interface ChatCompletionResponseChoicesInner {
+    /**
+     * 
+     * @type {ChatCompletionResponseMessage}
+     * @memberof ChatCompletionResponseChoicesInner
+     */
+    'message': ChatCompletionResponseMessage;
+}
+/**
+ * 
+ * @export
+ * @interface ChatCompletionResponseGabber
+ */
+export interface ChatCompletionResponseGabber {
+    /**
+     * 
+     * @type {Array<ChatCompletionResponseGabberMessageDataInner>}
+     * @memberof ChatCompletionResponseGabber
+     */
+    'message_data'?: Array<ChatCompletionResponseGabberMessageDataInner>;
+}
+/**
+ * 
+ * @export
+ * @interface ChatCompletionResponseGabberMessageDataInner
+ */
+export interface ChatCompletionResponseGabberMessageDataInner {
+    /**
+     * 
+     * @type {number}
+     * @memberof ChatCompletionResponseGabberMessageDataInner
+     */
+    'message_index': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ChatCompletionResponseGabberMessageDataInner
+     */
+    'content_index': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatCompletionResponseGabberMessageDataInner
+     */
+    'type': ChatCompletionResponseGabberMessageDataInnerTypeEnum;
+    /**
+     * 
+     * @type {ChatCompletionResponseGabberMessageDataInnerData}
+     * @memberof ChatCompletionResponseGabberMessageDataInner
+     */
+    'data': ChatCompletionResponseGabberMessageDataInnerData;
+}
+
+export const ChatCompletionResponseGabberMessageDataInnerTypeEnum = {
+    AudioTranscript: 'audio_transcript'
+} as const;
+
+export type ChatCompletionResponseGabberMessageDataInnerTypeEnum = typeof ChatCompletionResponseGabberMessageDataInnerTypeEnum[keyof typeof ChatCompletionResponseGabberMessageDataInnerTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface ChatCompletionResponseGabberMessageDataInnerData
+ */
+export interface ChatCompletionResponseGabberMessageDataInnerData {
+    /**
+     * 
+     * @type {string}
+     * @memberof ChatCompletionResponseGabberMessageDataInnerData
+     */
+    'transcript'?: string;
+}
+/**
+ * A chat completion message generated by the model.
+ * @export
+ * @interface ChatCompletionResponseMessage
+ */
+export interface ChatCompletionResponseMessage {
+    /**
+     * The contents of the message.
+     * @type {string}
+     * @memberof ChatCompletionResponseMessage
+     */
+    'content': string;
+    /**
+     * The refusal message generated by the model.
+     * @type {string}
+     * @memberof ChatCompletionResponseMessage
+     */
+    'refusal': string;
+    /**
+     * The role of the author of this message.
+     * @type {string}
+     * @memberof ChatCompletionResponseMessage
+     */
+    'role': ChatCompletionResponseMessageRoleEnum;
+    /**
+     * 
+     * @type {ChatCompletionStreamResponseDeltaGabber}
+     * @memberof ChatCompletionResponseMessage
+     */
+    'gabber'?: ChatCompletionStreamResponseDeltaGabber;
+}
+
+export const ChatCompletionResponseMessageRoleEnum = {
+    Assistant: 'assistant'
+} as const;
+
+export type ChatCompletionResponseMessageRoleEnum = typeof ChatCompletionResponseMessageRoleEnum[keyof typeof ChatCompletionResponseMessageRoleEnum];
+
 /**
  * Represents a streamed chunk of a chat completion response returned by model, based on the provided input.
  * @export
- * @interface ChatCompletions200Response1
+ * @interface ChatCompletionStreamResponse
  */
-export interface ChatCompletions200Response1 {
+export interface ChatCompletionStreamResponse {
     /**
      * A unique identifier for the chat completion. Each chunk has the same ID.
      * @type {string}
-     * @memberof ChatCompletions200Response1
+     * @memberof ChatCompletionStreamResponse
      */
     'id': string;
     /**
      * A list of chat completion choices. Can contain more than one elements if `n` is greater than 1. Can also be empty for the last chunk if you set `stream_options: {\"include_usage\": true}`. 
-     * @type {Array<ChatCompletions200Response1ChoicesInner>}
-     * @memberof ChatCompletions200Response1
+     * @type {Array<ChatCompletionStreamResponseChoicesInner>}
+     * @memberof ChatCompletionStreamResponse
      */
-    'choices': Array<ChatCompletions200Response1ChoicesInner>;
+    'choices': Array<ChatCompletionStreamResponseChoicesInner>;
     /**
      * The Unix timestamp (in seconds) of when the chat completion was created. Each chunk has the same timestamp.
      * @type {number}
-     * @memberof ChatCompletions200Response1
+     * @memberof ChatCompletionStreamResponse
      */
     'created': number;
     /**
      * The model to generate the completion.
      * @type {string}
-     * @memberof ChatCompletions200Response1
+     * @memberof ChatCompletionStreamResponse
      */
     'model': string;
     /**
      * The object type, which is always `chat.completion.chunk`.
      * @type {string}
-     * @memberof ChatCompletions200Response1
+     * @memberof ChatCompletionStreamResponse
      */
-    'object': ChatCompletions200Response1ObjectEnum;
+    'object': ChatCompletionStreamResponseObjectEnum;
     /**
      * 
-     * @type {ChatCompletions200Response1Gabber}
-     * @memberof ChatCompletions200Response1
+     * @type {ChatCompletionStreamResponseGabber}
+     * @memberof ChatCompletionStreamResponse
      */
-    'gabber'?: ChatCompletions200Response1Gabber;
+    'gabber'?: ChatCompletionStreamResponseGabber;
 }
 
-export const ChatCompletions200Response1ObjectEnum = {
+export const ChatCompletionStreamResponseObjectEnum = {
     ChatCompletionChunk: 'chat.completion.chunk'
 } as const;
 
-export type ChatCompletions200Response1ObjectEnum = typeof ChatCompletions200Response1ObjectEnum[keyof typeof ChatCompletions200Response1ObjectEnum];
+export type ChatCompletionStreamResponseObjectEnum = typeof ChatCompletionStreamResponseObjectEnum[keyof typeof ChatCompletionStreamResponseObjectEnum];
 
 /**
  * 
  * @export
- * @interface ChatCompletions200Response1ChoicesInner
+ * @interface ChatCompletionStreamResponseChoicesInner
  */
-export interface ChatCompletions200Response1ChoicesInner {
+export interface ChatCompletionStreamResponseChoicesInner {
     /**
      * 
-     * @type {ChatCompletions200Response1ChoicesInnerDelta}
-     * @memberof ChatCompletions200Response1ChoicesInner
+     * @type {ChatCompletionStreamResponseDelta}
+     * @memberof ChatCompletionStreamResponseChoicesInner
      */
-    'delta': ChatCompletions200Response1ChoicesInnerDelta;
+    'delta': ChatCompletionStreamResponseDelta;
     /**
      * The reason the model stopped generating tokens. This will be `stop` if the model hit a natural stop point or a provided stop sequence, `length` if the maximum number of tokens specified in the request was reached, `content_filter` if content was omitted due to a flag from our content filters, `tool_calls` if the model called a tool, or `function_call` (deprecated) if the model called a function. 
      * @type {string}
-     * @memberof ChatCompletions200Response1ChoicesInner
+     * @memberof ChatCompletionStreamResponseChoicesInner
      */
-    'finish_reason': ChatCompletions200Response1ChoicesInnerFinishReasonEnum;
+    'finish_reason': ChatCompletionStreamResponseChoicesInnerFinishReasonEnum;
     /**
      * The index of the choice in the list of choices.
      * @type {number}
-     * @memberof ChatCompletions200Response1ChoicesInner
+     * @memberof ChatCompletionStreamResponseChoicesInner
      */
     'index': number;
 }
 
-export const ChatCompletions200Response1ChoicesInnerFinishReasonEnum = {
+export const ChatCompletionStreamResponseChoicesInnerFinishReasonEnum = {
     Stop: 'stop',
     Length: 'length',
     ToolCalls: 'tool_calls',
@@ -726,361 +505,150 @@ export const ChatCompletions200Response1ChoicesInnerFinishReasonEnum = {
     FunctionCall: 'function_call'
 } as const;
 
-export type ChatCompletions200Response1ChoicesInnerFinishReasonEnum = typeof ChatCompletions200Response1ChoicesInnerFinishReasonEnum[keyof typeof ChatCompletions200Response1ChoicesInnerFinishReasonEnum];
+export type ChatCompletionStreamResponseChoicesInnerFinishReasonEnum = typeof ChatCompletionStreamResponseChoicesInnerFinishReasonEnum[keyof typeof ChatCompletionStreamResponseChoicesInnerFinishReasonEnum];
 
 /**
  * A chat completion delta generated by streamed model responses.
  * @export
- * @interface ChatCompletions200Response1ChoicesInnerDelta
+ * @interface ChatCompletionStreamResponseDelta
  */
-export interface ChatCompletions200Response1ChoicesInnerDelta {
+export interface ChatCompletionStreamResponseDelta {
     /**
      * The contents of the chunk message.
      * @type {string}
-     * @memberof ChatCompletions200Response1ChoicesInnerDelta
+     * @memberof ChatCompletionStreamResponseDelta
      */
     'content'?: string;
     /**
      * The role of the author of this message.
      * @type {string}
-     * @memberof ChatCompletions200Response1ChoicesInnerDelta
+     * @memberof ChatCompletionStreamResponseDelta
      */
-    'role'?: ChatCompletions200Response1ChoicesInnerDeltaRoleEnum;
+    'role'?: ChatCompletionStreamResponseDeltaRoleEnum;
     /**
      * The refusal message generated by the model.
      * @type {string}
-     * @memberof ChatCompletions200Response1ChoicesInnerDelta
+     * @memberof ChatCompletionStreamResponseDelta
      */
     'refusal'?: string;
     /**
      * 
-     * @type {ChatCompletions200ResponseChoicesInnerMessageGabber}
-     * @memberof ChatCompletions200Response1ChoicesInnerDelta
+     * @type {ChatCompletionStreamResponseDeltaGabber}
+     * @memberof ChatCompletionStreamResponseDelta
      */
-    'gabber'?: ChatCompletions200ResponseChoicesInnerMessageGabber;
+    'gabber'?: ChatCompletionStreamResponseDeltaGabber;
 }
 
-export const ChatCompletions200Response1ChoicesInnerDeltaRoleEnum = {
+export const ChatCompletionStreamResponseDeltaRoleEnum = {
     System: 'system',
     User: 'user',
     Assistant: 'assistant'
 } as const;
 
-export type ChatCompletions200Response1ChoicesInnerDeltaRoleEnum = typeof ChatCompletions200Response1ChoicesInnerDeltaRoleEnum[keyof typeof ChatCompletions200Response1ChoicesInnerDeltaRoleEnum];
-
-/**
- * Gabber-specific fields
- * @export
- * @interface ChatCompletions200Response1Gabber
- */
-export interface ChatCompletions200Response1Gabber {
-    /**
-     * 
-     * @type {ChatCompletions200Response1GabberUsage}
-     * @memberof ChatCompletions200Response1Gabber
-     */
-    'usage'?: ChatCompletions200Response1GabberUsage;
-    /**
-     * 
-     * @type {Array<ChatCompletions200Response1GabberMessageDataInner>}
-     * @memberof ChatCompletions200Response1Gabber
-     */
-    'message_data'?: Array<ChatCompletions200Response1GabberMessageDataInner>;
-}
-/**
- * 
- * @export
- * @interface ChatCompletions200Response1GabberMessageDataInner
- */
-export interface ChatCompletions200Response1GabberMessageDataInner {
-    /**
-     * 
-     * @type {number}
-     * @memberof ChatCompletions200Response1GabberMessageDataInner
-     */
-    'message_index': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ChatCompletions200Response1GabberMessageDataInner
-     */
-    'content_index': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatCompletions200Response1GabberMessageDataInner
-     */
-    'type': ChatCompletions200Response1GabberMessageDataInnerTypeEnum;
-    /**
-     * 
-     * @type {ChatCompletions200Response1GabberMessageDataInnerData}
-     * @memberof ChatCompletions200Response1GabberMessageDataInner
-     */
-    'data': ChatCompletions200Response1GabberMessageDataInnerData;
-}
-
-export const ChatCompletions200Response1GabberMessageDataInnerTypeEnum = {
-    AudioTranscript: 'audio_transcript'
-} as const;
-
-export type ChatCompletions200Response1GabberMessageDataInnerTypeEnum = typeof ChatCompletions200Response1GabberMessageDataInnerTypeEnum[keyof typeof ChatCompletions200Response1GabberMessageDataInnerTypeEnum];
-
-/**
- * 
- * @export
- * @interface ChatCompletions200Response1GabberMessageDataInnerData
- */
-export interface ChatCompletions200Response1GabberMessageDataInnerData {
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatCompletions200Response1GabberMessageDataInnerData
-     */
-    'transcript': string;
-}
-/**
- * Gabber usage for this request
- * @export
- * @interface ChatCompletions200Response1GabberUsage
- */
-export interface ChatCompletions200Response1GabberUsage {
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatCompletions200Response1GabberUsage
-     */
-    'type': ChatCompletions200Response1GabberUsageTypeEnum;
-    /**
-     * 
-     * @type {number}
-     * @memberof ChatCompletions200Response1GabberUsage
-     */
-    'value': number;
-}
-
-export const ChatCompletions200Response1GabberUsageTypeEnum = {
-    ConversationalSeconds: 'conversational_seconds',
-    VoiceSynthesisSeconds: 'voice_synthesis_seconds',
-    TokenCnt: 'token_cnt'
-} as const;
-
-export type ChatCompletions200Response1GabberUsageTypeEnum = typeof ChatCompletions200Response1GabberUsageTypeEnum[keyof typeof ChatCompletions200Response1GabberUsageTypeEnum];
-
-/**
- * 
- * @export
- * @interface ChatCompletions200ResponseChoicesInner
- */
-export interface ChatCompletions200ResponseChoicesInner {
-    /**
-     * 
-     * @type {ChatCompletions200ResponseChoicesInnerMessage}
-     * @memberof ChatCompletions200ResponseChoicesInner
-     */
-    'message': ChatCompletions200ResponseChoicesInnerMessage;
-}
-/**
- * A chat completion message generated by the model.
- * @export
- * @interface ChatCompletions200ResponseChoicesInnerMessage
- */
-export interface ChatCompletions200ResponseChoicesInnerMessage {
-    /**
-     * The contents of the message.
-     * @type {string}
-     * @memberof ChatCompletions200ResponseChoicesInnerMessage
-     */
-    'content': string;
-    /**
-     * The refusal message generated by the model.
-     * @type {string}
-     * @memberof ChatCompletions200ResponseChoicesInnerMessage
-     */
-    'refusal': string;
-    /**
-     * The role of the author of this message.
-     * @type {string}
-     * @memberof ChatCompletions200ResponseChoicesInnerMessage
-     */
-    'role': ChatCompletions200ResponseChoicesInnerMessageRoleEnum;
-    /**
-     * 
-     * @type {ChatCompletions200ResponseChoicesInnerMessageGabber}
-     * @memberof ChatCompletions200ResponseChoicesInnerMessage
-     */
-    'gabber'?: ChatCompletions200ResponseChoicesInnerMessageGabber;
-}
-
-export const ChatCompletions200ResponseChoicesInnerMessageRoleEnum = {
-    Assistant: 'assistant'
-} as const;
-
-export type ChatCompletions200ResponseChoicesInnerMessageRoleEnum = typeof ChatCompletions200ResponseChoicesInnerMessageRoleEnum[keyof typeof ChatCompletions200ResponseChoicesInnerMessageRoleEnum];
+export type ChatCompletionStreamResponseDeltaRoleEnum = typeof ChatCompletionStreamResponseDeltaRoleEnum[keyof typeof ChatCompletionStreamResponseDeltaRoleEnum];
 
 /**
  * If the audio output modality is requested, this object contains data
  * @export
- * @interface ChatCompletions200ResponseChoicesInnerMessageGabber
+ * @interface ChatCompletionStreamResponseDeltaGabber
  */
-export interface ChatCompletions200ResponseChoicesInnerMessageGabber {
+export interface ChatCompletionStreamResponseDeltaGabber {
     /**
      * 
-     * @type {ChatCompletions200ResponseChoicesInnerMessageGabberVoice}
-     * @memberof ChatCompletions200ResponseChoicesInnerMessageGabber
+     * @type {ChatCompletionStreamResponseDeltaGabberVoice}
+     * @memberof ChatCompletionStreamResponseDeltaGabber
      */
-    'voice'?: ChatCompletions200ResponseChoicesInnerMessageGabberVoice;
+    'voice'?: ChatCompletionStreamResponseDeltaGabberVoice;
 }
 /**
  * 
  * @export
- * @interface ChatCompletions200ResponseChoicesInnerMessageGabberVoice
+ * @interface ChatCompletionStreamResponseDeltaGabberVoice
  */
-export interface ChatCompletions200ResponseChoicesInnerMessageGabberVoice {
+export interface ChatCompletionStreamResponseDeltaGabberVoice {
     /**
      * This will be the URL to the audio file
      * @type {string}
-     * @memberof ChatCompletions200ResponseChoicesInnerMessageGabberVoice
+     * @memberof ChatCompletionStreamResponseDeltaGabberVoice
      */
     'audio_url': string;
     /**
      * The Unix timestamp (in seconds) when the audio file expires
      * @type {number}
-     * @memberof ChatCompletions200ResponseChoicesInnerMessageGabberVoice
+     * @memberof ChatCompletionStreamResponseDeltaGabberVoice
      */
     'expires_at': number;
 }
 /**
- * 
+ * Gabber-specific fields
  * @export
- * @interface ChatCompletions200ResponseGabber
+ * @interface ChatCompletionStreamResponseGabber
  */
-export interface ChatCompletions200ResponseGabber {
+export interface ChatCompletionStreamResponseGabber {
+    /**
+     * Gabber usage for this request
+     * @type {Usage}
+     * @memberof ChatCompletionStreamResponseGabber
+     */
+    'usage'?: Usage;
     /**
      * 
-     * @type {Array<ChatCompletions200ResponseGabberMessageDataInner>}
-     * @memberof ChatCompletions200ResponseGabber
+     * @type {Array<ChatCompletionStreamResponseGabberMessageDataInner>}
+     * @memberof ChatCompletionStreamResponseGabber
      */
-    'message_data'?: Array<ChatCompletions200ResponseGabberMessageDataInner>;
+    'message_data'?: Array<ChatCompletionStreamResponseGabberMessageDataInner>;
 }
 /**
  * 
  * @export
- * @interface ChatCompletions200ResponseGabberMessageDataInner
+ * @interface ChatCompletionStreamResponseGabberMessageDataInner
  */
-export interface ChatCompletions200ResponseGabberMessageDataInner {
+export interface ChatCompletionStreamResponseGabberMessageDataInner {
     /**
      * 
      * @type {number}
-     * @memberof ChatCompletions200ResponseGabberMessageDataInner
+     * @memberof ChatCompletionStreamResponseGabberMessageDataInner
      */
     'message_index': number;
     /**
      * 
      * @type {number}
-     * @memberof ChatCompletions200ResponseGabberMessageDataInner
+     * @memberof ChatCompletionStreamResponseGabberMessageDataInner
      */
     'content_index': number;
     /**
      * 
      * @type {string}
-     * @memberof ChatCompletions200ResponseGabberMessageDataInner
+     * @memberof ChatCompletionStreamResponseGabberMessageDataInner
      */
-    'type': ChatCompletions200ResponseGabberMessageDataInnerTypeEnum;
+    'type': ChatCompletionStreamResponseGabberMessageDataInnerTypeEnum;
     /**
      * 
-     * @type {ChatCompletions200ResponseGabberMessageDataInnerData}
-     * @memberof ChatCompletions200ResponseGabberMessageDataInner
+     * @type {ChatCompletionStreamResponseGabberMessageDataInnerData}
+     * @memberof ChatCompletionStreamResponseGabberMessageDataInner
      */
-    'data': ChatCompletions200ResponseGabberMessageDataInnerData;
+    'data': ChatCompletionStreamResponseGabberMessageDataInnerData;
 }
 
-export const ChatCompletions200ResponseGabberMessageDataInnerTypeEnum = {
+export const ChatCompletionStreamResponseGabberMessageDataInnerTypeEnum = {
     AudioTranscript: 'audio_transcript'
 } as const;
 
-export type ChatCompletions200ResponseGabberMessageDataInnerTypeEnum = typeof ChatCompletions200ResponseGabberMessageDataInnerTypeEnum[keyof typeof ChatCompletions200ResponseGabberMessageDataInnerTypeEnum];
+export type ChatCompletionStreamResponseGabberMessageDataInnerTypeEnum = typeof ChatCompletionStreamResponseGabberMessageDataInnerTypeEnum[keyof typeof ChatCompletionStreamResponseGabberMessageDataInnerTypeEnum];
 
 /**
  * 
  * @export
- * @interface ChatCompletions200ResponseGabberMessageDataInnerData
+ * @interface ChatCompletionStreamResponseGabberMessageDataInnerData
  */
-export interface ChatCompletions200ResponseGabberMessageDataInnerData {
+export interface ChatCompletionStreamResponseGabberMessageDataInnerData {
     /**
      * 
      * @type {string}
-     * @memberof ChatCompletions200ResponseGabberMessageDataInnerData
+     * @memberof ChatCompletionStreamResponseGabberMessageDataInnerData
      */
-    'transcript'?: string;
+    'transcript': string;
 }
-/**
- * 
- * @export
- * @interface ChatCompletionsRequest
- */
-export interface ChatCompletionsRequest {
-    /**
-     * Chat context
-     * @type {Array<ChatCompletionsRequestMessagesInner>}
-     * @memberof ChatCompletionsRequest
-     */
-    'messages': Array<ChatCompletionsRequestMessagesInner>;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatCompletionsRequest
-     */
-    'model': string;
-    /**
-     * 
-     * @type {object}
-     * @memberof ChatCompletionsRequest
-     */
-    'metadata'?: object;
-    /**
-     * 
-     * @type {ChatCompletionsRequestGabber}
-     * @memberof ChatCompletionsRequest
-     */
-    'gabber'?: ChatCompletionsRequestGabber;
-    /**
-     * If set, partial message deltas will be sent, like in ChatGPT. 
-     * @type {boolean}
-     * @memberof ChatCompletionsRequest
-     */
-    'stream'?: boolean;
-    /**
-     * Temperature for sampling from the model. Higher values mean more randomness. 
-     * @type {number}
-     * @memberof ChatCompletionsRequest
-     */
-    'temperature'?: number;
-    /**
-     * Maximum number of tokens to generate. Requests can be up to 4096 tokens. 
-     * @type {number}
-     * @memberof ChatCompletionsRequest
-     */
-    'max_tokens'?: number;
-}
-/**
- * 
- * @export
- * @interface ChatCompletionsRequestGabber
- */
-export interface ChatCompletionsRequestGabber {
-    /**
-     * Gabber voice id
-     * @type {string}
-     * @memberof ChatCompletionsRequestGabber
-     */
-    'voice'?: string;
-}
-/**
- * @type ChatCompletionsRequestMessagesInner
- * @export
- */
-export type ChatCompletionsRequestMessagesInner = AssistantMessage | SystemMessage | UserMessage;
-
 /**
  * 
  * @export
@@ -1946,10 +1514,10 @@ export interface Persona {
     'gender'?: PersonaGenderEnum;
     /**
      * 
-     * @type {Array<ApiV1SessionStartPost200ResponsePersonaTagsInner>}
+     * @type {Array<PersonaTagsInner>}
      * @memberof Persona
      */
-    'tags'?: Array<ApiV1SessionStartPost200ResponsePersonaTagsInner>;
+    'tags'?: Array<PersonaTagsInner>;
     /**
      * 
      * @type {string}
@@ -1965,6 +1533,25 @@ export const PersonaGenderEnum = {
 
 export type PersonaGenderEnum = typeof PersonaGenderEnum[keyof typeof PersonaGenderEnum];
 
+/**
+ * 
+ * @export
+ * @interface PersonaTagsInner
+ */
+export interface PersonaTagsInner {
+    /**
+     * 
+     * @type {string}
+     * @memberof PersonaTagsInner
+     */
+    'human_name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof PersonaTagsInner
+     */
+    'name': string;
+}
 /**
  * 
  * @export
@@ -2037,257 +1624,274 @@ export type RealtimeSessionStateEnum = typeof RealtimeSessionStateEnum[keyof typ
 export interface RealtimeSessionConfig {
     /**
      * 
-     * @type {RealtimeSessionConfigGeneral}
+     * @type {RealtimeSessionGeneralConfig}
      * @memberof RealtimeSessionConfig
      */
-    'general': RealtimeSessionConfigGeneral;
+    'general': RealtimeSessionGeneralConfig;
     /**
      * 
-     * @type {RealtimeSessionConfigInput}
+     * @type {RealtimeSessionInputConfig}
      * @memberof RealtimeSessionConfig
      */
-    'input': RealtimeSessionConfigInput;
+    'input': RealtimeSessionInputConfig;
     /**
      * 
-     * @type {RealtimeSessionConfigGenerative}
+     * @type {RealtimeSessionGenerativeConfig}
      * @memberof RealtimeSessionConfig
      */
-    'generative': RealtimeSessionConfigGenerative;
+    'generative': RealtimeSessionGenerativeConfig;
     /**
      * 
-     * @type {RealtimeSessionConfigOutput}
+     * @type {RealtimeSessionOutputConfig}
      * @memberof RealtimeSessionConfig
      */
-    'output': RealtimeSessionConfigOutput;
+    'output': RealtimeSessionOutputConfig;
 }
 /**
  * 
  * @export
- * @interface RealtimeSessionConfigGeneral
+ * @interface RealtimeSessionConfigCreate
  */
-export interface RealtimeSessionConfigGeneral {
+export interface RealtimeSessionConfigCreate {
+    /**
+     * 
+     * @type {RealtimeSessionGeneralConfig}
+     * @memberof RealtimeSessionConfigCreate
+     */
+    'general': RealtimeSessionGeneralConfig;
+    /**
+     * 
+     * @type {RealtimeSessionInputConfig}
+     * @memberof RealtimeSessionConfigCreate
+     */
+    'input': RealtimeSessionInputConfig;
+    /**
+     * 
+     * @type {RealtimeSessionGenerativeConfigCreate}
+     * @memberof RealtimeSessionConfigCreate
+     */
+    'generative': RealtimeSessionGenerativeConfigCreate;
+    /**
+     * 
+     * @type {RealtimeSessionOutputConfig}
+     * @memberof RealtimeSessionConfigCreate
+     */
+    'output': RealtimeSessionOutputConfig;
+}
+/**
+ * 
+ * @export
+ * @interface RealtimeSessionConfigUpdate
+ */
+export interface RealtimeSessionConfigUpdate {
+    /**
+     * 
+     * @type {RealtimeSessionGeneralConfig}
+     * @memberof RealtimeSessionConfigUpdate
+     */
+    'general'?: RealtimeSessionGeneralConfig;
+    /**
+     * 
+     * @type {RealtimeSessionInputConfig}
+     * @memberof RealtimeSessionConfigUpdate
+     */
+    'input'?: RealtimeSessionInputConfig;
+    /**
+     * 
+     * @type {RealtimeSessionGenerativeConfigUpdate}
+     * @memberof RealtimeSessionConfigUpdate
+     */
+    'generative'?: RealtimeSessionGenerativeConfigUpdate;
+    /**
+     * 
+     * @type {RealtimeSessionOutputConfig}
+     * @memberof RealtimeSessionConfigUpdate
+     */
+    'output'?: RealtimeSessionOutputConfig;
+}
+/**
+ * 
+ * @export
+ * @interface RealtimeSessionGeneralConfig
+ */
+export interface RealtimeSessionGeneralConfig {
     /**
      * The time limit in seconds for the RealtimeSession.
      * @type {number}
-     * @memberof RealtimeSessionConfigGeneral
+     * @memberof RealtimeSessionGeneralConfig
      */
     'time_limit_s'?: number;
     /**
      * Whether to save messages in the RealtimeSession. These will be saved to the context provided in the generative config. If no context is provided, a new context will be created when the session starts. 
      * @type {boolean}
-     * @memberof RealtimeSessionConfigGeneral
-     */
-    'save_messages': boolean;
-}
-/**
- * 
- * @export
- * @interface RealtimeSessionConfigGenerative
- */
-export interface RealtimeSessionConfigGenerative {
-    /**
-     * Identifier for the LLM to use in the RealtimeSession.
-     * @type {string}
-     * @memberof RealtimeSessionConfigGenerative
-     */
-    'llm': string;
-    /**
-     * Identifier for the voice to use in speech synthesis. If a persona is set, this will override the persona\'s voice.
-     * @type {string}
-     * @memberof RealtimeSessionConfigGenerative
-     */
-    'voice_override'?: string;
-    /**
-     * Persona identifier. Personas become part of the prompt and voice.
-     * @type {string}
-     * @memberof RealtimeSessionConfigGenerative
-     */
-    'persona'?: string;
-    /**
-     * Scenario identifier to set the context of the session.
-     * @type {string}
-     * @memberof RealtimeSessionConfigGenerative
-     */
-    'scenario'?: string;
-    /**
-     * Which context to provide to the AI. Messages will be saved here if save_messages is true in the general config. 
-     * @type {string}
-     * @memberof RealtimeSessionConfigGenerative
-     */
-    'context': string;
-    /**
-     * Extra configuration for the generative AI. Usually this is for internal purposes.
-     * @type {{ [key: string]: any; }}
-     * @memberof RealtimeSessionConfigGenerative
-     */
-    '_extra'?: { [key: string]: any; };
-}
-/**
- * Configuration for the output of the RealtimeSession.
- * @export
- * @interface RealtimeSessionConfigInput
- */
-export interface RealtimeSessionConfigInput {
-    /**
-     * Whether the system allows interruption during speech.
-     * @type {boolean}
-     * @memberof RealtimeSessionConfigInput
-     */
-    'interruptable': boolean;
-    /**
-     * Whether the AI should continue listening while speaking. If true, the AI will produce another response immediately after the first one. This is only relevant if interruptable is false. 
-     * @type {boolean}
-     * @memberof RealtimeSessionConfigInput
-     */
-    'parallel_listening': boolean;
-}
-/**
- * Configuration for the output of the RealtimeSession.
- * @export
- * @interface RealtimeSessionConfigOutput
- */
-export interface RealtimeSessionConfigOutput {
-    /**
-     * Whether the AI should stream the output text.
-     * @type {boolean}
-     * @memberof RealtimeSessionConfigOutput
-     */
-    'stream_transcript': boolean;
-    /**
-     * Whether the AI should synthesize speech.
-     * @type {boolean}
-     * @memberof RealtimeSessionConfigOutput
-     */
-    'speech_synthesis_enabled': boolean;
-}
-/**
- * 
- * @export
- * @interface RealtimeSessionConfigPartial
- */
-export interface RealtimeSessionConfigPartial {
-    /**
-     * 
-     * @type {RealtimeSessionConfigPartialGeneral}
-     * @memberof RealtimeSessionConfigPartial
-     */
-    'general'?: RealtimeSessionConfigPartialGeneral;
-    /**
-     * 
-     * @type {RealtimeSessionConfigPartialInput}
-     * @memberof RealtimeSessionConfigPartial
-     */
-    'input'?: RealtimeSessionConfigPartialInput;
-    /**
-     * 
-     * @type {RealtimeSessionConfigPartialGenerative}
-     * @memberof RealtimeSessionConfigPartial
-     */
-    'generative'?: RealtimeSessionConfigPartialGenerative;
-    /**
-     * 
-     * @type {RealtimeSessionConfigPartialOutput}
-     * @memberof RealtimeSessionConfigPartial
-     */
-    'output'?: RealtimeSessionConfigPartialOutput;
-}
-/**
- * 
- * @export
- * @interface RealtimeSessionConfigPartialGeneral
- */
-export interface RealtimeSessionConfigPartialGeneral {
-    /**
-     * The time limit in seconds for the RealtimeSession.
-     * @type {number}
-     * @memberof RealtimeSessionConfigPartialGeneral
-     */
-    'time_limit_s'?: number;
-    /**
-     * Whether to save messages in the RealtimeSession. These will be saved to the context provided in the generative config. If no context is provided, a new context will be created when the session starts. 
-     * @type {boolean}
-     * @memberof RealtimeSessionConfigPartialGeneral
+     * @memberof RealtimeSessionGeneralConfig
      */
     'save_messages'?: boolean;
 }
 /**
  * Configuration for the generative AI in the RealtimeSession.
  * @export
- * @interface RealtimeSessionConfigPartialGenerative
+ * @interface RealtimeSessionGenerativeConfig
  */
-export interface RealtimeSessionConfigPartialGenerative {
+export interface RealtimeSessionGenerativeConfig {
     /**
-     * Identifier for the LLM to use in the RealtimeSession.
-     * @type {string}
-     * @memberof RealtimeSessionConfigPartialGenerative
+     * 
+     * @type {LLM}
+     * @memberof RealtimeSessionGenerativeConfig
      */
-    'llm'?: string;
+    'llm': LLM;
     /**
-     * Identifier for the voice to use in speech synthesis. If a persona is set, this will override the persona\'s voice.
+     * 
+     * @type {Voice}
+     * @memberof RealtimeSessionGenerativeConfig
+     */
+    'voice_override'?: Voice;
+    /**
+     * 
+     * @type {Persona}
+     * @memberof RealtimeSessionGenerativeConfig
+     */
+    'persona'?: Persona;
+    /**
+     * 
+     * @type {Scenario}
+     * @memberof RealtimeSessionGenerativeConfig
+     */
+    'scenario'?: Scenario;
+    /**
+     * 
+     * @type {Context}
+     * @memberof RealtimeSessionGenerativeConfig
+     */
+    'context': Context;
+    /**
+     * Extra configuration for the generative AI. Usually this is for internal purposes.
+     * @type {{ [key: string]: any; }}
+     * @memberof RealtimeSessionGenerativeConfig
+     */
+    '_extra'?: { [key: string]: any; };
+}
+/**
+ * Configuration for the generative AI in the RealtimeSession.
+ * @export
+ * @interface RealtimeSessionGenerativeConfigCreate
+ */
+export interface RealtimeSessionGenerativeConfigCreate {
+    /**
+     * The LLM to use for the RealtimeSession.
      * @type {string}
-     * @memberof RealtimeSessionConfigPartialGenerative
+     * @memberof RealtimeSessionGenerativeConfigCreate
+     */
+    'llm': string;
+    /**
+     * The voice to use for the RealtimeSession.
+     * @type {string}
+     * @memberof RealtimeSessionGenerativeConfigCreate
      */
     'voice_override'?: string;
     /**
-     * Persona identifier. Personas become part of the prompt and voice.
+     * The persona to use for the RealtimeSession.
      * @type {string}
-     * @memberof RealtimeSessionConfigPartialGenerative
+     * @memberof RealtimeSessionGenerativeConfigCreate
      */
     'persona'?: string;
     /**
-     * Scenario identifier to set the context of the session.
+     * The scenario to use for the RealtimeSession.
      * @type {string}
-     * @memberof RealtimeSessionConfigPartialGenerative
+     * @memberof RealtimeSessionGenerativeConfigCreate
      */
     'scenario'?: string;
     /**
-     * Which context to provide to the AI. Messages will be saved here if save_messages is true in the general config. 
+     * The context to use for the RealtimeSession. If unspecified, a new context will be created.
      * @type {string}
-     * @memberof RealtimeSessionConfigPartialGenerative
+     * @memberof RealtimeSessionGenerativeConfigCreate
      */
     'context'?: string;
     /**
      * Extra configuration for the generative AI. Usually this is for internal purposes.
      * @type {{ [key: string]: any; }}
-     * @memberof RealtimeSessionConfigPartialGenerative
+     * @memberof RealtimeSessionGenerativeConfigCreate
+     */
+    '_extra'?: { [key: string]: any; };
+}
+/**
+ * Configuration for the generative AI in the RealtimeSession.
+ * @export
+ * @interface RealtimeSessionGenerativeConfigUpdate
+ */
+export interface RealtimeSessionGenerativeConfigUpdate {
+    /**
+     * The LLM to use for the RealtimeSession.
+     * @type {string}
+     * @memberof RealtimeSessionGenerativeConfigUpdate
+     */
+    'llm'?: string;
+    /**
+     * The voice to use for the RealtimeSession.
+     * @type {string}
+     * @memberof RealtimeSessionGenerativeConfigUpdate
+     */
+    'voice_override'?: string;
+    /**
+     * The persona to use for the RealtimeSession.
+     * @type {string}
+     * @memberof RealtimeSessionGenerativeConfigUpdate
+     */
+    'persona'?: string;
+    /**
+     * The scenario to use for the RealtimeSession.
+     * @type {string}
+     * @memberof RealtimeSessionGenerativeConfigUpdate
+     */
+    'scenario'?: string;
+    /**
+     * The context to use for the RealtimeSession. If unspecified, a new context will be created.
+     * @type {string}
+     * @memberof RealtimeSessionGenerativeConfigUpdate
+     */
+    'context'?: string;
+    /**
+     * Extra configuration for the generative AI. Usually this is for internal purposes.
+     * @type {{ [key: string]: any; }}
+     * @memberof RealtimeSessionGenerativeConfigUpdate
      */
     '_extra'?: { [key: string]: any; };
 }
 /**
  * Configuration for the output of the RealtimeSession.
  * @export
- * @interface RealtimeSessionConfigPartialInput
+ * @interface RealtimeSessionInputConfig
  */
-export interface RealtimeSessionConfigPartialInput {
+export interface RealtimeSessionInputConfig {
     /**
      * Whether the system allows interruption during speech.
      * @type {boolean}
-     * @memberof RealtimeSessionConfigPartialInput
+     * @memberof RealtimeSessionInputConfig
      */
     'interruptable'?: boolean;
     /**
      * Whether the AI should continue listening while speaking. If true, the AI will produce another response immediately after the first one. This is only relevant if interruptable is false. 
      * @type {boolean}
-     * @memberof RealtimeSessionConfigPartialInput
+     * @memberof RealtimeSessionInputConfig
      */
     'parallel_listening'?: boolean;
 }
 /**
  * Configuration for the output of the RealtimeSession.
  * @export
- * @interface RealtimeSessionConfigPartialOutput
+ * @interface RealtimeSessionOutputConfig
  */
-export interface RealtimeSessionConfigPartialOutput {
+export interface RealtimeSessionOutputConfig {
     /**
-     * Whether the AI should stream the output text.
+     * Whether to stream AI spoken transcript or send full transcript when it\'s available all at once.
      * @type {boolean}
-     * @memberof RealtimeSessionConfigPartialOutput
+     * @memberof RealtimeSessionOutputConfig
      */
     'stream_transcript'?: boolean;
     /**
-     * Whether the AI should synthesize speech.
+     * Whether to enable speech synthesis for the RealtimeSession.
      * @type {boolean}
-     * @memberof RealtimeSessionConfigPartialOutput
+     * @memberof RealtimeSessionOutputConfig
      */
     'speech_synthesis_enabled'?: boolean;
 }
@@ -2299,10 +1903,10 @@ export interface RealtimeSessionConfigPartialOutput {
 export interface RealtimeSessionStartResponse {
     /**
      * 
-     * @type {RealtimeSessionStartResponseSession}
+     * @type {RealtimeSession}
      * @memberof RealtimeSessionStartResponse
      */
-    'session': RealtimeSessionStartResponseSession;
+    'session': RealtimeSession;
     /**
      * 
      * @type {RealtimeSessionStartResponseConnectionDetails}
@@ -2329,96 +1933,6 @@ export interface RealtimeSessionStartResponseConnectionDetails {
      */
     'token': string;
 }
-/**
- * 
- * @export
- * @interface RealtimeSessionStartResponseSession
- */
-export interface RealtimeSessionStartResponseSession {
-    /**
-     * The unique identifier of the RealtimeSession.
-     * @type {string}
-     * @memberof RealtimeSessionStartResponseSession
-     */
-    'id': string;
-    /**
-     * The current state of the RealtimeSession.
-     * @type {string}
-     * @memberof RealtimeSessionStartResponseSession
-     */
-    'state': RealtimeSessionStartResponseSessionStateEnum;
-    /**
-     * The time the RealtimeSession was created.
-     * @type {string}
-     * @memberof RealtimeSessionStartResponseSession
-     */
-    'created_at': string;
-    /**
-     * The time the RealtimeSession ended.
-     * @type {string}
-     * @memberof RealtimeSessionStartResponseSession
-     */
-    'ended_at'?: string;
-    /**
-     * The project identifier.
-     * @type {string}
-     * @memberof RealtimeSessionStartResponseSession
-     */
-    'project': string;
-    /**
-     * The human identifier.
-     * @type {string}
-     * @memberof RealtimeSessionStartResponseSession
-     */
-    'human'?: string;
-    /**
-     * Whether the session is simulated or not.
-     * @type {boolean}
-     * @memberof RealtimeSessionStartResponseSession
-     */
-    'simulated': boolean;
-    /**
-     * 
-     * @type {RealtimeSessionConfig}
-     * @memberof RealtimeSessionStartResponseSession
-     */
-    'config': RealtimeSessionConfig;
-}
-
-export const RealtimeSessionStartResponseSessionStateEnum = {
-    Ended: 'ended',
-    InProgress: 'in_progress',
-    NotStarted: 'not_started'
-} as const;
-
-export type RealtimeSessionStartResponseSessionStateEnum = typeof RealtimeSessionStartResponseSessionStateEnum[keyof typeof RealtimeSessionStartResponseSessionStateEnum];
-
-/**
- * 
- * @export
- * @interface RefusalContentPart
- */
-export interface RefusalContentPart {
-    /**
-     * The type of the content part.
-     * @type {string}
-     * @memberof RefusalContentPart
-     */
-    'type': RefusalContentPartTypeEnum;
-    /**
-     * The refusal message generated by the model.
-     * @type {string}
-     * @memberof RefusalContentPart
-     */
-    'refusal': string;
-}
-
-export const RefusalContentPartTypeEnum = {
-    Refusal: 'refusal'
-} as const;
-
-export type RefusalContentPartTypeEnum = typeof RefusalContentPartTypeEnum[keyof typeof RefusalContentPartTypeEnum];
-
 /**
  * 
  * @export
@@ -2606,6 +2120,160 @@ export interface SessionMessage {
     'text'?: string;
 }
 /**
+ * @type SessionStartRequest
+ * @export
+ */
+export type SessionStartRequest = SessionStartRequestOneOf | SessionStartRequestOneOf1;
+
+/**
+ * 
+ * @export
+ * @interface SessionStartRequestOneOf
+ */
+export interface SessionStartRequestOneOf {
+    /**
+     * 
+     * @type {Array<HistoryMessage>}
+     * @memberof SessionStartRequestOneOf
+     */
+    'history'?: Array<HistoryMessage>;
+    /**
+     * 
+     * @type {number}
+     * @memberof SessionStartRequestOneOf
+     */
+    'time_limit_s'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof SessionStartRequestOneOf
+     */
+    'voice_override'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SessionStartRequestOneOf
+     */
+    'llm'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SessionStartRequestOneOf
+     */
+    'persona'?: string;
+    /**
+     * save session messages
+     * @type {boolean}
+     * @memberof SessionStartRequestOneOf
+     */
+    'save_messages'?: boolean;
+    /**
+     * reserved for internal use
+     * @type {object}
+     * @memberof SessionStartRequestOneOf
+     */
+    '_extra'?: object;
+}
+/**
+ * 
+ * @export
+ * @interface SessionStartRequestOneOf1
+ */
+export interface SessionStartRequestOneOf1 {
+    /**
+     * 
+     * @type {number}
+     * @memberof SessionStartRequestOneOf1
+     */
+    'time_limit_s'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof SessionStartRequestOneOf1
+     */
+    'voice_override'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SessionStartRequestOneOf1
+     */
+    'llm'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SessionStartRequestOneOf1
+     */
+    'scenario'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SessionStartRequestOneOf1
+     */
+    'persona'?: string;
+    /**
+     * save session messages
+     * @type {boolean}
+     * @memberof SessionStartRequestOneOf1
+     */
+    'save_messages'?: boolean;
+    /**
+     * reserved for internal use
+     * @type {object}
+     * @memberof SessionStartRequestOneOf1
+     */
+    '_extra'?: object;
+}
+/**
+ * 
+ * @export
+ * @interface SessionStartResponse
+ */
+export interface SessionStartResponse {
+    /**
+     * 
+     * @type {Session}
+     * @memberof SessionStartResponse
+     */
+    'session': Session;
+    /**
+     * 
+     * @type {Persona}
+     * @memberof SessionStartResponse
+     */
+    'persona'?: Persona;
+    /**
+     * 
+     * @type {Scenario}
+     * @memberof SessionStartResponse
+     */
+    'scenario'?: Scenario;
+    /**
+     * 
+     * @type {SessionStartResponseConnectionDetails}
+     * @memberof SessionStartResponse
+     */
+    'connection_details': SessionStartResponseConnectionDetails;
+}
+/**
+ * 
+ * @export
+ * @interface SessionStartResponseConnectionDetails
+ */
+export interface SessionStartResponseConnectionDetails {
+    /**
+     * 
+     * @type {string}
+     * @memberof SessionStartResponseConnectionDetails
+     */
+    'token'?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SessionStartResponseConnectionDetails
+     */
+    'url'?: string;
+}
+/**
  * 
  * @export
  * @interface SessionTimelineItem
@@ -2647,76 +2315,11 @@ export interface StartRealtimeSessionRequest {
     'simulated'?: boolean;
     /**
      * 
-     * @type {RealtimeSessionConfigPartial}
+     * @type {RealtimeSessionConfigCreate}
      * @memberof StartRealtimeSessionRequest
      */
-    'config': RealtimeSessionConfigPartial;
+    'config': RealtimeSessionConfigCreate;
 }
-/**
- * 
- * @export
- * @interface SystemMessage
- */
-export interface SystemMessage {
-    /**
-     * 
-     * @type {SystemMessageContent}
-     * @memberof SystemMessage
-     */
-    'content': SystemMessageContent;
-    /**
-     * The role of the messages author, in this case `system`.
-     * @type {string}
-     * @memberof SystemMessage
-     */
-    'role': SystemMessageRoleEnum;
-}
-
-export const SystemMessageRoleEnum = {
-    System: 'system'
-} as const;
-
-export type SystemMessageRoleEnum = typeof SystemMessageRoleEnum[keyof typeof SystemMessageRoleEnum];
-
-/**
- * @type SystemMessageContent
- * The contents of the system message.
- * @export
- */
-export type SystemMessageContent = Array<SystemMessageContentOneOfInner> | string;
-
-/**
- * @type SystemMessageContentOneOfInner
- * @export
- */
-export type SystemMessageContentOneOfInner = TextContentPart;
-
-/**
- * Text content
- * @export
- * @interface TextContentPart
- */
-export interface TextContentPart {
-    /**
-     * The type of the content part.
-     * @type {string}
-     * @memberof TextContentPart
-     */
-    'type': TextContentPartTypeEnum;
-    /**
-     * The text content.
-     * @type {string}
-     * @memberof TextContentPart
-     */
-    'text': string;
-}
-
-export const TextContentPartTypeEnum = {
-    Text: 'text'
-} as const;
-
-export type TextContentPartTypeEnum = typeof TextContentPartTypeEnum[keyof typeof TextContentPartTypeEnum];
-
 /**
  * 
  * @export
@@ -2790,50 +2393,41 @@ export interface UpdateScenarioRequest {
 /**
  * 
  * @export
- * @interface UpdateUsageTokenRequest
+ * @interface UpdateSessionRequest
  */
-export interface UpdateUsageTokenRequest {
+export interface UpdateSessionRequest {
     /**
      * 
-     * @type {Array<UpdateUsageTokenRequestLimitsInner>}
-     * @memberof UpdateUsageTokenRequest
+     * @type {number}
+     * @memberof UpdateSessionRequest
      */
-    'limits': Array<UpdateUsageTokenRequestLimitsInner>;
+    'time_limit_s'?: number;
     /**
-     * The ID of the human that the token is for. (this is typically your user id from your system)
+     * 
      * @type {string}
-     * @memberof UpdateUsageTokenRequest
+     * @memberof UpdateSessionRequest
      */
-    'human_id': string;
+    'voice_override'?: string;
 }
 /**
  * 
  * @export
- * @interface UpdateUsageTokenRequestLimitsInner
+ * @interface UpdateUsageLimitsRequest
  */
-export interface UpdateUsageTokenRequestLimitsInner {
+export interface UpdateUsageLimitsRequest {
     /**
      * 
+     * @type {Array<UsageLimitsInner>}
+     * @memberof UpdateUsageLimitsRequest
+     */
+    'limits': Array<UsageLimitsInner>;
+    /**
+     * The ID of the human that the token is for. (this is typically your user id from your system)
      * @type {string}
-     * @memberof UpdateUsageTokenRequestLimitsInner
+     * @memberof UpdateUsageLimitsRequest
      */
-    'type': UpdateUsageTokenRequestLimitsInnerTypeEnum;
-    /**
-     * 
-     * @type {number}
-     * @memberof UpdateUsageTokenRequestLimitsInner
-     */
-    'value': number;
+    'human_id': string;
 }
-
-export const UpdateUsageTokenRequestLimitsInnerTypeEnum = {
-    ConversationalSeconds: 'conversational_seconds',
-    VoiceSynthesisSeconds: 'voice_synthesis_seconds',
-    TokenCnt: 'token_cnt'
-} as const;
-
-export type UpdateUsageTokenRequestLimitsInnerTypeEnum = typeof UpdateUsageTokenRequestLimitsInnerTypeEnum[keyof typeof UpdateUsageTokenRequestLimitsInnerTypeEnum];
-
 /**
  * 
  * @export
@@ -2861,10 +2455,10 @@ export interface UpdateVoiceRequest {
 export interface Usage {
     /**
      * 
-     * @type {string}
+     * @type {UsageType}
      * @memberof Usage
      */
-    'type': UsageTypeEnum;
+    'type': UsageType;
     /**
      * 
      * @type {number}
@@ -2873,52 +2467,61 @@ export interface Usage {
     'value': number;
 }
 
-export const UsageTypeEnum = {
+
+/**
+ * 
+ * @export
+ * @interface UsageLimitsInner
+ */
+export interface UsageLimitsInner {
+    /**
+     * 
+     * @type {UsageType}
+     * @memberof UsageLimitsInner
+     */
+    'type': UsageType;
+    /**
+     * 
+     * @type {number}
+     * @memberof UsageLimitsInner
+     */
+    'value': number;
+}
+
+
+/**
+ * 
+ * @export
+ * @interface UsageTokenRequest
+ */
+export interface UsageTokenRequest {
+    /**
+     * 
+     * @type {Array<UsageLimitsInner>}
+     * @memberof UsageTokenRequest
+     */
+    'limits': Array<UsageLimitsInner>;
+    /**
+     * The ID of the human that the token is for. (this is typically your user id from your system)
+     * @type {string}
+     * @memberof UsageTokenRequest
+     */
+    'human_id': string;
+}
+/**
+ * 
+ * @export
+ * @enum {string}
+ */
+
+export const UsageType = {
     ConversationalSeconds: 'conversational_seconds',
     VoiceSynthesisSeconds: 'voice_synthesis_seconds',
     TokenCnt: 'token_cnt'
 } as const;
 
-export type UsageTypeEnum = typeof UsageTypeEnum[keyof typeof UsageTypeEnum];
+export type UsageType = typeof UsageType[keyof typeof UsageType];
 
-/**
- * 
- * @export
- * @interface UserMessage
- */
-export interface UserMessage {
-    /**
-     * 
-     * @type {UserMessageContent}
-     * @memberof UserMessage
-     */
-    'content': UserMessageContent;
-    /**
-     * The role of the messages author, in this case `user`.
-     * @type {string}
-     * @memberof UserMessage
-     */
-    'role': UserMessageRoleEnum;
-}
-
-export const UserMessageRoleEnum = {
-    User: 'user'
-} as const;
-
-export type UserMessageRoleEnum = typeof UserMessageRoleEnum[keyof typeof UserMessageRoleEnum];
-
-/**
- * @type UserMessageContent
- * The contents of the user message.
- * @export
- */
-export type UserMessageContent = Array<UserMessageContentOneOfInner> | string;
-
-/**
- * @type UserMessageContentOneOfInner
- * @export
- */
-export type UserMessageContentOneOfInner = AudioContentPart | TextContentPart;
 
 /**
  * 
@@ -3011,6 +2614,71 @@ export interface Voice {
      */
     '_extra'?: { [key: string]: any; };
 }
+/**
+ * @type WebhookMessage
+ * @export
+ */
+export type WebhookMessage = WebhookMessageUsageTracked;
+
+/**
+ * 
+ * @export
+ * @interface WebhookMessageUsageTracked
+ */
+export interface WebhookMessageUsageTracked {
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookMessageUsageTracked
+     */
+    'type': WebhookMessageUsageTrackedTypeEnum;
+    /**
+     * 
+     * @type {WebhookMessageUsageTrackedPayload}
+     * @memberof WebhookMessageUsageTracked
+     */
+    'payload': WebhookMessageUsageTrackedPayload;
+}
+
+export const WebhookMessageUsageTrackedTypeEnum = {
+    UsageTracked: 'usage.tracked'
+} as const;
+
+export type WebhookMessageUsageTrackedTypeEnum = typeof WebhookMessageUsageTrackedTypeEnum[keyof typeof WebhookMessageUsageTrackedTypeEnum];
+
+/**
+ * 
+ * @export
+ * @interface WebhookMessageUsageTrackedPayload
+ */
+export interface WebhookMessageUsageTrackedPayload {
+    /**
+     * 
+     * @type {string}
+     * @memberof WebhookMessageUsageTrackedPayload
+     */
+    'human_id'?: string;
+    /**
+     * 
+     * @type {UsageType}
+     * @memberof WebhookMessageUsageTrackedPayload
+     */
+    'type'?: UsageType;
+    /**
+     * 
+     * @type {number}
+     * @memberof WebhookMessageUsageTrackedPayload
+     */
+    'value'?: number;
+    /**
+     * 
+     * @type {{ [key: string]: any; }}
+     * @memberof WebhookMessageUsageTrackedPayload
+     */
+    'extra'?: { [key: string]: any; };
+}
+
+
 
 /**
  * CreditApi - axios parameter creator
@@ -3444,13 +3112,13 @@ export const InferenceApiAxiosParamCreator = function (configuration?: Configura
         /**
          * Given messages, generates LLM output text and optionally speech
          * @summary Chat Completions (+ Voice)
-         * @param {ChatCompletionsRequest} chatCompletionsRequest 
+         * @param {ChatCompletionRequest} chatCompletionRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatCompletions: async (chatCompletionsRequest: ChatCompletionsRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'chatCompletionsRequest' is not null or undefined
-            assertParamExists('chatCompletions', 'chatCompletionsRequest', chatCompletionsRequest)
+        chatCompletions: async (chatCompletionRequest: ChatCompletionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'chatCompletionRequest' is not null or undefined
+            assertParamExists('chatCompletions', 'chatCompletionRequest', chatCompletionRequest)
             const localVarPath = `/api/v1/chat/completions`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3477,7 +3145,7 @@ export const InferenceApiAxiosParamCreator = function (configuration?: Configura
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(chatCompletionsRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(chatCompletionRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3497,12 +3165,12 @@ export const InferenceApiFp = function(configuration?: Configuration) {
         /**
          * Given messages, generates LLM output text and optionally speech
          * @summary Chat Completions (+ Voice)
-         * @param {ChatCompletionsRequest} chatCompletionsRequest 
+         * @param {ChatCompletionRequest} chatCompletionRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async chatCompletions(chatCompletionsRequest: ChatCompletionsRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatCompletions200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.chatCompletions(chatCompletionsRequest, options);
+        async chatCompletions(chatCompletionRequest: ChatCompletionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ChatCompletionResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.chatCompletions(chatCompletionRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['InferenceApi.chatCompletions']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -3520,12 +3188,12 @@ export const InferenceApiFactory = function (configuration?: Configuration, base
         /**
          * Given messages, generates LLM output text and optionally speech
          * @summary Chat Completions (+ Voice)
-         * @param {ChatCompletionsRequest} chatCompletionsRequest 
+         * @param {ChatCompletionRequest} chatCompletionRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        chatCompletions(chatCompletionsRequest: ChatCompletionsRequest, options?: RawAxiosRequestConfig): AxiosPromise<ChatCompletions200Response> {
-            return localVarFp.chatCompletions(chatCompletionsRequest, options).then((request) => request(axios, basePath));
+        chatCompletions(chatCompletionRequest: ChatCompletionRequest, options?: RawAxiosRequestConfig): AxiosPromise<ChatCompletionResponse> {
+            return localVarFp.chatCompletions(chatCompletionRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3540,13 +3208,13 @@ export class InferenceApi extends BaseAPI {
     /**
      * Given messages, generates LLM output text and optionally speech
      * @summary Chat Completions (+ Voice)
-     * @param {ChatCompletionsRequest} chatCompletionsRequest 
+     * @param {ChatCompletionRequest} chatCompletionRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof InferenceApi
      */
-    public chatCompletions(chatCompletionsRequest: ChatCompletionsRequest, options?: RawAxiosRequestConfig) {
-        return InferenceApiFp(this.configuration).chatCompletions(chatCompletionsRequest, options).then((request) => request(this.axios, this.basePath));
+    public chatCompletions(chatCompletionRequest: ChatCompletionRequest, options?: RawAxiosRequestConfig) {
+        return InferenceApiFp(this.configuration).chatCompletions(chatCompletionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -4729,15 +4397,15 @@ export const RealtimeApiAxiosParamCreator = function (configuration?: Configurat
          * Update the RealtimeSession with the given identifier. 
          * @summary Update a RealtimeSession.
          * @param {string} session The unique identifier of the RealtimeSession.
-         * @param {RealtimeSessionConfigPartial} realtimeSessionConfigPartial 
+         * @param {RealtimeSessionConfigUpdate} realtimeSessionConfigUpdate 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateRealtimeSession: async (session: string, realtimeSessionConfigPartial: RealtimeSessionConfigPartial, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateRealtimeSession: async (session: string, realtimeSessionConfigUpdate: RealtimeSessionConfigUpdate, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'session' is not null or undefined
             assertParamExists('updateRealtimeSession', 'session', session)
-            // verify required parameter 'realtimeSessionConfigPartial' is not null or undefined
-            assertParamExists('updateRealtimeSession', 'realtimeSessionConfigPartial', realtimeSessionConfigPartial)
+            // verify required parameter 'realtimeSessionConfigUpdate' is not null or undefined
+            assertParamExists('updateRealtimeSession', 'realtimeSessionConfigUpdate', realtimeSessionConfigUpdate)
             const localVarPath = `/api/v1/realtime/{session}/update`
                 .replace(`{${"session"}}`, encodeURIComponent(String(session)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -4765,7 +4433,7 @@ export const RealtimeApiAxiosParamCreator = function (configuration?: Configurat
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(realtimeSessionConfigPartial, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(realtimeSessionConfigUpdate, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -4837,12 +4505,12 @@ export const RealtimeApiFp = function(configuration?: Configuration) {
          * Update the RealtimeSession with the given identifier. 
          * @summary Update a RealtimeSession.
          * @param {string} session The unique identifier of the RealtimeSession.
-         * @param {RealtimeSessionConfigPartial} realtimeSessionConfigPartial 
+         * @param {RealtimeSessionConfigUpdate} realtimeSessionConfigUpdate 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateRealtimeSession(session: string, realtimeSessionConfigPartial: RealtimeSessionConfigPartial, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RealtimeSession>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateRealtimeSession(session, realtimeSessionConfigPartial, options);
+        async updateRealtimeSession(session: string, realtimeSessionConfigUpdate: RealtimeSessionConfigUpdate, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<RealtimeSession>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateRealtimeSession(session, realtimeSessionConfigUpdate, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['RealtimeApi.updateRealtimeSession']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -4900,12 +4568,12 @@ export const RealtimeApiFactory = function (configuration?: Configuration, baseP
          * Update the RealtimeSession with the given identifier. 
          * @summary Update a RealtimeSession.
          * @param {string} session The unique identifier of the RealtimeSession.
-         * @param {RealtimeSessionConfigPartial} realtimeSessionConfigPartial 
+         * @param {RealtimeSessionConfigUpdate} realtimeSessionConfigUpdate 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateRealtimeSession(session: string, realtimeSessionConfigPartial: RealtimeSessionConfigPartial, options?: RawAxiosRequestConfig): AxiosPromise<RealtimeSession> {
-            return localVarFp.updateRealtimeSession(session, realtimeSessionConfigPartial, options).then((request) => request(axios, basePath));
+        updateRealtimeSession(session: string, realtimeSessionConfigUpdate: RealtimeSessionConfigUpdate, options?: RawAxiosRequestConfig): AxiosPromise<RealtimeSession> {
+            return localVarFp.updateRealtimeSession(session, realtimeSessionConfigUpdate, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -4968,13 +4636,13 @@ export class RealtimeApi extends BaseAPI {
      * Update the RealtimeSession with the given identifier. 
      * @summary Update a RealtimeSession.
      * @param {string} session The unique identifier of the RealtimeSession.
-     * @param {RealtimeSessionConfigPartial} realtimeSessionConfigPartial 
+     * @param {RealtimeSessionConfigUpdate} realtimeSessionConfigUpdate 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof RealtimeApi
      */
-    public updateRealtimeSession(session: string, realtimeSessionConfigPartial: RealtimeSessionConfigPartial, options?: RawAxiosRequestConfig) {
-        return RealtimeApiFp(this.configuration).updateRealtimeSession(session, realtimeSessionConfigPartial, options).then((request) => request(this.axios, this.basePath));
+    public updateRealtimeSession(session: string, realtimeSessionConfigUpdate: RealtimeSessionConfigUpdate, options?: RawAxiosRequestConfig) {
+        return RealtimeApiFp(this.configuration).updateRealtimeSession(session, realtimeSessionConfigUpdate, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -5578,15 +5246,15 @@ export const SessionApiAxiosParamCreator = function (configuration?: Configurati
          * 
          * @summary Update a session by id
          * @param {string} sessionId 
-         * @param {ApiV1SessionSessionIdPutRequest} apiV1SessionSessionIdPutRequest 
+         * @param {UpdateSessionRequest} updateSessionRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1SessionSessionIdPut: async (sessionId: string, apiV1SessionSessionIdPutRequest: ApiV1SessionSessionIdPutRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        apiV1SessionSessionIdPut: async (sessionId: string, updateSessionRequest: UpdateSessionRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'sessionId' is not null or undefined
             assertParamExists('apiV1SessionSessionIdPut', 'sessionId', sessionId)
-            // verify required parameter 'apiV1SessionSessionIdPutRequest' is not null or undefined
-            assertParamExists('apiV1SessionSessionIdPut', 'apiV1SessionSessionIdPutRequest', apiV1SessionSessionIdPutRequest)
+            // verify required parameter 'updateSessionRequest' is not null or undefined
+            assertParamExists('apiV1SessionSessionIdPut', 'updateSessionRequest', updateSessionRequest)
             const localVarPath = `/api/v1/session/{session_id}`
                 .replace(`{${"session_id"}}`, encodeURIComponent(String(sessionId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -5614,7 +5282,7 @@ export const SessionApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(apiV1SessionSessionIdPutRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(updateSessionRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5665,13 +5333,13 @@ export const SessionApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * Creates a new session based on the input request data
          * @summary Create a new session
-         * @param {ApiV1SessionStartPostRequest} apiV1SessionStartPostRequest 
+         * @param {SessionStartRequest} sessionStartRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1SessionStartPost: async (apiV1SessionStartPostRequest: ApiV1SessionStartPostRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'apiV1SessionStartPostRequest' is not null or undefined
-            assertParamExists('apiV1SessionStartPost', 'apiV1SessionStartPostRequest', apiV1SessionStartPostRequest)
+        apiV1SessionStartPost: async (sessionStartRequest: SessionStartRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'sessionStartRequest' is not null or undefined
+            assertParamExists('apiV1SessionStartPost', 'sessionStartRequest', sessionStartRequest)
             const localVarPath = `/api/v1/session/start`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -5698,7 +5366,7 @@ export const SessionApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(apiV1SessionStartPostRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(sessionStartRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -5771,12 +5439,12 @@ export const SessionApiFp = function(configuration?: Configuration) {
          * 
          * @summary Update a session by id
          * @param {string} sessionId 
-         * @param {ApiV1SessionSessionIdPutRequest} apiV1SessionSessionIdPutRequest 
+         * @param {UpdateSessionRequest} updateSessionRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiV1SessionSessionIdPut(sessionId: string, apiV1SessionSessionIdPutRequest: ApiV1SessionSessionIdPutRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1SessionSessionIdPut(sessionId, apiV1SessionSessionIdPutRequest, options);
+        async apiV1SessionSessionIdPut(sessionId: string, updateSessionRequest: UpdateSessionRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1SessionSessionIdPut(sessionId, updateSessionRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SessionApi.apiV1SessionSessionIdPut']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -5797,12 +5465,12 @@ export const SessionApiFp = function(configuration?: Configuration) {
         /**
          * Creates a new session based on the input request data
          * @summary Create a new session
-         * @param {ApiV1SessionStartPostRequest} apiV1SessionStartPostRequest 
+         * @param {SessionStartRequest} sessionStartRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async apiV1SessionStartPost(apiV1SessionStartPostRequest: ApiV1SessionStartPostRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ApiV1SessionStartPost200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1SessionStartPost(apiV1SessionStartPostRequest, options);
+        async apiV1SessionStartPost(sessionStartRequest: SessionStartRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SessionStartResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.apiV1SessionStartPost(sessionStartRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SessionApi.apiV1SessionStartPost']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -5861,12 +5529,12 @@ export const SessionApiFactory = function (configuration?: Configuration, basePa
          * 
          * @summary Update a session by id
          * @param {string} sessionId 
-         * @param {ApiV1SessionSessionIdPutRequest} apiV1SessionSessionIdPutRequest 
+         * @param {UpdateSessionRequest} updateSessionRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1SessionSessionIdPut(sessionId: string, apiV1SessionSessionIdPutRequest: ApiV1SessionSessionIdPutRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
-            return localVarFp.apiV1SessionSessionIdPut(sessionId, apiV1SessionSessionIdPutRequest, options).then((request) => request(axios, basePath));
+        apiV1SessionSessionIdPut(sessionId: string, updateSessionRequest: UpdateSessionRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
+            return localVarFp.apiV1SessionSessionIdPut(sessionId, updateSessionRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -5881,12 +5549,12 @@ export const SessionApiFactory = function (configuration?: Configuration, basePa
         /**
          * Creates a new session based on the input request data
          * @summary Create a new session
-         * @param {ApiV1SessionStartPostRequest} apiV1SessionStartPostRequest 
+         * @param {SessionStartRequest} sessionStartRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        apiV1SessionStartPost(apiV1SessionStartPostRequest: ApiV1SessionStartPostRequest, options?: RawAxiosRequestConfig): AxiosPromise<ApiV1SessionStartPost200Response> {
-            return localVarFp.apiV1SessionStartPost(apiV1SessionStartPostRequest, options).then((request) => request(axios, basePath));
+        apiV1SessionStartPost(sessionStartRequest: SessionStartRequest, options?: RawAxiosRequestConfig): AxiosPromise<SessionStartResponse> {
+            return localVarFp.apiV1SessionStartPost(sessionStartRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -5950,13 +5618,13 @@ export class SessionApi extends BaseAPI {
      * 
      * @summary Update a session by id
      * @param {string} sessionId 
-     * @param {ApiV1SessionSessionIdPutRequest} apiV1SessionSessionIdPutRequest 
+     * @param {UpdateSessionRequest} updateSessionRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SessionApi
      */
-    public apiV1SessionSessionIdPut(sessionId: string, apiV1SessionSessionIdPutRequest: ApiV1SessionSessionIdPutRequest, options?: RawAxiosRequestConfig) {
-        return SessionApiFp(this.configuration).apiV1SessionSessionIdPut(sessionId, apiV1SessionSessionIdPutRequest, options).then((request) => request(this.axios, this.basePath));
+    public apiV1SessionSessionIdPut(sessionId: string, updateSessionRequest: UpdateSessionRequest, options?: RawAxiosRequestConfig) {
+        return SessionApiFp(this.configuration).apiV1SessionSessionIdPut(sessionId, updateSessionRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -5974,13 +5642,13 @@ export class SessionApi extends BaseAPI {
     /**
      * Creates a new session based on the input request data
      * @summary Create a new session
-     * @param {ApiV1SessionStartPostRequest} apiV1SessionStartPostRequest 
+     * @param {SessionStartRequest} sessionStartRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SessionApi
      */
-    public apiV1SessionStartPost(apiV1SessionStartPostRequest: ApiV1SessionStartPostRequest, options?: RawAxiosRequestConfig) {
-        return SessionApiFp(this.configuration).apiV1SessionStartPost(apiV1SessionStartPostRequest, options).then((request) => request(this.axios, this.basePath));
+    public apiV1SessionStartPost(sessionStartRequest: SessionStartRequest, options?: RawAxiosRequestConfig) {
+        return SessionApiFp(this.configuration).apiV1SessionStartPost(sessionStartRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -5995,13 +5663,13 @@ export const UsageApiAxiosParamCreator = function (configuration?: Configuration
         /**
          * Requests a token for a human
          * @summary Request new human token
-         * @param {UpdateUsageTokenRequest} updateUsageTokenRequest 
+         * @param {UsageTokenRequest} usageTokenRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createUsageToken: async (updateUsageTokenRequest: UpdateUsageTokenRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'updateUsageTokenRequest' is not null or undefined
-            assertParamExists('createUsageToken', 'updateUsageTokenRequest', updateUsageTokenRequest)
+        createUsageToken: async (usageTokenRequest: UsageTokenRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'usageTokenRequest' is not null or undefined
+            assertParamExists('createUsageToken', 'usageTokenRequest', usageTokenRequest)
             const localVarPath = `/api/v1/usage/token`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6028,7 +5696,7 @@ export const UsageApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(updateUsageTokenRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(usageTokenRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6074,14 +5742,14 @@ export const UsageApiAxiosParamCreator = function (configuration?: Configuration
         },
         /**
          * Updates the usage limits of a human
-         * @summary Update human usage limits
-         * @param {UpdateUsageTokenRequest} updateUsageTokenRequest 
+         * @summary Update limits on a usage token
+         * @param {UpdateUsageLimitsRequest} updateUsageLimitsRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateUsageToken: async (updateUsageTokenRequest: UpdateUsageTokenRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'updateUsageTokenRequest' is not null or undefined
-            assertParamExists('updateUsageToken', 'updateUsageTokenRequest', updateUsageTokenRequest)
+        updateUsageToken: async (updateUsageLimitsRequest: UpdateUsageLimitsRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'updateUsageLimitsRequest' is not null or undefined
+            assertParamExists('updateUsageToken', 'updateUsageLimitsRequest', updateUsageLimitsRequest)
             const localVarPath = `/api/v1/usage/token`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -6108,7 +5776,7 @@ export const UsageApiAxiosParamCreator = function (configuration?: Configuration
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(updateUsageTokenRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(updateUsageLimitsRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -6128,12 +5796,12 @@ export const UsageApiFp = function(configuration?: Configuration) {
         /**
          * Requests a token for a human
          * @summary Request new human token
-         * @param {UpdateUsageTokenRequest} updateUsageTokenRequest 
+         * @param {UsageTokenRequest} usageTokenRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createUsageToken(updateUsageTokenRequest: UpdateUsageTokenRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateUsageToken200Response>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createUsageToken(updateUsageTokenRequest, options);
+        async createUsageToken(usageTokenRequest: UsageTokenRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<CreateUsageToken200Response>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createUsageToken(usageTokenRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UsageApi.createUsageToken']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -6144,7 +5812,7 @@ export const UsageApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getUsageLimits(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UpdateUsageTokenRequestLimitsInner>>> {
+        async getUsageLimits(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UsageLimitsInner>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getUsageLimits(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UsageApi.getUsageLimits']?.[localVarOperationServerIndex]?.url;
@@ -6152,13 +5820,13 @@ export const UsageApiFp = function(configuration?: Configuration) {
         },
         /**
          * Updates the usage limits of a human
-         * @summary Update human usage limits
-         * @param {UpdateUsageTokenRequest} updateUsageTokenRequest 
+         * @summary Update limits on a usage token
+         * @param {UpdateUsageLimitsRequest} updateUsageLimitsRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateUsageToken(updateUsageTokenRequest: UpdateUsageTokenRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateUsageToken(updateUsageTokenRequest, options);
+        async updateUsageToken(updateUsageLimitsRequest: UpdateUsageLimitsRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<{ [key: string]: any; }>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateUsageToken(updateUsageLimitsRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UsageApi.updateUsageToken']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -6176,12 +5844,12 @@ export const UsageApiFactory = function (configuration?: Configuration, basePath
         /**
          * Requests a token for a human
          * @summary Request new human token
-         * @param {UpdateUsageTokenRequest} updateUsageTokenRequest 
+         * @param {UsageTokenRequest} usageTokenRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createUsageToken(updateUsageTokenRequest: UpdateUsageTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<CreateUsageToken200Response> {
-            return localVarFp.createUsageToken(updateUsageTokenRequest, options).then((request) => request(axios, basePath));
+        createUsageToken(usageTokenRequest: UsageTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<CreateUsageToken200Response> {
+            return localVarFp.createUsageToken(usageTokenRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * Gets the usage limits of a token
@@ -6189,18 +5857,18 @@ export const UsageApiFactory = function (configuration?: Configuration, basePath
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUsageLimits(options?: RawAxiosRequestConfig): AxiosPromise<Array<UpdateUsageTokenRequestLimitsInner>> {
+        getUsageLimits(options?: RawAxiosRequestConfig): AxiosPromise<Array<UsageLimitsInner>> {
             return localVarFp.getUsageLimits(options).then((request) => request(axios, basePath));
         },
         /**
          * Updates the usage limits of a human
-         * @summary Update human usage limits
-         * @param {UpdateUsageTokenRequest} updateUsageTokenRequest 
+         * @summary Update limits on a usage token
+         * @param {UpdateUsageLimitsRequest} updateUsageLimitsRequest 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateUsageToken(updateUsageTokenRequest: UpdateUsageTokenRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
-            return localVarFp.updateUsageToken(updateUsageTokenRequest, options).then((request) => request(axios, basePath));
+        updateUsageToken(updateUsageLimitsRequest: UpdateUsageLimitsRequest, options?: RawAxiosRequestConfig): AxiosPromise<{ [key: string]: any; }> {
+            return localVarFp.updateUsageToken(updateUsageLimitsRequest, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -6215,13 +5883,13 @@ export class UsageApi extends BaseAPI {
     /**
      * Requests a token for a human
      * @summary Request new human token
-     * @param {UpdateUsageTokenRequest} updateUsageTokenRequest 
+     * @param {UsageTokenRequest} usageTokenRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsageApi
      */
-    public createUsageToken(updateUsageTokenRequest: UpdateUsageTokenRequest, options?: RawAxiosRequestConfig) {
-        return UsageApiFp(this.configuration).createUsageToken(updateUsageTokenRequest, options).then((request) => request(this.axios, this.basePath));
+    public createUsageToken(usageTokenRequest: UsageTokenRequest, options?: RawAxiosRequestConfig) {
+        return UsageApiFp(this.configuration).createUsageToken(usageTokenRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -6237,14 +5905,14 @@ export class UsageApi extends BaseAPI {
 
     /**
      * Updates the usage limits of a human
-     * @summary Update human usage limits
-     * @param {UpdateUsageTokenRequest} updateUsageTokenRequest 
+     * @summary Update limits on a usage token
+     * @param {UpdateUsageLimitsRequest} updateUsageLimitsRequest 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UsageApi
      */
-    public updateUsageToken(updateUsageTokenRequest: UpdateUsageTokenRequest, options?: RawAxiosRequestConfig) {
-        return UsageApiFp(this.configuration).updateUsageToken(updateUsageTokenRequest, options).then((request) => request(this.axios, this.basePath));
+    public updateUsageToken(updateUsageLimitsRequest: UpdateUsageLimitsRequest, options?: RawAxiosRequestConfig) {
+        return UsageApiFp(this.configuration).updateUsageToken(updateUsageLimitsRequest, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

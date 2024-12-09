@@ -4,7 +4,6 @@ import {
   Configuration,
   PersonaApiFactory,
   ScenarioApiFactory,
-  UsageApiFactory,
 } from "@/generated";
 import { UserController } from "@/lib/server/controller/user";
 

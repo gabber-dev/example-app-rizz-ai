@@ -34,15 +34,15 @@ export class ScoreController {
       throw new Error("Couldn't get persona or scenario");
     }
     const scenarioObj = (
-      await scenarioApi.getScenario(sessionObj.config.generative.scenario)
+      await scenarioApi.getScenario(sessionObj.config.generative.scenario.id)
     ).data;
 
     const personaObj = (
-      await personaApi.getPersona(sessionObj.config.generative.persona)
+      await personaApi.getPersona(sessionObj.config.generative.persona.id)
     ).data;
 
     const messages = (
-      await llmAPI.listContextMessages(sessionObj.config.generative.context)
+      await llmAPI.listContextMessages(sessionObj.config.generative.context.id)
     ).data;
 
     const history = messages.values
