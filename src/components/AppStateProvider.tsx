@@ -63,6 +63,8 @@ type AppStateContextType = {
 
   gender: "men" | "women" | "all";
   setGender: (g: "men" | "women" | "all") => void;
+
+  user: UserInfo | null;
 };
 
 export const CreditContext = createContext<AppStateContextType | undefined>(
@@ -235,6 +237,8 @@ export function AppStateProvider({
 
         gender,
         setGender,
+
+        user: userInfo,
       }}
     >
       {children}
