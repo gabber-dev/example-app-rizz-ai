@@ -1,4 +1,5 @@
 import { useAppState } from "./AppStateProvider";
+import { useRouter } from "next/navigation";
 
 export function ScenariosList() {
   const {
@@ -6,10 +7,14 @@ export function ScenariosList() {
     selectedScenario,
     setSelectedPersona,
     setSelectedScenario,
+    selectedPersona,
+    userInfo,
   } = useAppState();
+  const router = useRouter();
+
   return (
-    <div className="flex flex-col h-full min-h-0">
-      <div className="flex justify-between items-center mb-4 flex-shrink-0">
+    <div className="flex flex-col max-h-[calc(100vh-350px)]">
+      <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold md:text-xl text-lg">
           Select a Scenario To Practice
         </h2>
@@ -23,9 +28,9 @@ export function ScenariosList() {
           Change Character
         </button>
       </div>
-      <div className="overflow-y-auto min-h-0 flex-1">
+      <div className="overflow-y-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pb-4">
-          {scenarios.slice(0, 6).map((scenario) => (
+          {scenarios.map((scenario) => (
             <button
               key={scenario.id}
               onClick={() => setSelectedScenario(scenario)}
@@ -44,6 +49,24 @@ export function ScenariosList() {
           ))}
         </div>
       </div>
+      {selectedScenario && selectedPersona && (
+        <div className="mt-4 flex justify-center">
+          <button
+            onClick={() => {
+              if (!userInfo) {
+                router.push("/auth/google/login");
+              } else {
+              router.push(
+                `/live?persona=${selectedPersona.id}&scenario=${selectedScenario.id}`
+                );
+              }
+            }}
+            className="bg-primary text-primary-content px-8 py-3 rounded-lg font-bold hover:bg-primary-focus transition-colors"
+          >
+            Start Session →
+          </button>
+        </div>
+      )}
     </div>
   );
 }

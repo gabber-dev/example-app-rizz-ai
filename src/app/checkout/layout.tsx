@@ -18,7 +18,7 @@ export default async function RootLayout({
 }) {
   const user = await UserController.getUserFromCookies();
   if (!user) {
-    redirect("/login");
+    redirect("/");
   }
   const clientSecret = await CreditsController.getClientSecret({
     customer: user.stripe_customer,

@@ -6,7 +6,13 @@ export type Score = {
   seductiveness: "poor" | "fair" | "good";
   ability_to_progress_conversation: "poor" | "fair" | "good";
   kindness: "poor" | "fair" | "good";
-  summary: string;
+  wit_summary: string;
+  humor_summary: string;
+  confidence_summary: string;
+  seductiveness_summary: string;
+  ability_to_progress_conversation_summary: string;
+  kindness_summary: string;
+  overall_summary: string;
   good_1: string;
   good_2: string;
   good_3: string;
