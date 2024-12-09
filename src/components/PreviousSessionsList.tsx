@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useAppState } from "./AppStateProvider";
 import { SessionDetailModal } from "./SessionDetailModal";
 import Image from "next/image";
@@ -9,6 +9,13 @@ export function PreviousSessionsList() {
   const [selectedSessionId, setSelectedSessionId] = useState<string | null>(null);
   const { sessions } = useAppState();
   const router = useRouter();
+
+  // Sort sessions by created_at in descending order and take only the last 10
+  const recentSessions = useMemo(() => {
+    return [...sessions]
+      .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+      .slice(0, 20);
+  }, [sessions]);
 
   return (
     <div className="w-full h-full">
@@ -30,7 +37,7 @@ export function PreviousSessionsList() {
         } md:h-[calc(100%-4rem)]`}
       >
         <div className="flex-1 overflow-y-auto">
-          {sessions.map((session) => (
+          {recentSessions.map((session) => (
             <div key={session.id} className="relative mb-2">
               <button
                 className="p-4 rounded-lg text-left transition-all bg-base-200 hover:bg-base-100 w-full group"
