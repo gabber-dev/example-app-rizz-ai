@@ -13,7 +13,7 @@ export function Footer() {
             alt="Gabber Logo"
             width={80}
             height={48}
-            className="sm:w-[120px] sm:h-[50px]"
+            className="sm:w-[120px] sm:h-[40px]"
           />
         </Link>
       </div>
