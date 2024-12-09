@@ -6,6 +6,36 @@ import { useRouter } from "next/navigation";
 import Stripe from "stripe";
 import toast from "react-hot-toast";
 
+const ProductCard = ({
+  product,
+  onClick,
+}: {
+  product: Stripe.Product;
+  onClick: () => void;
+}) => {
+  const [isHovered, setIsHovered] = useState(false);
+  
+  return (
+    <div
+      key={product.id}
+      className={`flex flex-col items-center justify-center bg-primary text-white p-2 rounded-lg shadow-md transition-all duration-300 cursor-pointer ${
+        isHovered ? "scale-105 shadow-lg" : ""
+      }`}
+      style={{ height: "60px", width: "100%" }}
+      onClick={onClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="text-lg font-bold">
+        {product.metadata.credit_amount} Credits
+      </div>
+      <div className="text-sm">
+        ${((product.default_price as any).unit_amount / 100).toFixed(2)}
+      </div>
+    </div>
+  );
+};
+
 export function PaywallPopup() {
   const { products, showPaywall, hasPaid } = useAppState();
   const [activeTab, setActiveTab] = useState(hasPaid ? "oneTime" : "recurring");
@@ -83,24 +113,13 @@ export function PaywallPopup() {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {recurringProducts.map((product) => (
-                <div
+                <ProductCard
                   key={product.id}
-                  className="flex flex-col items-center justify-center bg-primary text-white p-2 rounded-lg shadow-md"
-                  style={{ height: "60px", width: "100%" }}
+                  product={product}
                   onClick={async () => {
                     await getCheckoutSession((product.default_price as any).id);
                   }}
-                >
-                  <div className="text-lg font-bold">
-                    {product.metadata.credit_amount} Credits
-                  </div>
-                  <div className="text-sm">
-                    $
-                    {((product.default_price as any).unit_amount / 100).toFixed(
-                      2,
-                    )}
-                  </div>
-                </div>
+                />
               ))}
             </div>
           </section>
@@ -112,24 +131,13 @@ export function PaywallPopup() {
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {oneTimeProducts.map((product) => (
-                <div
+                <ProductCard
                   key={product.id}
-                  className="flex flex-col items-center justify-center bg-primary text-white p-2 rounded-lg shadow-md"
-                  style={{ height: "60px", width: "100%" }}
+                  product={product}
                   onClick={() => {
                     getCheckoutSession((product.default_price as any).id);
                   }}
-                >
-                  <div className="text-lg font-bold">
-                    {product.metadata.credit_amount} Credits
-                  </div>
-                  <div className="text-sm">
-                    $
-                    {((product.default_price as any).unit_amount / 100).toFixed(
-                      2,
-                    )}
-                  </div>
-                </div>
+                />
               ))}
             </div>
           </section>

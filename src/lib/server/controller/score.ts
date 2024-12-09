@@ -120,8 +120,8 @@ const generateScoreMessage = () => {
 Please be harsh on me with the score.
 
 For context on scoring
-
-Please rate my performance in the scenario based on the following attributes:
+  
+  Please rate my performance in the scenario based on the following attributes:
 - wit
 - humor
 - confidence
@@ -131,17 +131,25 @@ Please rate my performance in the scenario based on the following attributes:
 
 each with scores: poor, fair, good
 
-Also include a string that summarizes my performance in the scenario.
+For each attribute, include a short sentence of why you gave me the score I received for that attribute. For example, for wit you could say "You had quick responses that really showed you were sharp and witty, like when you brought up pancakes after your date said waffles"
+
+Also include an "overall_summary" field that summarizes my performance in the scenario
 
 Please provide your outputs in JSON format with the format:
 {
   "wit": "fair" | "good" | "poor",
+  "wit_summary": "<summary of wit>"
   "humor": "fair" | "good" | "poor",
+  "humor_summary": "<summary of humor>"
   "confidence": "fair" | "good" | "poor",
+  "confidence_summary": "<summary of confidence>"
   "seductiveness": "fair" | "good" | "poor",
+  "seductiveness_summary": "<summary of seductiveness>"
   "ability_to_progress_conversation": "fair" | "good" | "poor"
+  "ability_to_progress_conversation_summary": "<summary of progress conversation>"
   "kindness": "fair" | "good" | "poor",
-  "summary": <string>
+  "kindness_summary": "<summary of kindness>"
+  "overall_summary": <string>
 }
 
 Make the output JSON parsable. Don't include any extra text or markdown. 

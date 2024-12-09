@@ -1,6 +1,7 @@
 import { Score as ScoreModel } from "@/lib/model/score";
 import { useState, useEffect } from "react";
 import { Ring } from "@/components/stats/RizzScore";
+import AttributeCard from "./AttributeCard";
 
 type Props = {
   score: ScoreModel;
@@ -9,6 +10,7 @@ type Props = {
 type AttributeRating = {
   name: string;
   score: "poor" | "fair" | "good";
+  summary: string;
 };
 
 export function Score({ score }: Props) {
@@ -39,12 +41,16 @@ export function Score({ score }: Props) {
   };
 
   const attributes: AttributeRating[] = [
-    { name: "Wit", score: score.wit },
-    { name: "Humor", score: score.humor },
-    { name: "Confidence", score: score.confidence },
-    { name: "Seduction", score: score.seductiveness },
-    { name: "Conversation", score: score.ability_to_progress_conversation },
-    { name: "Kindness", score: score.kindness },
+    { name: "Wit", score: score.wit, summary: score.wit_summary },
+    { name: "Humor", score: score.humor, summary: score.humor_summary },
+    { name: "Confidence", score: score.confidence, summary: score.confidence_summary },
+    { name: "Seduction", score: score.seductiveness, summary: score.seductiveness_summary },
+    { 
+      name: "Conversation", 
+      score: score.ability_to_progress_conversation, 
+      summary: score.ability_to_progress_conversation_summary 
+    },
+    { name: "Kindness", score: score.kindness, summary: score.kindness_summary },
   ];
 
   return (
@@ -68,23 +74,7 @@ export function Score({ score }: Props) {
       {/* Attribute Ratings */}
       <div className="grid grid-cols-2 gap-4 w-full max-w-[600px]">
         {attributes.map((attr) => (
-          <div
-            key={attr.name}
-            className="flex items-center justify-between bg-base-300 p-4 rounded-lg"
-          >
-            <span className="text-base-content-bold">{attr.name}</span>
-            <div className="flex gap-1">
-              {["poor", "fair", "good"].map((rating) => (
-                <div
-                  key={rating}
-                  className={`w-2 h-2 rounded-full ${getRatingColor(
-                    attr.score,
-                    rating,
-                  )}`}
-                />
-              ))}
-            </div>
-          </div>
+          <AttributeCard key={attr.name} attr={attr} />
         ))}
       </div>
       {/* Summary Modal */}
@@ -93,7 +83,7 @@ export function Score({ score }: Props) {
           <div className="bg-base-200 p-4 rounded-lg w-full max-w-[90%] sm:max-w-[540px] border border-primary">
             <div className="text-lg font-bold mb-2 text-white">Summary</div>
             <div className="text-base-content-bold text-white">
-              {score.summary}
+              {score.overall_summary}
             </div>
             <button
               className="mt-4 bg-primary text-white p-2 rounded"
