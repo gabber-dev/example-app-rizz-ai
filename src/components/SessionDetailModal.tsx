@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { formatDistanceToNow } from "date-fns";
 import { StatCard } from "@/components/StatCard";
+import { useAppState } from "@/components/AppStateProvider";
 
 type Message = {
   agent: boolean;
@@ -23,18 +24,27 @@ export function SessionDetailModal({ sessionId, onClose }: Props) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [timeline, setTimeline] = useState<TimelineItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const { sessionApi, llmApi, realtimeApi } = useAppState();
 
   useEffect(() => {
     const fetchSessionDetails = async () => {
       if (!sessionId) return;
       setLoading(true);
       try {
+        const session = await realtimeApi.getRealtimeSession(sessionId);
         const [messagesRes, timelineRes] = await Promise.all([
-          axios.get(`/api/sessions/${sessionId}/messages`),
-          axios.get(`/api/sessions/${sessionId}/timeline`),
+          sessionApi.apiV1SessionSessionIdMessagesGet(sessionId),
+          sessionApi.apiV1SessionSessionIdTimelineGet(sessionId),
         ]);
-        setMessages(messagesRes.data.values);
-        setTimeline(timelineRes.data.values);
+        setMessages(messagesRes.data.values.map(msg => ({
+          agent: msg.agent || false,
+          text: msg.text || "",
+          created_at: msg.created_at || new Date().toISOString()
+        })));
+        setTimeline((timelineRes.data.values ?? []).map(item => ({
+          type: item.type || "user",
+          seconds: item.seconds || 0
+        })));
       } catch (e) {
         console.error("Failed to fetch session details:", e);
       } finally {
