@@ -51,10 +51,6 @@ export function ClientSessionPageInner({
   const { messages, id } = useSession();
   const router = useRouter();
 
-  useEffect(() => {
-    console.log("NEIL id", id);
-  }, [id]);
-
   return (
     <div className="relative w-full h-full pt-4">
       <div className="absolute top-0 left-0 right-0 bottom-[50px] p-2 flex flex-col items-center justify-center">

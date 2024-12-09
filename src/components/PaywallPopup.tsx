@@ -1,5 +1,3 @@
-import { ShinyButton } from "@/components/ShinyButton";
-import { BorderButton } from "../../../../components/BorderButton";
 import { useAppState } from "@/components/AppStateProvider";
 import { useCallback, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
