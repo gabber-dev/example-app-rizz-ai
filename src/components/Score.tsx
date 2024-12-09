@@ -69,7 +69,7 @@ export function Score({ score }: Props) {
         className="mt-2 mb-2 bg-primary text-white p-2 rounded w-full max-w-[600px]"
         onClick={handleSummaryClick}
       >
-        View Summary
+        View Feedback
       </button>
       {/* Attribute Ratings */}
       <div className="grid grid-cols-2 gap-4 w-full max-w-[600px]">

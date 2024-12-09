@@ -11,6 +11,7 @@ import { ProgressBar } from "./components/ProgressBar";
 import { useAppState } from "@/components/AppStateProvider";
 import { BorderButton } from "@/components/BorderButton";
 import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
 
 type Props = {
   persona: Persona;
@@ -51,6 +52,10 @@ export function ClientSessionPageInner({
   const { messages, id } = useSession();
   const router = useRouter();
 
+  useEffect(() => {
+    console.log("Current session ID:", id);
+  }, [id]);
+
   return (
     <div className="relative w-full h-full pt-4">
       <div className="absolute top-0 left-0 right-0 bottom-[50px] p-2 flex flex-col items-center justify-center">
@@ -86,8 +91,13 @@ export function ClientSessionPageInner({
             ) : (
               <BorderButton
                 onClick={() => {
+                  if (!id) {
+                    console.error("No session ID available");
+                    toast.error("Session not ready yet, please try again");
+                    return;
+                  }
+                  console.log("Navigating to score with session ID:", id);
                   router.push(`/score?session=${id}`);
-                  console.log("NEIL clicked", id);
                 }}
                 className="font-bold px-2 hover:shadow-inner bg-primary rounded-lg text-primary hover:primary h-full"
               >
