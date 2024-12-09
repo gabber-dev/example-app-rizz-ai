@@ -4,6 +4,7 @@ import { SessionDetailModal } from "./SessionDetailModal";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { formatDistanceToNow } from "date-fns";
 
 export function PreviousSessionsList() {
   const [isSessionsCollapsed, setIsSessionsCollapsed] = useState(true);
@@ -15,13 +16,20 @@ export function PreviousSessionsList() {
 
   // Sort sessions by created_at in descending order and take only the last 10
   const recentSessions = useMemo(() => {
+    if (!sessions.length) return [];
+
     return [...sessions]
-      .sort(
-        (a, b) =>
-          new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
-      )
+      .sort((a, b) => {
+        const dateA = new Date(a.created_at).getTime();
+        const dateB = new Date(b.created_at).getTime();
+        return dateB - dateA; // Most recent first
+      })
       .slice(0, 20);
   }, [sessions]);
+
+  const handleCloseModal = () => {
+    setSelectedSessionId(null);
+  };
 
   return (
     <div className="w-full h-full">
@@ -72,7 +80,8 @@ export function PreviousSessionsList() {
                           {session.config.generative?.scenario?.name || ""}
                         </div>
                         <div className="text-sm opacity-70">
-                          {new Date(session.created_at).toLocaleDateString()}
+                          {formatDistanceToNow(new Date(session.created_at))}{" "}
+                          ago
                         </div>
                       </div>
                       <div
@@ -108,7 +117,7 @@ export function PreviousSessionsList() {
 
       <SessionDetailModal
         sessionId={selectedSessionId}
-        onClose={() => setSelectedSessionId(null)}
+        onClose={handleCloseModal}
       />
     </div>
   );

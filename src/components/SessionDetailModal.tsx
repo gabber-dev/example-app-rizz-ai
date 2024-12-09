@@ -6,7 +6,7 @@ import { useAppState } from "@/components/AppStateProvider";
 
 type Message = {
   agent: boolean;
-  text: string;
+  content: string;
   created_at: string;
 };
 
@@ -39,7 +39,7 @@ export function SessionDetailModal({ sessionId, onClose }: Props) {
         setMessages(
           messagesRes.data.values.map((msg) => ({
             agent: msg.agent || false,
-            text: msg.text || "",
+            content: msg.content || "",
             created_at: msg.created_at || new Date().toISOString(),
           })),
         );
@@ -56,8 +56,13 @@ export function SessionDetailModal({ sessionId, onClose }: Props) {
       }
     };
 
+    // Reset states when sessionId changes
+    setMessages([]);
+    setTimeline([]);
+    setLoading(true);
+
     fetchSessionDetails();
-  }, [sessionId]);
+  }, [sessionId, sessionApi, realtimeApi]);
 
   if (!sessionId) return null;
 
@@ -125,7 +130,7 @@ export function SessionDetailModal({ sessionId, onClose }: Props) {
                     <div className="text-xs opacity-70 mb-1">
                       {formatDistanceToNow(new Date(message.created_at))} ago
                     </div>
-                    <div>{message.text}</div>
+                    <div className="text-white">{message.content}</div>
                   </div>
                 ))}
               </div>
