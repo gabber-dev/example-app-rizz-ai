@@ -8,9 +8,10 @@ import {
   ScenarioApiFactory,
 } from "@/generated";
 import OpenAI from "openai";
+import { Score } from "@/lib/model/score";
 
 export class ScoreController {
-  static async calculateScore(session: string): Promise<Record<string, any>> {
+  static async calculateScore(session: string): Promise<Score> {
     const openai = new OpenAI({
       apiKey: "",
       baseURL: "https://app.gabber.dev/api/v1",

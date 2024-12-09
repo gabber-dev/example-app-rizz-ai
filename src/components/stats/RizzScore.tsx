@@ -1,4 +1,5 @@
 import { Lock, Warning } from "@mui/icons-material";
+import { motion } from "framer-motion";
 
 export function RizzScore({ score, empty }: { score: number; empty: boolean }) {
   return (
@@ -45,10 +46,8 @@ export function Ring({
   color: string;
 }) {
   const fullSweep = (Math.PI * 4) / 3;
-  const percentageSweep = fullSweep * percentage;
   const start = Math.PI / 2 + (Math.PI / 6) * 2;
   const pathFull = arcPath(50, 50, 45, 45, start, fullSweep);
-  const pathPercentage = arcPath(50, 50, 45, 45, start, percentageSweep);
 
   return (
     <div className={`text-${color} w-full h-full relative`}>
@@ -71,7 +70,7 @@ export function Ring({
       </svg>
       <svg
         viewBox={`0 0 100 100`}
-        className="absolute text-primary left-0 right-0 top-0 bottom-0 "
+        className="absolute text-primary left-0 right-0 top-0 bottom-0"
       >
         <g>
           <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -81,13 +80,20 @@ export function Ring({
               style={{ stopColor: "currentcolor", stopOpacity: 1 }}
             />
           </linearGradient>
-          <path
-            d={pathPercentage}
+          <motion.path
+            d={pathFull}
             stroke="url(#grad1)"
             strokeWidth="8"
             style={{
               strokeLinecap: "round",
               fill: "none",
+            }}
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: percentage }}
+            transition={{ 
+              duration: 1.5,
+              ease: "easeOut",
+              delay: 0.5
             }}
           />
         </g>
