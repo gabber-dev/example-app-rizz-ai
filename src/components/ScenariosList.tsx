@@ -13,7 +13,7 @@ export function ScenariosList() {
   const router = useRouter();
 
   return (
-    <div className="flex flex-col max-h-[calc(100vh-350px)]">
+    <div className="flex flex-col h-full">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold md:text-xl text-lg">
           Select a Scenario To Practice
@@ -34,14 +34,14 @@ export function ScenariosList() {
             <button
               key={scenario.id}
               onClick={() => setSelectedScenario(scenario)}
-              className={`p-4 rounded-lg text-left transition-all bg-base-200 hover:bg-base-100 h-[128px] ${
+              className={`p-4 rounded-lg text-center transition-all bg-base-200 hover:bg-base-100 h-[128px] ${
                 selectedScenario?.id === scenario.id
                   ? "border-2 border-primary"
                   : ""
               }`}
             >
               <div className="h-full flex flex-col items-center justify-center">
-                <div className="font-bold whitespace-normal text-xl">
+                <div className="font-bold whitespace-normal text-xl text-center">
                   {scenario.name}
                 </div>
               </div>

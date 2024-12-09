@@ -13,7 +13,7 @@ export function Footer() {
             alt="Gabber Logo"
             width={80}
             height={48}
-            className="sm:w-[100px] sm:h-[60px]"
+            className="sm:w-[120px] sm:h-[50px]"
           />
         </Link>
       </div>
@@ -26,7 +26,7 @@ export function Footer() {
           className="underline"
         >
           <span className="hidden sm:inline">
-            Want to build an app like this? Here's the full codebase
+            Want to build an app like this? Check out the full codebase
           </span>
           <span className="sm:hidden">Build an app like this</span>
         </Link>

@@ -4,7 +4,7 @@ import { useAppState } from "@/components/AppStateProvider";
 import { ScenariosList } from "@/components/ScenariosList";
 import { PersonasList } from "@/components/PersonasList";
 import { SelectedPersonaDetails } from "@/components/SelectedPersonaDetails";
-import { PreviousSessionsList } from "@/components/PreviousSessionsList";
+import { Analyze } from "@/components/Analayze";
 
 export default function ClientPage() {
   const { selectedPersona } = useAppState();
@@ -13,7 +13,7 @@ export default function ClientPage() {
     <div className="flex flex-col md:flex-row gap-4 h-[calc(100vh-100px)] w-full md:max-w-[1200px]">
       {/* Sessions Panel - Collapsible on Mobile */}
       <Card className="md:grow-[2] md:basis-0 md:min-w-200px">
-        <PreviousSessionsList />
+        <Analyze />
       </Card>
       {/* Right Column - Main Content */}
       <div className="md:grow-[4] basis-0 flex flex-col gap-4">
