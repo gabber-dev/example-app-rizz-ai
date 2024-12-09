@@ -35,7 +35,9 @@ export function PreviousSessionsList() {
             className="p-4 rounded-lg text-left transition-all bg-base-200 hover:bg-base-100"
             onClick={() => {
               if (session.id) {
-                router.push(`/history?session=${session.id}`);
+                router.push(
+                  `/live?scenario=${session.config.generative.scenario?.id}&persona=${session.config.generative.persona?.id}`,
+                );
               }
             }}
           >
