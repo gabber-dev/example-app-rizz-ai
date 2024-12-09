@@ -12,10 +12,6 @@ export default async function Page({
   const { session } = searchParams;
   const user = await UserController.getUserFromCookies();
 
-  if (!user) {
-    return redirect("/login");
-  }
-
   if (!session) {
     console.error("Missing session");
     return redirect("/");

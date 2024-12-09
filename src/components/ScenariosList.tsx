@@ -8,6 +8,7 @@ export function ScenariosList() {
     setSelectedPersona,
     setSelectedScenario,
     selectedPersona,
+    userInfo,
   } = useAppState();
   const router = useRouter();
 
@@ -52,9 +53,13 @@ export function ScenariosList() {
         <div className="mt-4 flex justify-center">
           <button
             onClick={() => {
+              if (!userInfo) {
+                router.push("/auth/google/login");
+              } else {
               router.push(
                 `/live?persona=${selectedPersona.id}&scenario=${selectedScenario.id}`
-              );
+                );
+              }
             }}
             className="bg-primary text-primary-content px-8 py-3 rounded-lg font-bold hover:bg-primary-focus transition-colors"
           >

@@ -15,10 +15,6 @@ export default async function Page({
   const { persona, scenario } = searchParams;
   const user = await UserController.getUserFromCookies();
 
-  if (!user) {
-    return redirect("/login");
-  }
-
   if (!persona || !scenario) {
     console.error("Missing persona or scenario");
     return redirect("/");

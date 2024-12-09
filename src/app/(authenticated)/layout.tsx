@@ -54,12 +54,17 @@ export default async function RootLayout({
   ]);
 
   let sessions: RealtimeSession[] = [];
+  console.log("user", user);
   if (user) {
     const realtimeApi = new RealtimeApi(config);
-    const response = await realtimeApi.listRealtimeSessions({
-      headers: { "x-human-id": user.stripe_customer },
-    });
-    sessions = response.data.values;
+    try {
+      const response = await realtimeApi.listRealtimeSessions({
+        headers: { "x-human-id": user.stripe_customer },
+      });
+      sessions = response.data.values;
+    } catch (e) {
+      console.error("NEIL Error fetching sessions", e);
+    }
   }
 
   const [credits, hasPaid, products, usageToken] = await Promise.all([
