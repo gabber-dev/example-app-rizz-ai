@@ -28,14 +28,26 @@ export function Score({ score }: Props) {
   const attributes: AttributeRating[] = [
     { name: "Wit", score: score.wit, summary: score.wit_summary },
     { name: "Humor", score: score.humor, summary: score.humor_summary },
-    { name: "Confidence", score: score.confidence, summary: score.confidence_summary },
-    { name: "Seduction", score: score.seductiveness, summary: score.seductiveness_summary },
-    { 
-      name: "Conversation", 
-      score: score.ability_to_progress_conversation, 
-      summary: score.ability_to_progress_conversation_summary 
+    {
+      name: "Confidence",
+      score: score.confidence,
+      summary: score.confidence_summary,
     },
-    { name: "Kindness", score: score.kindness, summary: score.kindness_summary },
+    {
+      name: "Seduction",
+      score: score.seductiveness,
+      summary: score.seductiveness_summary,
+    },
+    {
+      name: "Conversation",
+      score: score.ability_to_progress_conversation,
+      summary: score.ability_to_progress_conversation_summary,
+    },
+    {
+      name: "Kindness",
+      score: score.kindness,
+      summary: score.kindness_summary,
+    },
   ];
 
   const container = {
@@ -43,39 +55,36 @@ export function Score({ score }: Props) {
     show: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
-      }
-    }
+        staggerChildren: 0.1,
+      },
+    },
   };
 
   const item = {
     hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 }
+    show: { opacity: 1, y: 0 },
   };
 
   return (
-    <motion.div 
+    <motion.div
       initial="hidden"
       animate="show"
       variants={container}
       className="flex flex-col gap-2 items-center h-full w-full justify-center"
     >
       {/* Score Ring */}
-      <motion.div 
-        variants={item}
-        className="relative w-[200px] h-[200px]"
-      >
+      <motion.div variants={item} className="relative w-[200px] h-[200px]">
         <Ring color="primary" percentage={score.rizz_score / 100} />
         <div className="absolute inset-0 flex flex-col items-center justify-center">
           <div className="text-xl text-primary">Your Rizz Score</div>
-          <motion.div 
+          <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
-            transition={{ 
+            transition={{
               type: "spring",
               stiffness: 260,
               damping: 20,
-              delay: 0.3 
+              delay: 0.3,
             }}
             className="text-7xl font-bold text-white"
           >
@@ -96,7 +105,7 @@ export function Score({ score }: Props) {
       </motion.button>
 
       {/* Attribute Ratings */}
-      <motion.div 
+      <motion.div
         variants={container}
         className="grid grid-cols-2 gap-4 w-full max-w-[600px]"
       >
@@ -109,13 +118,13 @@ export function Score({ score }: Props) {
 
       {/* Summary Modal */}
       {isSummaryModalOpen && (
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
         >
-          <motion.div 
+          <motion.div
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.9, opacity: 0 }}

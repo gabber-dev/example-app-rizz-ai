@@ -119,7 +119,9 @@ export function PaywallPopup() {
                     key={product.id}
                     product={product}
                     onClick={async () => {
-                      await getCheckoutSession((product.default_price as any).id);
+                      await getCheckoutSession(
+                        (product.default_price as any).id,
+                      );
                     }}
                   />
                 ))}

@@ -56,8 +56,8 @@ export function ScenariosList() {
               if (!userInfo) {
                 router.push("/auth/google/login");
               } else {
-              router.push(
-                `/live?persona=${selectedPersona.id}&scenario=${selectedScenario.id}`
+                router.push(
+                  `/live?persona=${selectedPersona.id}&scenario=${selectedScenario.id}`,
                 );
               }
             }}

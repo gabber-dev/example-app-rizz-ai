@@ -2,11 +2,11 @@
 FROM node:18-alpine AS base
 
 # Builder stage
-FROM base AS builder 
+FROM base AS builder
 ENV NEXT_TELEMETRY_DISABLED 1
 
 # Install necessary build tools
-RUN apk add --no-cache libc6-compat python3 make g++ bash autoconf automake 
+RUN apk add --no-cache libc6-compat python3 make g++ bash autoconf automake
 
 WORKDIR /app
 
@@ -17,13 +17,8 @@ RUN corepack enable pnpm && pnpm install --frozen-lockfile
 # Copy application files
 COPY . .
 
-# Temporarily modify next.config.js to enable standalone build output
-RUN echo "module.exports = { ...require('./next.config.js'), output: 'standalone' };" > next.config.js
-
 # Build the application
 RUN pnpm run build
-
-RUN cp -r public .next/standalone/ && cp -r .next/static .next/standalone/.next/
 
 # Runner stage
 FROM node:18-alpine AS runner
@@ -39,12 +34,16 @@ ENV HOSTNAME "0.0.0.0"
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
-# Copy standalone build and public assets from the builder stage
-COPY --from=builder --chown=nextjs:nodejs /app/.next .next
+# Copy necessary files from the builder stage
+COPY --from=builder /app/.next .next
+COPY --from=builder /app/node_modules node_modules
+COPY --from=builder /app/package.json package.json
+COPY --from=builder /app/public public
 
 # Run as nextjs user
 USER nextjs
 
-# Expose port and run the standalone server
+# Expose port and run the Next.js server
 EXPOSE 3000
-CMD ["node", ".next/standalone/server.js"]
+CMD ["npm", "start"]
+

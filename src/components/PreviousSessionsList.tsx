@@ -4,16 +4,22 @@ import { SessionDetailModal } from "./SessionDetailModal";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+
 export function PreviousSessionsList() {
   const [isSessionsCollapsed, setIsSessionsCollapsed] = useState(true);
-  const [selectedSessionId, setSelectedSessionId] = useState<string | null>(null);
+  const [selectedSessionId, setSelectedSessionId] = useState<string | null>(
+    null,
+  );
   const { sessions } = useAppState();
   const router = useRouter();
 
   // Sort sessions by created_at in descending order and take only the last 10
   const recentSessions = useMemo(() => {
     return [...sessions]
-      .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+      .sort(
+        (a, b) =>
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime(),
+      )
       .slice(0, 20);
   }, [sessions]);
 
@@ -24,7 +30,9 @@ export function PreviousSessionsList() {
         onClick={() => setIsSessionsCollapsed(!isSessionsCollapsed)}
       >
         <h2 className="text-xl font-bold md:text-xl text-lg">Past Sessions</h2>
-        <div className={`transform transition-transform ${isSessionsCollapsed ? "" : "rotate-180"}`}>
+        <div
+          className={`transform transition-transform ${isSessionsCollapsed ? "" : "rotate-180"}`}
+        >
           ▼
         </div>
       </button>
@@ -70,8 +78,10 @@ export function PreviousSessionsList() {
                       <div
                         onClick={(e) => {
                           e.stopPropagation();
-                          const persona_id = session.config.generative?.persona?.id;
-                          const scenario_id = session.config.generative?.scenario?.id;
+                          const persona_id =
+                            session.config.generative?.persona?.id;
+                          const scenario_id =
+                            session.config.generative?.scenario?.id;
                           if (!persona_id || !scenario_id) {
                             toast.error("Failed to retry session");
                             return;
@@ -83,7 +93,9 @@ export function PreviousSessionsList() {
                         className="text-sm text-primary hover:text-primary-focus transition-colors flex items-center gap-1 ml-2"
                       >
                         <span>Retry</span>
-                        <span className="transform transition-transform group-hover:translate-x-1">→</span>
+                        <span className="transform transition-transform group-hover:translate-x-1">
+                          →
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -94,9 +106,9 @@ export function PreviousSessionsList() {
         </div>
       </div>
 
-      <SessionDetailModal 
-        sessionId={selectedSessionId} 
-        onClose={() => setSelectedSessionId(null)} 
+      <SessionDetailModal
+        sessionId={selectedSessionId}
+        onClose={() => setSelectedSessionId(null)}
       />
     </div>
   );

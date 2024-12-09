@@ -12,6 +12,7 @@ import { useAppState } from "@/components/AppStateProvider";
 import { BorderButton } from "@/components/BorderButton";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
+import { set } from "lodash";
 
 type Props = {
   persona: Persona;
@@ -28,9 +29,7 @@ export function ClientPage({ persona, scenario }: Props) {
   }>(null);
 
   useEffect(() => {
-    if (credits <= 0) {
-      setShowPaywall({ session: null });
-    } else {
+    if (credits >= 0) {
       setConnectionOpts({
         token: usageToken,
         sessionConnectOptions: { persona: persona.id, scenario: scenario.id },
@@ -50,11 +49,16 @@ export function ClientSessionPageInner({
   scenario,
 }: Omit<Props, "token">) {
   const { messages, id } = useSession();
+  const { credits, setShowPaywall, refreshCredits } = useAppState();
   const router = useRouter();
 
+  // Refresh credits loop
   useEffect(() => {
-    console.log("Current session ID:", id);
-  }, [id]);
+    const interval = setInterval(() => {
+      refreshCredits();
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [refreshCredits]);
 
   return (
     <div className="relative w-full h-full pt-4">
@@ -91,6 +95,11 @@ export function ClientSessionPageInner({
             ) : (
               <BorderButton
                 onClick={() => {
+                  if (credits <= 0) {
+                    console.error("No credits available");
+                    setShowPaywall({ session: id });
+                    return;
+                  }
                   if (!id) {
                     console.error("No session ID available");
                     toast.error("Session not ready yet, please try again");

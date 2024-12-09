@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { ClientPage } from "./client_page";
 import { UserController } from "@/lib/server/controller/user";
 import { ScoreController } from "@/lib/server/controller/score";
+
 export default async function Page({
   params,
   searchParams,

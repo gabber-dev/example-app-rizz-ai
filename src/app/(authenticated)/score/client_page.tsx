@@ -13,7 +13,7 @@ export function ClientPage({ session, score }: Props) {
   return (
     <div className="w-full h-full p-4 overflow-y-auto">
       <div className="max-w-4xl mx-auto md:w-full">
-        <ScoreComponent score={score}/>
+        <ScoreComponent score={score} />
       </div>
     </div>
   );

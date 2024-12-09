@@ -90,10 +90,10 @@ export function Ring({
             }}
             initial={{ pathLength: 0 }}
             animate={{ pathLength: percentage }}
-            transition={{ 
+            transition={{
               duration: 1.5,
               ease: "easeOut",
-              delay: 0.5
+              delay: 0.5,
             }}
           />
         </g>

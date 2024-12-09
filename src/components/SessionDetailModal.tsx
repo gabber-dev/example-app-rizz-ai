@@ -36,15 +36,19 @@ export function SessionDetailModal({ sessionId, onClose }: Props) {
           sessionApi.apiV1SessionSessionIdMessagesGet(sessionId),
           sessionApi.apiV1SessionSessionIdTimelineGet(sessionId),
         ]);
-        setMessages(messagesRes.data.values.map(msg => ({
-          agent: msg.agent || false,
-          text: msg.text || "",
-          created_at: msg.created_at || new Date().toISOString()
-        })));
-        setTimeline((timelineRes.data.values ?? []).map(item => ({
-          type: item.type || "user",
-          seconds: item.seconds || 0
-        })));
+        setMessages(
+          messagesRes.data.values.map((msg) => ({
+            agent: msg.agent || false,
+            text: msg.text || "",
+            created_at: msg.created_at || new Date().toISOString(),
+          })),
+        );
+        setTimeline(
+          (timelineRes.data.values ?? []).map((item) => ({
+            type: item.type || "user",
+            seconds: item.seconds || 0,
+          })),
+        );
       } catch (e) {
         console.error("Failed to fetch session details:", e);
       } finally {
@@ -76,9 +80,11 @@ export function SessionDetailModal({ sessionId, onClose }: Props) {
       <div className="bg-base-300 rounded-lg w-full max-w-2xl max-h-[90vh] flex flex-col">
         <div className="p-4 border-b border-base-200 flex justify-between items-center">
           <h2 className="text-xl font-bold">Session Details</h2>
-          <button onClick={onClose} className="text-2xl">&times;</button>
+          <button onClick={onClose} className="text-2xl">
+            &times;
+          </button>
         </div>
-        
+
         <div className="flex-1 overflow-y-auto p-4">
           {loading ? (
             <div className="animate-pulse space-y-4">
