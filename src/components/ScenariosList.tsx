@@ -18,15 +18,32 @@ export function ScenariosList() {
         <h2 className="text-xl font-bold md:text-xl text-lg">
           Select a Scenario To Practice
         </h2>
-        <button
-          onClick={() => {
-            setSelectedPersona(null);
-            setSelectedScenario(null);
-          }}
-          className="text-sm opacity-70 hover:opacity-100 border-2 border-secondary rounded-lg px-2 py-1"
-        >
-          Change Character
-        </button>
+        {selectedScenario ? (
+          <button
+            onClick={() => {
+              if (!userInfo) {
+                router.push("/auth/google/login");
+              } else {
+                router.push(
+                  `/live?persona=${selectedPersona?.id}&scenario=${selectedScenario.id}`,
+                );
+              }
+            }}
+            className="bg-primary text-primary-content px-4 py-1 rounded-lg font-bold hover:bg-primary-focus transition-colors"
+          >
+            Start Session →
+          </button>
+        ) : (
+          <button
+            onClick={() => {
+              setSelectedPersona(null);
+              setSelectedScenario(null);
+            }}
+            className="text-sm opacity-70 hover:opacity-100 border-2 border-secondary rounded-lg px-2 py-1"
+          >
+            Change Character
+          </button>
+        )}
       </div>
       <div className="flex-1 min-h-0 overflow-y-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pb-20">
@@ -49,24 +66,6 @@ export function ScenariosList() {
           ))}
         </div>
       </div>
-      {selectedScenario && selectedPersona && (
-        <div className="mt-2 flex justify-center flex-shrink-0">
-          <button
-            onClick={() => {
-              if (!userInfo) {
-                router.push("/auth/google/login");
-              } else {
-                router.push(
-                  `/live?persona=${selectedPersona.id}&scenario=${selectedScenario.id}`,
-                );
-              }
-            }}
-            className="bg-primary text-primary-content px-8 py-2 rounded-lg font-bold hover:bg-primary-focus transition-colors"
-          >
-            Start Session →
-          </button>
-        </div>
-      )}
     </div>
   );
 }
