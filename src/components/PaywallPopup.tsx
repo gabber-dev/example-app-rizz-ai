@@ -43,9 +43,13 @@ export function PaywallPopup() {
   const router = useRouter();
 
   const recurringProducts = useMemo(() => {
-    return products.filter(
-      (product) => (product.default_price as any).type === "recurring",
-    );
+    return products
+      .filter((product) => (product.default_price as any).type === "recurring")
+      .sort((a, b) => {
+        const priceA = (a.default_price as any).unit_amount;
+        const priceB = (b.default_price as any).unit_amount;
+        return priceA - priceB;
+      });
   }, [products]);
 
   const oneTimeProducts = useMemo(() => {
