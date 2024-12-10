@@ -32,7 +32,7 @@ const sfProRounded = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Rizz.AI - The Gym For Your Dating Life",
+  title: "Rizz.AI - The Gym For Your Social Skills",
   description:
     "Practice dating, socializing, and speaking with confidence by having conversation with AI. Get tailored feedback to improve your skills.",
   openGraph: {
