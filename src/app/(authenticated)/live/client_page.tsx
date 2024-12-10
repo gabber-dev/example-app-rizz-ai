@@ -64,23 +64,23 @@ export function ClientSessionPageInner({
     <div className="relative w-full h-full pt-4">
       <div className="absolute top-0 left-0 right-0 bottom-[50px] p-2 flex flex-col items-center justify-center">
         <div className="relative h-[200px] w-[200px] rounded-[8px] overflow-hidden">
-          <div
-            className="absolute left-0 right-0 bottom-0 h-[80px] z-50 px-1 pb-1"
-            style={{
-              background:
-                "linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.8), rgba(0,0,0,1.0))",
-            }}
-          >
-            <AgentAudioVisualizer />
-          </div>
           <Image
             fill={true}
             className="w-full h-full object-cover"
             src={persona.image_url || ""}
             alt={persona.name}
           />
+          <div
+            className="absolute left-0 right-0 bottom-0 h-[80px] z-[1]"
+            style={{
+              background:
+                "linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.9), rgba(0,0,0,1.0))",
+            }}
+          >
+            <AgentAudioVisualizer />
+          </div>
         </div>
-        <div className="flex flex-col items-center justify-center text-white my-2 h-[100px]">
+        <div className="flex flex-col items-center justify-center text-white my-2 h-[100px] relative z-[2]">
           <div className="text-xl font-bold mb-1">{persona.name}</div>
           <div className="text-sm opacity-70 mb-3">{scenario.name}</div>
           <div className="font-bold">
