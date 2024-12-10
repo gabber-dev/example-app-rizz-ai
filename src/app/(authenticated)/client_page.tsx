@@ -9,12 +9,14 @@ import { StreakCard } from "@/components/analyze/StreakCard";
 import { PastSessionsList } from "@/components/analyze/PastSessionsList";
 import { useState, useMemo, useEffect } from "react";
 import { SessionDetailModal } from "@/components/SessionDetailModal";
-import { useStreakData } from '@/hooks/useStreakData';
+import { useStreakData } from "@/hooks/useStreakData";
 import { RealtimeSession } from "@/generated/";
 
 export default function ClientPage() {
   const { selectedPersona, sessions, setSelectedPersona } = useAppState();
-  const [selectedSessionId, setSelectedSessionId] = useState<string | null>(null);
+  const [selectedSessionId, setSelectedSessionId] = useState<string | null>(
+    null,
+  );
   const streakData = useStreakData(sessions);
 
   useEffect(() => {
@@ -46,7 +48,7 @@ export default function ClientPage() {
       <div className="hidden md:block md:grow-[2] md:basis-0 md:min-w-200px">
         <Card>
           <StreakCard streakData={streakData} />
-          <PastSessionsList 
+          <PastSessionsList
             sessions={sessions}
             onSessionSelect={setSelectedSessionId}
           />
