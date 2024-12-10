@@ -21,10 +21,10 @@ export function StreakCard({ streakData }: Props) {
         {streakData.days.map((day, i) => (
           <div key={i} className="flex flex-col items-center">
             <div className="text-xs opacity-70 mb-1">{day.label}</div>
-            <div 
+            <div
               className={`w-2 h-2 rounded-full ${
-                day.completed === "hit" 
-                  ? "bg-primary" 
+                day.completed === "hit"
+                  ? "bg-primary"
                   : "border border-base-content opacity-30"
               }`}
             />

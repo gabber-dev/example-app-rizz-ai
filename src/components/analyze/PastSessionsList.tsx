@@ -10,13 +10,19 @@ type Props = {
   className?: string;
 };
 
-export function PastSessionsList({ sessions, onSessionSelect, className }: Props) {
+export function PastSessionsList({
+  sessions,
+  onSessionSelect,
+  className,
+}: Props) {
   const router = useRouter();
 
   return (
     <>
       <h2 className="text-xl font-bold mb-4">Past Sessions</h2>
-      <div className={`overflow-y-auto ${className || "h-[calc(100vh-450px)] md:h-[calc(100vh-350px)]"}`}>
+      <div
+        className={`overflow-y-auto ${className || "h-[calc(100vh-450px)] md:h-[calc(100vh-350px)]"}`}
+      >
         {sessions.length > 0 ? (
           sessions.map((session) => (
             <div key={session.id} className="relative mb-2">
@@ -45,19 +51,24 @@ export function PastSessionsList({ sessions, onSessionSelect, className }: Props
                           {session.config.generative?.scenario?.name || ""}
                         </div>
                         <div className="text-sm opacity-70">
-                          {formatDistanceToNow(new Date(session.created_at))} ago
+                          {formatDistanceToNow(new Date(session.created_at))}{" "}
+                          ago
                         </div>
                       </div>
                       <div
                         onClick={(e) => {
                           e.stopPropagation();
-                          const persona_id = session.config.generative?.persona?.id;
-                          const scenario_id = session.config.generative?.scenario?.id;
+                          const persona_id =
+                            session.config.generative?.persona?.id;
+                          const scenario_id =
+                            session.config.generative?.scenario?.id;
                           if (!persona_id || !scenario_id) {
                             toast.error("Failed to retry session");
                             return;
                           }
-                          router.push(`/live?persona=${persona_id}&scenario=${scenario_id}`);
+                          router.push(
+                            `/live?persona=${persona_id}&scenario=${scenario_id}`,
+                          );
                         }}
                         className="text-sm text-primary hover:text-primary-focus transition-colors flex items-center gap-1 ml-2"
                       >

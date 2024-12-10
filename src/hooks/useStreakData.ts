@@ -1,5 +1,5 @@
-import { useMemo } from 'react';
-import { RealtimeSession } from '@/generated';
+import { useMemo } from "react";
+import { RealtimeSession } from "@/generated";
 
 export function useStreakData(sessions: RealtimeSession[]) {
   return useMemo(() => {
@@ -11,7 +11,7 @@ export function useStreakData(sessions: RealtimeSession[]) {
     }).reverse();
 
     const sessionsByDay = new Map();
-    sessions.forEach(session => {
+    sessions.forEach((session) => {
       const sessionDate = new Date(session.created_at);
       const dateKey = sessionDate.toDateString();
       sessionsByDay.set(dateKey, (sessionsByDay.get(dateKey) || 0) + 1);
@@ -22,7 +22,7 @@ export function useStreakData(sessions: RealtimeSession[]) {
       const checkDate = new Date(today);
       checkDate.setDate(today.getDate() - i);
       const dateKey = checkDate.toDateString();
-      
+
       if (sessionsByDay.has(dateKey)) {
         currentStreak++;
       } else {
@@ -31,11 +31,13 @@ export function useStreakData(sessions: RealtimeSession[]) {
     }
 
     return {
-      days: last7Days.map(date => ({
+      days: last7Days.map((date) => ({
         label: date.getDate().toString(),
-        completed: sessionsByDay.has(date.toDateString()) ? ("hit" as const) : ("missed" as const)
+        completed: sessionsByDay.has(date.toDateString())
+          ? ("hit" as const)
+          : ("missed" as const),
       })),
-      streak: currentStreak
+      streak: currentStreak,
     };
   }, [sessions]);
-} 
+}
