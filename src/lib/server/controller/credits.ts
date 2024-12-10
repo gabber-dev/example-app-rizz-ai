@@ -90,8 +90,8 @@ export class CreditsController {
     const client = await CreditsController.getStripeClient();
     const customer = await client.customers.create({ email });
 
-    // Grant 10 minutes (600 seconds) worth of free credits
-    await CreditsController.grantFreeCredits(600, customer.id);
+    // Grant 5 minutes (300 seconds) worth of free credits
+    await CreditsController.grantFreeCredits(300, customer.id);
 
     return customer;
   }
@@ -236,7 +236,7 @@ export class CreditsController {
     });
     const creditApi = CreditApiFactory(configuration);
     try {
-      await creditApi.createCreditLedgerEntry(
+      return creditApi.createCreditLedgerEntry(
         process.env.GABBER_CREDIT_ID,
         {
           amount,

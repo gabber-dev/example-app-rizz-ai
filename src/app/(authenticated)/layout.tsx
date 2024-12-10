@@ -54,7 +54,6 @@ export default async function RootLayout({
   ]);
 
   let sessions: RealtimeSession[] = [];
-  console.log("user", user);
   if (user) {
     const realtimeApi = new RealtimeApi(config);
     try {
@@ -75,7 +74,7 @@ export default async function RootLayout({
       ? CreditsController.checkHasPaid(user.stripe_customer)
       : false,
     CreditsController.getProducts(),
-    UserController.createUsageToken(),
+    UserController.createUsageToken(user),
   ]);
 
   return (

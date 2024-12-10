@@ -28,8 +28,7 @@ export class UserController {
     return user;
   }
 
-  static async createUsageToken() {
-    const user = await UserController.getUserFromCookies();
+  static async createUsageToken(user: UserInfo | null) {
     const config = new Configuration({
       apiKey: process.env.GABBER_API_KEY,
     });
@@ -39,7 +38,7 @@ export class UserController {
       return (
         await usageApi.createUsageToken({
           human_id: "anonymous",
-          limits: [{ type: "conversational_seconds", value: 1000 }],
+          limits: [{ type: "conversational_seconds", value: 0 }],
         })
       ).data.token;
     }
@@ -50,6 +49,17 @@ export class UserController {
         limits: [{ type: "conversational_seconds", value: 1000 }],
       })
     ).data.token;
+  }
+
+  static async updateLimits(human_id: string, limit: number) {
+    const config = new Configuration({
+      apiKey: process.env.GABBER_API_KEY,
+    });
+    const usageApi = UsageApiFactory(config);
+    await usageApi.updateUsageToken({
+      human_id,
+      limits: [{ type: "conversational_seconds", value: limit }],
+    });
   }
 
   static async loginGoogleUser({

@@ -1,6 +1,7 @@
 import { NextRequest } from "next/server";
 import crypto from "crypto";
 import { CreditsController } from "@/lib/server/controller/credits";
+import { UserController } from "@/lib/server/controller/user";
 
 export async function POST(req: NextRequest) {
   const textBody = await req.text();
@@ -34,7 +35,12 @@ export async function POST(req: NextRequest) {
     if (type === "conversational_seconds") {
       // Use 1 credit per second
       const creditCost = value;
-      await CreditsController.reportCreditUsage(human_id, creditCost * -1);
+      const resp = await CreditsController.reportCreditUsage(
+        human_id,
+        creditCost * -1,
+      );
+      const entry = resp.data;
+      await UserController.updateLimits(human_id, entry.balance);
     }
   }
   return new Response(null, { status: 200 });
