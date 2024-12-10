@@ -29,7 +29,7 @@ export function ScenariosList() {
         </button>
       </div>
       <div className="flex-1 min-h-0 overflow-y-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pb-20">
           {scenarios.map((scenario) => (
             <button
               key={scenario.id}
@@ -50,7 +50,7 @@ export function ScenariosList() {
         </div>
       </div>
       {selectedScenario && selectedPersona && (
-        <div className="mt-2 mb-6 flex justify-center flex-shrink-0">
+        <div className="mt-2 flex justify-center flex-shrink-0">
           <button
             onClick={() => {
               if (!userInfo) {
