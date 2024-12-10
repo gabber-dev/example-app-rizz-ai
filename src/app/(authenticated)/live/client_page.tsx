@@ -29,11 +29,13 @@ export function ClientPage({ persona, scenario }: Props) {
   }>(null);
 
   useEffect(() => {
-    if (credits >= 0) {
+    if (credits > 0) {
       setConnectionOpts({
         token: usageToken,
         sessionConnectOptions: { persona: persona.id, scenario: scenario.id },
       });
+    } else {
+      setConnectionOpts(null);
     }
   }, [credits, persona.id, scenario.id, setShowPaywall, usageToken]);
 
@@ -69,7 +71,7 @@ export function ClientSessionPageInner({
   return (
     <div className="relative w-full h-full pt-2">
       <div className="absolute top-0 left-0 right-0 bottom-[50px] p-2 flex flex-col items-center justify-center">
-        <div className="relative h-[100px] w-[100px] md:h-[200px] md:w-[200px] rounded-[8px] overflow-hidden">
+        <div className="relative h-[100px] w-[100px] md:h-[200px] md:w-[200px] rounded-[8px] overflow-hidden mb-1">
           <Image
             fill={true}
             className="w-full h-full object-cover"
@@ -86,8 +88,8 @@ export function ClientSessionPageInner({
             <AgentAudioVisualizer />
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center text-white h-[100px] relative z-[2]">
-          <div className="text-xl font-bold mb-1">{persona.name}</div>
+        <div className="flex flex-col items-center justify-center text-white h-[120px] relative z-[2]">
+          <div className="text-lg font-bold mb-1">{persona.name}</div>
           <div className="text-sm opacity-70 mb-1">{scenario.name}</div>
           <div className="font-bold mb-1">
             Talk for at least 10 messages to get your rizz score

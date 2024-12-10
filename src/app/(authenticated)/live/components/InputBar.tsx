@@ -1,4 +1,6 @@
 "use client";
+import { useAppState } from "@/components/AppStateProvider";
+import { BorderButton } from "@/components/BorderButton";
 import { ArrowUpward, Mic, MicOff } from "@mui/icons-material";
 import { useSession } from "gabber-client-react";
 import { useState } from "react";
@@ -6,11 +8,30 @@ import { useState } from "react";
 export function InputBar({}: {}) {
   const [text, setText] = useState("");
   const {
+    id,
     sendChatMessage,
     microphoneEnabled,
     setMicrophoneEnabled,
     userVolume,
+    connectionState,
   } = useSession();
+  const { credits, setShowPaywall } = useAppState();
+
+  if (connectionState !== "connected") {
+    if (credits > 0) {
+      return null;
+    }
+    return (
+      <BorderButton
+        onClick={() => {
+          setShowPaywall({ session: id });
+        }}
+        className="w-full h-full flex justify-center items-center text-primary"
+      >
+        Purchase Credits
+      </BorderButton>
+    );
+  }
 
   return (
     <div className="w-full h-full px-2 max-w-[600px] mx-auto">

@@ -36,7 +36,7 @@ export function Messages({}: {}) {
     <div className="relative w-full h-full">
       <div
         ref={containerRef}
-        className="w-full h-full overflow-y-scroll"
+        className="w-full h-full overflow-y-scroll py-1"
         onScroll={handleScroll}
       >
         {messages.map((message) => (
