@@ -28,8 +28,8 @@ export function ScenariosList() {
           Change Character
         </button>
       </div>
-      <div className="overflow-y-auto">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 pb-4">
+      <div className="flex-1 min-h-0 overflow-y-auto">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {scenarios.map((scenario) => (
             <button
               key={scenario.id}
@@ -50,7 +50,7 @@ export function ScenariosList() {
         </div>
       </div>
       {selectedScenario && selectedPersona && (
-        <div className="mt-4 flex justify-center">
+        <div className="mt-2 mb-6 flex justify-center flex-shrink-0">
           <button
             onClick={() => {
               if (!userInfo) {
@@ -61,7 +61,7 @@ export function ScenariosList() {
                 );
               }
             }}
-            className="bg-primary text-primary-content px-8 py-3 rounded-lg font-bold hover:bg-primary-focus transition-colors"
+            className="bg-primary text-primary-content px-8 py-2 rounded-lg font-bold hover:bg-primary-focus transition-colors"
           >
             Start Session →
           </button>

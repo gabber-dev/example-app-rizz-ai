@@ -82,7 +82,7 @@ export function SessionDetailModal({ sessionId, onClose }: Props) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-base-300 rounded-lg w-full max-w-2xl max-h-[90vh] flex flex-col">
+      <div className="bg-base-300 rounded-lg w-full max-w-2xl max-h-[80vh] flex flex-col my-[10vh]">
         <div className="p-4 border-b border-base-200 flex justify-between items-center">
           <h2 className="text-xl font-bold">Session Details</h2>
           <button onClick={onClose} className="text-2xl">
