@@ -16,9 +16,9 @@ Create a [https://app.gabber.dev](Gabber) project.
 
 Rizz.AI uses the following Gabber features:
 - Credits: Tracking end-user credit balances
-- Personas + Scenarios: Creating various voice experiences
+- Personas + Scenarios: In your [https://app.gabber.dev](Gabber dashboard), create personas, scenarios, & voices to be used in your app
 - Webhook: Responding to usage events to adjust users' credit balances
-- Chat Completions: LLM completions endpoint for scoring the Rizz
+- Chat Completions: LLM completions endpoint for scoring the user's Rizz
 
 Before running the app you'll need to create a Credit object in the Gabber dashboard
 and a few personas and scenarios to populate the app.
