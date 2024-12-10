@@ -4,6 +4,8 @@ Rizz.AI is a gym for your social skills. Practice talking to various personas in
 
 This app can be completely deployed on its own with no additional infrastrucure.
 
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fgabber-dev%2Fexample-app-rizz-ai&env=GABBER_API_KEY,GABBER_CREDIT_ID,STRIPE_SECRET_KEY,STRIPE_REDIRECT_HOST,GOOGLE_CLIENT_ID,GOOGLE_CLIENT_SECRET,GOOGLE_REDIRECT_URI&project-name=rizz-ai-clone)
+
 ## Pre-Requisites
 
 Before you can run the app, you'll need a few things.
