@@ -67,9 +67,9 @@ export function ClientSessionPageInner({
   }, [credits, id, setShowPaywall]);
 
   return (
-    <div className="relative w-full h-full pt-4">
+    <div className="relative w-full h-full pt-2">
       <div className="absolute top-0 left-0 right-0 bottom-[50px] p-2 flex flex-col items-center justify-center">
-        <div className="relative h-[200px] w-[200px] rounded-[8px] overflow-hidden">
+        <div className="relative h-[100px] w-[100px] md:h-[200px] md:w-[200px] rounded-[8px] overflow-hidden">
           <Image
             fill={true}
             className="w-full h-full object-cover"
@@ -77,7 +77,7 @@ export function ClientSessionPageInner({
             alt={persona.name}
           />
           <div
-            className="absolute left-0 right-0 bottom-0 h-[80px] z-[1]"
+            className="absolute left-0 right-0 bottom-0 h-[40px] md:h-[80px] z-[1]"
             style={{
               background:
                 "linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.9), rgba(0,0,0,1.0))",
@@ -86,10 +86,10 @@ export function ClientSessionPageInner({
             <AgentAudioVisualizer />
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center text-white my-2 h-[100px] relative z-[2]">
+        <div className="flex flex-col items-center justify-center text-white h-[100px] relative z-[2]">
           <div className="text-xl font-bold mb-1">{persona.name}</div>
-          <div className="text-sm opacity-70 mb-3">{scenario.name}</div>
-          <div className="font-bold">
+          <div className="text-sm opacity-70 mb-1">{scenario.name}</div>
+          <div className="font-bold mb-1">
             Talk for at least 10 messages to get your rizz score
           </div>
           <div className="h-[40px] w-[200px] flex items-center justify-center">
