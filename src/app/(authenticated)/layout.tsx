@@ -32,9 +32,29 @@ const sfProRounded = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Rizz.AI - Go on AI Powered Dates",
+  title: "Rizz.AI - The Gym For Your Social Skills",
   description:
-    "Rizz.AI is a platform to help you practice your social skills with AI powered virtual dates.",
+    "Practice dating, socializing, and speaking with confidence by having conversation with AI. Get tailored feedback to improve your skills.",
+  openGraph: {
+    title: "Rizz.AI - The Gym For Your Social Skills",
+    description:
+      "Practice dating, socializing, and speaking with confidence by having conversation with AI. Get tailored feedback to improve your skills.",
+    images: [
+      {
+        url: "https://rizz.ai/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Rizz.AI - Practice your dating skills with AI",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Rizz.AI - The Gym For Your Social Skills",
+    description:
+      "Practice dating, socializing, and speaking with confidence by having conversation with AI. Get tailored feedback to improve your skills.",
+    images: ["https://rizz.ai/og-image.png"],
+  },
 };
 
 export default async function RootLayout({
