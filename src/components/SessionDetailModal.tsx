@@ -4,9 +4,9 @@ import { formatDistanceToNow } from "date-fns";
 import { StatCard } from "@/components/StatCard";
 import { useAppState } from "@/components/AppStateProvider";
 
-type Message = {
+type SessionMessage = {
   agent: boolean;
-  content: string;
+  content?: string;
   created_at: string;
 };
 
@@ -21,7 +21,7 @@ type Props = {
 };
 
 export function SessionDetailModal({ sessionId, onClose }: Props) {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<SessionMessage[]>([]);
   const [timeline, setTimeline] = useState<TimelineItem[]>([]);
   const [loading, setLoading] = useState(true);
   const { sessionApi, llmApi, realtimeApi } = useAppState();
@@ -37,7 +37,7 @@ export function SessionDetailModal({ sessionId, onClose }: Props) {
           sessionApi.apiV1SessionSessionIdTimelineGet(sessionId),
         ]);
         setMessages(
-          messagesRes.data.values.map((msg) => ({
+          messagesRes.data.values.map((msg: SessionMessage) => ({
             agent: msg.agent || false,
             content: msg.content || "",
             created_at: msg.created_at || new Date().toISOString(),

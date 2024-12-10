@@ -9,7 +9,7 @@ import { StreakCard } from "@/components/analyze/StreakCard";
 import { PastSessionsList } from "@/components/analyze/PastSessionsList";
 import { useState, useMemo, useEffect } from "react";
 import { SessionDetailModal } from "@/components/SessionDetailModal";
-
+import { Session } from "@/lib/model/session";
 export default function ClientPage() {
   const { selectedPersona, sessions, setSelectedPersona } = useAppState();
   const [selectedSessionId, setSelectedSessionId] = useState<string | null>(null);
