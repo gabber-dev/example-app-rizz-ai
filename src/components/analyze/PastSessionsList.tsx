@@ -2,10 +2,10 @@ import Image from "next/image";
 import { formatDistanceToNow } from "date-fns";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import { Session } from "@/lib/model/session"; // You'll need to create this type
+import { RealtimeSession } from "@/generated";
 
 type Props = {
-  sessions: Session[];
+  sessions: RealtimeSession[];
   onSessionSelect: (sessionId: string) => void;
   className?: string;
 };

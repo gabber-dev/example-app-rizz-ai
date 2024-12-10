@@ -9,52 +9,18 @@ import { StreakCard } from "@/components/analyze/StreakCard";
 import { PastSessionsList } from "@/components/analyze/PastSessionsList";
 import { useState, useMemo, useEffect } from "react";
 import { SessionDetailModal } from "@/components/SessionDetailModal";
-import { Session } from "@/lib/model/session";
+import { useStreakData } from '@/hooks/useStreakData';
+import { RealtimeSession } from "@/generated/";
+
 export default function ClientPage() {
   const { selectedPersona, sessions, setSelectedPersona } = useAppState();
   const [selectedSessionId, setSelectedSessionId] = useState<string | null>(null);
+  const streakData = useStreakData(sessions);
 
   useEffect(() => {
     // Clear selected persona when component mounts
     setSelectedPersona(null);
   }, []); // Empty dependency array means this runs once on mount
-
-  const streakData = useMemo(() => {
-    const today = new Date();
-    const last7Days = Array.from({ length: 7 }, (_, i) => {
-      const date = new Date();
-      date.setDate(today.getDate() - i);
-      return date;
-    }).reverse();
-
-    const sessionsByDay = new Map();
-    sessions.forEach(session => {
-      const sessionDate = new Date(session.created_at);
-      const dateKey = sessionDate.toDateString();
-      sessionsByDay.set(dateKey, (sessionsByDay.get(dateKey) || 0) + 1);
-    });
-
-    let currentStreak = 0;
-    for (let i = 0; i <= 30; i++) {
-      const checkDate = new Date(today);
-      checkDate.setDate(today.getDate() - i);
-      const dateKey = checkDate.toDateString();
-      
-      if (sessionsByDay.has(dateKey)) {
-        currentStreak++;
-      } else {
-        break;
-      }
-    }
-
-    return {
-      days: last7Days.map(date => ({
-        label: date.getDate().toString(),
-        completed: sessionsByDay.has(date.toDateString()) ? ("hit" as const) : ("missed" as const)
-      })),
-      streak: currentStreak
-    };
-  }, [sessions]);
 
   const recentSessions = useMemo(() => {
     if (!sessions.length) return [];
@@ -81,7 +47,7 @@ export default function ClientPage() {
         <Card>
           <StreakCard streakData={streakData} />
           <PastSessionsList 
-            sessions={recentSessions}
+            sessions={sessions}
             onSessionSelect={setSelectedSessionId}
           />
         </Card>
