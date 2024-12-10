@@ -46,7 +46,7 @@ export function ClientLayout({ children }: { children: React.ReactNode }) {
         </div>
       </div>
 
-      <div className="fixed flex justify-center top-[62px] left-[8px] right-[8px] bottom-[58px]">
+      <div className="fixed flex justify-center top-[62px] left-[8px] right-[8px] bottom-[70px]">
         {children}
       </div>
       <div className="fixed flex justify-center bottom-0 left-0 right-0 h-[50px] z-[10]">

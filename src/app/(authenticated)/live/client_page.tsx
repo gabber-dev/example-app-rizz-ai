@@ -121,9 +121,11 @@ export function ClientSessionPageInner({
           </div>
         </div>
       </div>
-      <div className="absolute justify-center flex left-0 right-0 bottom-0 h-[50px]">
-        <div className="h-full max-w-[400px] w-full">
-          <InputBar />
+      <div className="absolute justify-center flex left-0 right-0 bottom-0 h-[50px] px-2">
+        <div className="h-full w-full max-w-[400px]">
+          <div className="w-full h-full flex items-center">
+            <InputBar />
+          </div>
         </div>
       </div>
     </div>

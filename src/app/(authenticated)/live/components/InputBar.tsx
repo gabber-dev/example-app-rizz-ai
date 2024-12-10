@@ -26,8 +26,12 @@ export function InputBar({}: {}) {
         }}
       >
         <button
-          onClick={() => setMicrophoneEnabled(!microphoneEnabled)}
-          className={`text-primary-content p-0 rounded-full w-[40px] h-[40px] border-2 border-primary ${microphoneEnabled ? "bg-primary" : "text-base-content"}`}
+          type="button"
+          onClick={(e) => {
+            e.preventDefault();
+            setMicrophoneEnabled(!microphoneEnabled);
+          }}
+          className={`text-primary-content p-0 rounded-full w-[40px] h-[40px] border-2 border-primary bg-primary ${microphoneEnabled ? "bg-primary" : "text-base-content"}`}
           style={{
             transform: microphoneEnabled
               ? `scale(${1 + userVolume / 2})`

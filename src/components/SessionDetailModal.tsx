@@ -4,9 +4,9 @@ import { formatDistanceToNow } from "date-fns";
 import { StatCard } from "@/components/StatCard";
 import { useAppState } from "@/components/AppStateProvider";
 
-type Message = {
+type SessionMessage = {
   agent: boolean;
-  text: string;
+  content?: string;
   created_at: string;
 };
 
@@ -21,7 +21,7 @@ type Props = {
 };
 
 export function SessionDetailModal({ sessionId, onClose }: Props) {
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<SessionMessage[]>([]);
   const [timeline, setTimeline] = useState<TimelineItem[]>([]);
   const [loading, setLoading] = useState(true);
   const { sessionApi, llmApi, realtimeApi } = useAppState();
@@ -37,9 +37,9 @@ export function SessionDetailModal({ sessionId, onClose }: Props) {
           sessionApi.apiV1SessionSessionIdTimelineGet(sessionId),
         ]);
         setMessages(
-          messagesRes.data.values.map((msg) => ({
+          messagesRes.data.values.map((msg: SessionMessage) => ({
             agent: msg.agent || false,
-            text: msg.text || "",
+            content: msg.content || "",
             created_at: msg.created_at || new Date().toISOString(),
           })),
         );
@@ -56,8 +56,13 @@ export function SessionDetailModal({ sessionId, onClose }: Props) {
       }
     };
 
+    // Reset states when sessionId changes
+    setMessages([]);
+    setTimeline([]);
+    setLoading(true);
+
     fetchSessionDetails();
-  }, [sessionId]);
+  }, [sessionId, sessionApi, realtimeApi]);
 
   if (!sessionId) return null;
 
@@ -77,7 +82,7 @@ export function SessionDetailModal({ sessionId, onClose }: Props) {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-base-300 rounded-lg w-full max-w-2xl max-h-[90vh] flex flex-col">
+      <div className="bg-base-300 rounded-lg w-full max-w-2xl max-h-[80vh] flex flex-col my-[10vh]">
         <div className="p-4 border-b border-base-200 flex justify-between items-center">
           <h2 className="text-xl font-bold">Session Details</h2>
           <button onClick={onClose} className="text-2xl">
@@ -125,7 +130,7 @@ export function SessionDetailModal({ sessionId, onClose }: Props) {
                     <div className="text-xs opacity-70 mb-1">
                       {formatDistanceToNow(new Date(message.created_at))} ago
                     </div>
-                    <div>{message.text}</div>
+                    <div className="text-white">{message.content}</div>
                   </div>
                 ))}
               </div>

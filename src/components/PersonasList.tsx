@@ -12,8 +12,8 @@ export function PersonasList() {
         </h2>
         <GenderSelection />
       </div>
-      <div className="flex-1 overflow-y-auto -mx-4 px-4 max-h-[calc(100vh-250px)]">
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 pb-4">
+      <div className="flex-1 overflow-y-auto">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 pb-20">
           {personas.map((persona) => (
             <PersonaButton
               key={persona.id}
