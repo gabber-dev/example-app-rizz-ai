@@ -13,7 +13,7 @@ export function InputBar({}: {}) {
   } = useSession();
 
   return (
-    <div className="w-full h-full gap-2 items-center">
+    <div className="w-full h-full px-2 max-w-[600px] mx-auto">
       <form
         className="flex gap-2 w-full h-full items-center"
         onSubmit={(e) => {
@@ -31,7 +31,7 @@ export function InputBar({}: {}) {
             e.preventDefault();
             setMicrophoneEnabled(!microphoneEnabled);
           }}
-          className={`text-primary-content p-0 rounded-full w-[40px] h-[40px] border-2 border-primary bg-primary ${microphoneEnabled ? "bg-primary" : "text-base-content"}`}
+          className={`flex-shrink-0 text-primary-content p-0 rounded-full w-[40px] h-[40px] border-2 border-primary bg-primary ${microphoneEnabled ? "bg-primary" : "text-base-content"}`}
           style={{
             transform: microphoneEnabled
               ? `scale(${1 + userVolume / 2})`
@@ -48,12 +48,12 @@ export function InputBar({}: {}) {
           type="text"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          className="input input-bordered grow p-2"
+          className="input input-bordered grow min-w-0 p-2"
           placeholder="Type a message..."
         />
         <button
           formAction={"submit"}
-          className="bg-primary text-primary-content p-0 rounded-full w-[40px] h-[40px]"
+          className="flex-shrink-0 bg-primary text-primary-content p-0 rounded-full w-[40px] h-[40px]"
         >
           <ArrowUpward className="w-full h-full" />
         </button>
