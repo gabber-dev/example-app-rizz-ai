@@ -127,14 +127,14 @@ For context on scoring
 - humor
 - confidence
 - seductiveness
-- ability_to_progress_conversation
+- flow (lack of filler words, ability to progress conversation)
 - kindness
 
 each with scores: poor, fair, good
 
-For each attribute, include a short sentence of why you gave me the score I received for that attribute. For example, for wit you could say "You had quick responses that really showed you were sharp and witty, like when you brought up pancakes after your date said waffles"
+For each attribute, include a short, casual and funny sentence of why you gave me the score I received for that attribute. For example, for flow you could say "You kept the conversation going, but used a lot of filler words like "um" and "like""
 
-Also include an "overall_summary" field that summarizes my performance in the scenario
+Also include an "overall_summary" field that summarizes my performance in the scenario. Make it funny and casual, using slang, but still useful
 
 Please provide your outputs in JSON format with the format:
 {
@@ -146,8 +146,8 @@ Please provide your outputs in JSON format with the format:
   "confidence_summary": "<summary of confidence>"
   "seductiveness": "fair" | "good" | "poor",
   "seductiveness_summary": "<summary of seductiveness>"
-  "ability_to_progress_conversation": "fair" | "good" | "poor"
-  "ability_to_progress_conversation_summary": "<summary of progress conversation>"
+  "flow": "fair" | "good" | "poor"
+  "flow_summary": "<summary of flow>"
   "kindness": "fair" | "good" | "poor",
   "kindness_summary": "<summary of kindness>"
   "overall_summary": <string>
@@ -171,7 +171,7 @@ const calculateRizzScore = (scoreObj: Record<string, string>): number => {
     "humor",
     "confidence",
     "seductiveness",
-    "ability_to_progress_conversation",
+    "flow",
     "kindness",
   ];
 
