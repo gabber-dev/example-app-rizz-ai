@@ -4,13 +4,13 @@ export type Score = {
   humor: "poor" | "fair" | "good";
   confidence: "poor" | "fair" | "good";
   seductiveness: "poor" | "fair" | "good";
-  ability_to_progress_conversation: "poor" | "fair" | "good";
+  flow: "poor" | "fair" | "good";
   kindness: "poor" | "fair" | "good";
   wit_summary: string;
   humor_summary: string;
   confidence_summary: string;
   seductiveness_summary: string;
-  ability_to_progress_conversation_summary: string;
+  flow_summary: string;
   kindness_summary: string;
   overall_summary: string;
   good_1: string;

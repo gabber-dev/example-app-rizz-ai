@@ -39,9 +39,9 @@ export function Score({ score }: Props) {
       summary: score.seductiveness_summary,
     },
     {
-      name: "Conversation",
-      score: score.ability_to_progress_conversation,
-      summary: score.ability_to_progress_conversation_summary,
+      name: "Flow",
+      score: score.flow,
+      summary: score.flow_summary,
     },
     {
       name: "Kindness",
