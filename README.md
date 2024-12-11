@@ -40,10 +40,12 @@ The app uses Google OAuth for user authentication. You'll need to set up a Googl
    - Create a new project or select an existing one.
 2. **Enable OAuth Consent Screen**:
    - Navigate to APIs & Services > OAuth consent screen.
+   - Select "external" if you plan to build an app for people outside of your organization.
    - Configure the consent screen by adding the necessary information.
+   - Once you've added this info, select "publish app"
 3. **Create OAuth Client ID**:
    - Go to APIs & Services > Credentials.
-   - Click Create Credentials and select OAuth client ID.
+   - Click Create Credentials and select OAuth 2.0 client ID.
    - Choose Web Application as the application type.
    - Under Authorized JavaScript origins, add your app's URL (e.g., http://localhost:3000).
    - Under Authorized redirect URIs, add http://localhost:3000/auth/google/callback.
