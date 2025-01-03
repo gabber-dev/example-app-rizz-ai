@@ -90,8 +90,8 @@ export class CreditsController {
     const client = await CreditsController.getStripeClient();
     const customer = await client.customers.create({ email });
 
-    // Grant 5 minutes (300 seconds) worth of free credits
-    await CreditsController.grantFreeCredits(300, customer.id);
+    // Grant ~8 minutes (500 seconds) worth of free credits
+    await CreditsController.grantFreeCredits(500, customer.id);
 
     return customer;
   }
