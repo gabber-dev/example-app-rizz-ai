@@ -61,7 +61,6 @@ export function PaywallPopup() {
   const getCheckoutSession = useCallback(
     async (priceId: string) => {
       const paywallSession = showPaywall?.session;
-      console.log("NEIL paywallSession", paywallSession);
       const response = await fetch("/api/checkout", {
         method: "POST",
         headers: {

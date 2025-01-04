@@ -77,12 +77,12 @@ export default async function RootLayout({
   if (user) {
     const realtimeApi = new RealtimeApi(config);
     try {
-      const response = await realtimeApi.listRealtimeSessions({
-        headers: { "x-human-id": user.stripe_customer },
-      });
+      const response = await realtimeApi.listRealtimeSessions(
+        user.stripe_customer,
+      );
       sessions = response.data.values;
     } catch (e) {
-      console.error("NEIL Error fetching sessions", e);
+      console.error("Error fetching sessions", e);
     }
   }
 

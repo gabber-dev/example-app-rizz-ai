@@ -3,12 +3,7 @@ import axios from "axios";
 import { formatDistanceToNow } from "date-fns";
 import { StatCard } from "@/components/StatCard";
 import { useAppState } from "@/components/AppStateProvider";
-
-type SessionMessage = {
-  agent: boolean;
-  content?: string;
-  created_at: string;
-};
+import { ContextMessage } from "@/generated";
 
 type TimelineItem = {
   type: "user" | "agent" | "silence";
@@ -21,28 +16,21 @@ type Props = {
 };
 
 export function SessionDetailModal({ sessionId, onClose }: Props) {
-  const [messages, setMessages] = useState<SessionMessage[]>([]);
+  const [messages, setMessages] = useState<ContextMessage[]>([]);
   const [timeline, setTimeline] = useState<TimelineItem[]>([]);
   const [loading, setLoading] = useState(true);
-  const { sessionApi, llmApi, realtimeApi } = useAppState();
+  const { llmApi, realtimeApi } = useAppState();
 
   useEffect(() => {
     const fetchSessionDetails = async () => {
       if (!sessionId) return;
       setLoading(true);
       try {
-        const session = await realtimeApi.getRealtimeSession(sessionId);
         const [messagesRes, timelineRes] = await Promise.all([
-          sessionApi.apiV1SessionSessionIdMessagesGet(sessionId),
-          sessionApi.apiV1SessionSessionIdTimelineGet(sessionId),
+          realtimeApi.getRealtimeSessionMessages(sessionId),
+          realtimeApi.getRealtimeSessionTimeline(sessionId),
         ]);
-        setMessages(
-          messagesRes.data.values.map((msg: SessionMessage) => ({
-            agent: msg.agent || false,
-            content: msg.content || "",
-            created_at: msg.created_at || new Date().toISOString(),
-          })),
-        );
+        setMessages(messagesRes.data.values);
         setTimeline(
           (timelineRes.data.values ?? []).map((item) => ({
             type: item.type || "user",
@@ -62,7 +50,7 @@ export function SessionDetailModal({ sessionId, onClose }: Props) {
     setLoading(true);
 
     fetchSessionDetails();
-  }, [sessionId, sessionApi, realtimeApi]);
+  }, [sessionId, realtimeApi]);
 
   if (!sessionId) return null;
 
@@ -122,7 +110,7 @@ export function SessionDetailModal({ sessionId, onClose }: Props) {
                   <div
                     key={i}
                     className={`p-4 rounded-lg ${
-                      message.agent
+                      message.role !== "user"
                         ? "bg-base-200"
                         : "bg-primary text-primary-content ml-8"
                     }`}

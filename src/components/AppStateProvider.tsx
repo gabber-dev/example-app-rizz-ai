@@ -8,7 +8,6 @@ import {
   RealtimeSession,
   Scenario,
   ScenarioApi,
-  SessionApi,
   LLMApi,
 } from "@/generated";
 import { UserInfo } from "@/lib/server/controller/user";
@@ -62,7 +61,6 @@ type AppStateContextType = {
   realtimeApi: RealtimeApi;
   personaApi: PersonaApi;
   scenarioApi: ScenarioApi;
-  sessionApi: SessionApi;
   llmApi: LLMApi;
   gender: "men" | "women" | "all";
   setGender: (g: "men" | "women" | "all") => void;
@@ -130,10 +128,6 @@ export function AppStateProvider({
 
   const scenarioApi = useMemo(() => {
     return new ScenarioApi(new Configuration({ accessToken: usageToken }));
-  }, [usageToken]);
-
-  const sessionApi = useMemo(() => {
-    return new SessionApi(new Configuration({ accessToken: usageToken }));
   }, [usageToken]);
 
   const llmApi = useMemo(() => {
@@ -245,7 +239,6 @@ export function AppStateProvider({
         realtimeApi,
         personaApi,
         scenarioApi,
-        sessionApi,
         llmApi,
 
         gender,

@@ -7,6 +7,14 @@ import Stripe from "stripe";
 import { v4 } from "uuid";
 
 export class CreditsController {
+  private static getCreditApi() {
+    return CreditApiFactory(
+      new Configuration({
+        apiKey: process.env.GABBER_API_KEY,
+      }),
+    );
+  }
+
   private static getStripeClient() {
     if (!process.env.STRIPE_SECRET_KEY) {
       throw new Error("Stripe secret key not found");
@@ -134,17 +142,14 @@ export class CreditsController {
       throw new Error("Server misconfigured - missing credit id");
     }
 
-    const configuration = new Configuration({
-      apiKey: process.env.GABBER_API_KEY,
-    });
-    const creditApi = CreditApiFactory(configuration);
+    const creditApi = this.getCreditApi();
     const client = await CreditsController.getStripeClient();
     let latestCreditDate = new Date(0);
     try {
       const latestLedgerEntry = (
         await creditApi.getLatestCreditLedgerEntry(
           process.env.GABBER_CREDIT_ID,
-          { headers: { "x-human-id": customer } },
+          customer,
         )
       ).data;
       latestCreditDate = new Date(latestLedgerEntry.created_at);
@@ -193,7 +198,7 @@ export class CreditsController {
               amount,
               idempotency_key: charge.id,
             },
-            { headers: { "x-human-id": customer } },
+            customer,
           )
         ).data;
       } catch (e: any) {
@@ -209,7 +214,7 @@ export class CreditsController {
       const newLatestEntry = (
         await creditApi.getLatestCreditLedgerEntry(
           process.env.GABBER_CREDIT_ID,
-          { headers: { "x-human-id": customer } },
+          customer,
         )
       ).data;
       return newLatestEntry.balance;
@@ -231,10 +236,7 @@ export class CreditsController {
     if (!process.env.GABBER_CREDIT_ID) {
       throw new Error("Server misconfigured - missing credit id");
     }
-    const configuration = new Configuration({
-      apiKey: process.env.GABBER_API_KEY,
-    });
-    const creditApi = CreditApiFactory(configuration);
+    const creditApi = this.getCreditApi();
     try {
       return creditApi.createCreditLedgerEntry(
         process.env.GABBER_CREDIT_ID,
@@ -242,7 +244,7 @@ export class CreditsController {
           amount,
           idempotency_key: v4(),
         },
-        { headers: { "x-human-id": customer } },
+        customer,
       );
     } catch (e: any) {
       console.error("Failed to report credit usage:", e.message);

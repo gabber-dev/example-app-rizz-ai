@@ -22,7 +22,6 @@ export default async function Page({
 
   const config = new Configuration({
     apiKey: process.env.GABBER_API_KEY,
-    basePath: "https://app.gabber.dev",
   });
 
   const personaApi = PersonaApiFactory(config);

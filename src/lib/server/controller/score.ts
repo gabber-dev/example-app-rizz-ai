@@ -11,22 +11,25 @@ import OpenAI from "openai";
 import { Score } from "@/lib/model/score";
 
 export class ScoreController {
+  private static getApis() {
+    const config = new Configuration({
+      apiKey: process.env.GABBER_API_KEY,
+    });
+    return {
+      realtimeApi: RealtimeApiFactory(config),
+      personaApi: PersonaApiFactory(config),
+      scenarioApi: ScenarioApiFactory(config),
+      llmAPI: LLMApiFactory(config),
+    };
+  }
   static async calculateScore(session: string): Promise<Score> {
     const openai = new OpenAI({
       apiKey: "",
-      baseURL: "https://app.gabber.dev/api/v1",
+      baseURL: "https://api.gabber.dev/v1",
       defaultHeaders: { "x-api-key": process.env.GABBER_API_KEY },
     });
     const llm = "66df3c9d-5d8c-4cfc-8b65-a805c1f8ab53"; // Gabber LLM from dashboard
-    const config = new Configuration({
-      apiKey: process.env.GABBER_API_KEY,
-      basePath: "https://app.gabber.dev",
-    });
-    const realtimeApi = RealtimeApiFactory(config);
-    const personaApi = PersonaApiFactory(config);
-    const scenarioApi = ScenarioApiFactory(config);
-    const llmAPI = LLMApiFactory(config);
-
+    const { realtimeApi, llmAPI } = this.getApis();
     const sessionObj = (await realtimeApi.getRealtimeSession(session)).data;
     if (
       !sessionObj.config.generative.persona ||
@@ -34,13 +37,8 @@ export class ScoreController {
     ) {
       throw new Error("Couldn't get persona or scenario");
     }
-    const scenarioObj = (
-      await scenarioApi.getScenario(sessionObj.config.generative.scenario.id)
-    ).data;
-
-    const personaObj = (
-      await personaApi.getPersona(sessionObj.config.generative.persona.id)
-    ).data;
+    const scenarioObj = sessionObj.config.generative.scenario;
+    const personaObj = sessionObj.config.generative.persona;
 
     const messages = (
       await llmAPI.listContextMessages(sessionObj.config.generative.context.id)
@@ -63,11 +61,11 @@ export class ScoreController {
       ...history,
       { role: "user", content: scoreMessage },
     ] as { role: "user" | "assistant" | "system"; content: string }[];
-
     const result = await openai.chat.completions.create({
       model: llm,
       messages: llmMessages,
     });
+
     const scoreJsonString = result.choices[0].message.content;
     if (!scoreJsonString) {
       throw new Error("Failed to generate score");
