@@ -35,6 +35,17 @@ export function Footer() {
           <span className="sm:hidden">Build an app like this</span>
         </Link>
       </div>
+
+      <div className="h-6 w-px bg-gray-400"></div>
+
+      <div className="text-white space-x-4">
+        <Link href="/legal/privacy" className="underline hover:text-primary">
+          Privacy Policy
+        </Link>
+        <Link href="/legal/terms" className="underline hover:text-primary">
+          Terms of Service
+        </Link>
+      </div>
     </div>
   );
 }
