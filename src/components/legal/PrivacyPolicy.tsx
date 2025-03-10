@@ -13,11 +13,12 @@ export default function PrivacyPolicy({ isModal = false }) {
       content: (
         <>
           <p className="mb-4">
-            At <strong>Rizz.AI</strong> ("Rizz," "we," "us," or "our"), we take
-            your privacy seriously. This Privacy Policy explains how we collect,
-            use, disclose, and protect your personal data when you access or use
-            our website, products, services, and applications (collectively, the
-            "Services").
+            At <strong>Rizz.AI</strong> (&quot;Rizz,&quot; &quot;we,&quot;
+            &quot;us,&quot; or &quot;our&quot;), we take your privacy seriously.
+            This Privacy Policy explains how we collect, use, disclose, and
+            protect your personal data when you access or use our website,
+            website, website, website, products, services, and applications
+            (collectively, the &quot;Services&quot;).
           </p>
           <p className="mb-4">
             By using or accessing the Services, you acknowledge that you have
@@ -250,7 +251,7 @@ export default function PrivacyPolicy({ isModal = false }) {
             </li>
             <li>
               Marketing emails can be unsubscribed by selecting{" "}
-              <strong>"Opt-Out"</strong> in any communication.
+              <strong>&quot;Opt-Out&quot;</strong> in any communication.
             </li>
             <li>
               Rizz does not honor <strong>Do Not Track (DNT)</strong> signals at
@@ -381,7 +382,7 @@ export default function PrivacyPolicy({ isModal = false }) {
           </ul>
 
           <h3 className="font-semibold mb-2">
-            C. Children's Online Privacy Protection Act (COPPA)
+            C. Children&apos;s Online Privacy Protection Act (COPPA)
           </h3>
           <p className="mb-4">
             Rizz <strong>does not</strong> knowingly collect personal data from

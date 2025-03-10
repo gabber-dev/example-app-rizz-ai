@@ -4,7 +4,11 @@ type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: "primary" | "secondary";
 };
 
-export default function Button({ variant = "primary", className = "", ...props }: Props) {
+export default function Button({
+  variant = "primary",
+  className = "",
+  ...props
+}: Props) {
   const baseClasses = "font-medium transition-colors duration-200";
   const variantClasses = {
     primary: "bg-primary text-primary-content hover:bg-primary-focus",
@@ -19,4 +23,4 @@ export default function Button({ variant = "primary", className = "", ...props }
       {props.children}
     </button>
   );
-} 
+}
