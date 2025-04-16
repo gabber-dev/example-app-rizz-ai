@@ -1,3 +1,5 @@
+**Note:** This app was built using the old usage token flow. That has been deprecated in favor of a new system using TTLs. See more details [here](https://docs.gabber.dev/authentication) and [here](https://docs.gabber.dev/reference/create-usage-token).
+
 # Rizz.AI Example App
 
 Rizz.AI is a gym for your social skills. Practice talking to various personas in different scenarios and get a score at the end.
