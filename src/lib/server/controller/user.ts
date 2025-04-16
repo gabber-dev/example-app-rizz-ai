@@ -38,7 +38,8 @@ export class UserController {
       return (
         await usageApi.createUsageToken({
           human_id: "anonymous",
-          limits: [{ type: "conversational_seconds", value: 0 }],
+          limits: [{ type: "conversational_seconds", value: 0 }], //deprecated
+          //ttl_seconds: 600, // this is the new way to set limits
         })
       ).data.token;
     }
@@ -46,7 +47,8 @@ export class UserController {
     return (
       await usageApi.createUsageToken({
         human_id: user.stripe_customer,
-        limits: [{ type: "conversational_seconds", value: 1000 }],
+        limits: [{ type: "conversational_seconds", value: 1000 }], //deprecated
+        //ttl_seconds: 3600, // this is the new way to set limits
       })
     ).data.token;
   }
@@ -58,7 +60,8 @@ export class UserController {
     const usageApi = UsageApiFactory(config);
     await usageApi.updateUsageToken({
       human_id,
-      limits: [{ type: "conversational_seconds", value: limit }],
+      limits: [{ type: "conversational_seconds", value: limit }], //deprecated
+      //ttl_seconds: 3600, // this is the new way to set limits
     });
   }
 
